@@ -106,7 +106,6 @@ const filterProducts = () => {
       params.size == 0 ? "" : `&${params.toString()}`
     }`,
     (responseText) => {
-      console.log(responseText);
       productList.innerHTML = responseText;
       productQuantity.innerHTML =
         document.querySelectorAll(".product-item").length;

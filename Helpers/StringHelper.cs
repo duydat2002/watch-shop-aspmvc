@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace WatchesShop.Helpers;
+namespace WatchShop2.Helpers;
 
 public static class StringHelper
 {

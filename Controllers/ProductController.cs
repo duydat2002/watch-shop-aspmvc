@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WatchShop2.Models;
 
-namespace WatchesShop.Controllers;
+namespace WatchShop2.Controllers;
 
 public class ProductController : Controller
 {
@@ -14,7 +14,7 @@ public class ProductController : Controller
   }
 
   [Route("products/{category?}")]
-  public IActionResult Products(string category, string search = "")
+  public IActionResult Products(string category = "", string search = "")
   {
     string categoryName = "";
 
@@ -32,8 +32,10 @@ public class ProductController : Controller
       case "luxury-watches":
         categoryName = "Luxury Watches";
         break;
-        // default:
-        //   return RedirectToAction("PageNotFound", "Home");
+      case "":
+        break;
+      default:
+        return RedirectToAction("PageNotFound", "Home");
     }
 
     ViewData["categoryName"] = categoryName;
@@ -42,6 +44,16 @@ public class ProductController : Controller
     ViewBag.colors = _entityContext.GetColors(search, categoryName);
 
     return View();
+  }
+
+  [Route("product/{ProductSlug}")]
+  public IActionResult Detail(string ProductSlug)
+  {
+    Product? product = _entityContext.GetProductBySlug(ProductSlug);
+    if (product == null)
+      return RedirectToAction("PageNotFound", "Home");
+    else
+      return View(product);
   }
 
   [Route("products/filter")]
@@ -78,4 +90,11 @@ public class ProductController : Controller
     return Json(sizes);
   }
 
+  [HttpPost]
+  [Route("products/add-product")]
+  public IActionResult AddProduct([FromBody] AddProductModel product)
+  {
+    int cac = _entityContext.AddProduct(product.Categories, product.ColorId, product.SizeId, product.ProductName, product.ProductSlug, product.ProductDesc, product.Price, product.Quantity, product.Discount, product.ProductImages);
+    return Json(cac);
+  }
 }

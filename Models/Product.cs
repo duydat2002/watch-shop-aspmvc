@@ -27,9 +27,11 @@ public partial class Product
 
     public string? ColorName { get; set; } = null!;
 
+    public string? ColorValue { get; set; } = null!;
+
     public string? SizeName { get; set; } = null!;
 
-    public double PriceSale { get { return Price * (1 - Discount / 100); } }
+    public double PriceSale { get; set; }
 
     public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
 

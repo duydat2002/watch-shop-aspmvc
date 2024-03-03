@@ -83,6 +83,29 @@ public partial class WatchShop2Context : DbContext
         return products;
     }
 
+    public Product? GetProductBySlug(string ProductSlug)
+    {
+        return this.Products.FromSqlRaw("EXECUTE pr_GetProductBySlug @ProductSlug",
+            new SqlParameter("@ProductSlug", ProductSlug)
+        ).ToList().SingleOrDefault();
+    }
+
+    public int AddProduct(string Categories, int ColorId, int SizeId, string ProductName, string ProductSlug, string ProductDesc, double Price, int Quantity, int Discount, string ProductImages)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_AddProduct @Categories, @ColorId, @SizeId, @ProductName, @ProductSlug, @ProductDesc, @Price, @Quantity, @Discount, @ProductImages",
+            new SqlParameter("@Categories", Categories),
+            new SqlParameter("@ColorId", ColorId),
+            new SqlParameter("@SizeId", SizeId),
+            new SqlParameter("@ProductName", ProductName),
+            new SqlParameter("@ProductSlug", ProductSlug),
+            new SqlParameter("@ProductDesc", ProductDesc),
+            new SqlParameter("@Price", Price),
+            new SqlParameter("@Quantity", Quantity),
+            new SqlParameter("@Discount", Discount),
+            new SqlParameter("@ProductImages", ProductImages)
+        );
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>

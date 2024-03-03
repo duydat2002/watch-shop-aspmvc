@@ -1,0 +1,139 @@
+@{
+  ViewData["Title"] = "Producs";
+}
+
+@section Css {
+  <link rel="stylesheet" href="~/css/products.css" asp-append-version="true">
+}
+
+<main id="main">
+  <section class="wrapper">
+    <div class="container">
+      <div class="flex cl-gap">
+        <div class="col-3 col-md-12 pd-gap">
+          <div class="column-left">
+            <div class="search-filter">
+              <h3 class="search-filter__title flex">
+                <span>Filter By</span>
+                <i class="fas fa-times search-filter__close"></i>
+              </h3>
+              <div class="search-filter__content" id="searchFilter">
+                <div id="categoryName" class="hidden" data-category="@ViewBag.categoryName"></div>
+                <div class='search-filter-clearall'>
+                  <i class='fas fa-times'></i>
+                  Clear All
+                </div>
+                <div class='filter__color'>
+                  <h4 class='filter__title'>Color</h4>
+                  <div class='filter__desc'>
+                    @foreach (Color color in ViewBag.colors)
+                    {
+                      <label class='filter__item'>
+                        <input class="filter__checkbox hidden" value="@color.ColorName" type="checkbox" name="colors">
+                        <div class="filter__content">
+                          <span class='color__box' style="background-color: @color.ColorValue;">
+                            <i class='fas fa-check filter-check-icon'></i>
+                          </span>
+                          <span class='color__name'>@color.ColorName</span>
+                          <span class='color__qty'>(@color.Quantity)</span>
+                        </div>
+                      </label>
+                    }
+                  </div>
+                </div>
+                <div class='filter__price'>
+                  <h4 class='filter__title'>Price</h4>
+                  <div class='filter__desc'>
+                    <div class='filter__price-input flex'>
+                      <input type='number' name='priceFrom' min='0' placeholder='₫ From'>
+                      <div class='seperate'>-</div>
+                      <input type='number' name='priceTo' min='0' placeholder='₫ To'>
+                    </div>
+                  </div>
+                </div>
+                <div class='filter__size'>
+                  <h4 class='filter__title'>Size</h4>
+                  <div class='filter__desc' id='sizeFilters'>
+                    @foreach (Size size in ViewBag.sizes)
+                    {
+                      <label class='filter__item'>
+                        <input class="filter__checkbox hidden" value="@size.SizeName" type="checkbox" name="sizes">
+                        <div class="filter__content">
+                          <span class='size__box'>
+                            <i class='fas fa-check filter-check-icon'></i>
+                          </span>
+                          <span class='size__name'>@size.SizeName</span>
+                          <span class='size__qty'>(@size.Quantity)</span>
+                        </div>
+                      </label>
+                    }
+                  </div>
+                </div>
+                <button class='button button-gb filter__price-btn'>Apply</button>
+              </div>
+            </div>
+            <a href="Products.aspx" class="left-banner hide-md">
+              <img src="~/image/left-banner-1.png" alt="">
+            </a>
+          </div>
+        </div>
+        <div class="col-9 col-md-12 pd-gap">
+          <div class="column-right">
+            <div class="categories__banner">
+              <img src="~/image/banner-products.png" alt="">
+            </div>
+            <h3 class="categories__title" id="categories__title" runat="server">@ViewData["category"]</h3>
+            <p class="categories__desc">The point of using Lorem Ipsum is that it has a more-or-less normal
+              distribution of letters, as opposed to using 'Content here, content here', making it look
+              like readable that it has a more-or-less normal distribution of letters.</p>
+            <div class="products">
+              <div class="products__list-sort flex">
+                <div class="col-6 col-md-12">
+                  <div class="products__list-type flex">
+                    <i class="fas fa-th-large list-icon list-icon-grid active"></i>
+                    <i class="fas fa-th-list list-icon list-icon-list"></i>
+                    <span class="products__list-qty">
+                      There are <span class="list-qty">9</span> products.
+                    </span>
+                  </div>
+                </div>
+                <div class="col-6 col-md-12">
+                  <div class="products__sort flex">
+                    <span class="sort-text">Sort by:</span>
+                    <div class="sort-select">
+                      <div class="sort__title">
+                        <span class="sort__value">Auto</span>
+                        <i class="fas fa-caret-down"></i>
+                      </div>
+                      <div class="sort__list">
+                        <div data-value="auto" class="sort-item">Auto</div>
+                        <div data-value="atoz" class="sort-item">Name, A to Z</div>
+                        <div data-value="ztoa" class="sort-item">Name, Z to A</div>
+                        <div data-value="ltoh" class="sort-item">Price, low to high</div>
+                        <div data-value="htol" class="sort-item">Price, high to low</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-filter__open">
+                    <div class="button button-gb">Filter</div>
+                  </div>
+                </div>
+              </div>
+              <div class="products__active-filter flex">
+                <span class="active-filter__title">Active filters</span>
+                <div class="active-filter__list flex">
+                </div>
+              </div>
+              <div class="products__list flex cl-gap" id="products__list">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+@section JS {
+  <script src="~/js/products.js" asp-append-version="true"></script>
+}

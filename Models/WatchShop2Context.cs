@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace WatchShop2.Models;
@@ -46,11 +47,47 @@ public partial class WatchShop2Context : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DuyDat");
 
+    public List<Size> GetSizes(string ProductName = "", string Categories = "")
+    {
+        var sizes = this.Sizes.FromSqlRaw("EXECUTE pr_GetSizes @ProductName, @Categories",
+            new SqlParameter("@ProductName", ProductName),
+            new SqlParameter("@Categories", Categories)
+        ).ToList();
+        return sizes;
+    }
+
+    public List<Color> GetColors(string ProductName = "", string Categories = "")
+    {
+        var colors = this.Colors.FromSqlRaw("EXECUTE pr_GetColors @ProductName, @Categories",
+            new SqlParameter("@ProductName", ProductName),
+            new SqlParameter("@Categories", Categories)
+        ).ToList();
+        return colors;
+    }
+
+    public List<Product> FilterProducts(string ProductName = "", string Categories = "", string Colors = "", string Sizes = "", float PriceStart = 0, float PriceEnd = float.MaxValue, int PageNumber = 1, int PageSize = 10, string sort = "auto")
+    {
+        var products = this.Products.FromSqlRaw("EXECUTE pr_FilterProducts @ProductName, @Categories, @Colors, @Sizes, @PriceStart, @PriceEnd, @PageNumber, @PageSize, @SortType",
+            new SqlParameter("@ProductName", ProductName),
+            new SqlParameter("@Categories", Categories),
+            new SqlParameter("@Colors", Colors),
+            new SqlParameter("@Sizes", Sizes),
+            new SqlParameter("@PriceStart", PriceStart),
+            new SqlParameter("@PriceEnd", PriceEnd),
+            new SqlParameter("@PageNumber", PageNumber),
+            new SqlParameter("@PageSize", PageSize),
+            new SqlParameter("@SortType", sort)
+        )
+        .ToList();
+
+        return products;
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.CartId).HasName("PK__Carts__51BCD7B7DC116B74");
+            entity.HasKey(e => e.CartId).HasName("PK__Carts__51BCD7B72CB29EA2");
 
             entity.HasOne(d => d.User).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.UserId)
@@ -60,7 +97,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<CartDetail>(entity =>
         {
-            entity.HasKey(e => e.CartDetailId).HasName("PK__CartDeta__01B6A6B4E8F29FE9");
+            entity.HasKey(e => e.CartDetailId).HasName("PK__CartDeta__01B6A6B4623F16E6");
 
             entity.HasOne(d => d.Cart).WithMany(p => p.CartDetails)
                 .HasForeignKey(d => d.CartId)
@@ -75,18 +112,18 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B19207015");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0BBE460F2D");
 
             entity.Property(e => e.CategoryName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Color>(entity =>
         {
-            entity.HasKey(e => e.ColorId).HasName("PK__Colors__8DA7674DA2BC2F71");
+            entity.HasKey(e => e.ColorId).HasName("PK__Colors__8DA7674D704F4BC4");
 
-            entity.HasIndex(e => e.ColorValue, "UQ__Colors__2E5AF4260372320B").IsUnique();
+            entity.HasIndex(e => e.ColorValue, "UQ__Colors__2E5AF426F65F9D2E").IsUnique();
 
-            entity.HasIndex(e => e.ColorName, "UQ__Colors__C71A5A7BB5134EA8").IsUnique();
+            entity.HasIndex(e => e.ColorName, "UQ__Colors__C71A5A7B8863240F").IsUnique();
 
             entity.Property(e => e.ColorName).HasMaxLength(255);
             entity.Property(e => e.ColorValue)
@@ -96,7 +133,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF3AAB1387");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF7E6C3995");
 
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
@@ -108,7 +145,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36C0F6717C1");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36CADBC1EC4");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
@@ -123,7 +160,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A3800133041");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A38A1B43A63");
 
             entity.Property(e => e.BankName).HasMaxLength(255);
             entity.Property(e => e.CardNumber)
@@ -139,19 +176,14 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Products__B40CC6CDCFC7C86C");
+            entity.HasKey(e => e.ProductId).HasName("PK__Products__B40CC6CD64D9AA7B");
 
-            entity.HasIndex(e => e.ProductSlug, "UQ__Products__A8918E707B9F78EC").IsUnique();
+            entity.HasIndex(e => e.ProductSlug, "UQ__Products__A8918E7084A57C84").IsUnique();
 
             entity.Property(e => e.ProductName).HasMaxLength(255);
             entity.Property(e => e.ProductSlug)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-
-            entity.HasOne(d => d.Category).WithMany(p => p.Products)
-                .HasForeignKey(d => d.CategoryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Product_Category");
 
             entity.HasOne(d => d.Color).WithMany(p => p.Products)
                 .HasForeignKey(d => d.ColorId)
@@ -162,11 +194,28 @@ public partial class WatchShop2Context : DbContext
                 .HasForeignKey(d => d.SizeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Product_Size");
+
+            entity.HasMany(d => d.Categories).WithMany(p => p.Products)
+                .UsingEntity<Dictionary<string, object>>(
+                    "ProductCategory",
+                    r => r.HasOne<Category>().WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_ProductCategory_Category"),
+                    l => l.HasOne<Product>().WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_ProductCategory_Product"),
+                    j =>
+                    {
+                        j.HasKey("ProductId", "CategoryId");
+                        j.ToTable("ProductCategory");
+                    });
         });
 
         modelBuilder.Entity<Rating>(entity =>
         {
-            entity.HasKey(e => e.RatingId).HasName("PK__Ratings__FCCDF87CF39E7058");
+            entity.HasKey(e => e.RatingId).HasName("PK__Ratings__FCCDF87C7D1D4BB3");
 
             entity.Property(e => e.Comment)
                 .HasMaxLength(255)
@@ -185,7 +234,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Reply>(entity =>
         {
-            entity.HasKey(e => e.ReplyId).HasName("PK__Replies__C25E46092F246075");
+            entity.HasKey(e => e.ReplyId).HasName("PK__Replies__C25E46094A83A50C");
 
             entity.Property(e => e.Comment).HasDefaultValue("");
 
@@ -202,29 +251,29 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE1A07EE6E1F");
+            entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE1AF8853271");
 
-            entity.HasIndex(e => e.RoleName, "UQ__Roles__8A2B61604D4848A4").IsUnique();
+            entity.HasIndex(e => e.RoleName, "UQ__Roles__8A2B6160E355A123").IsUnique();
 
             entity.Property(e => e.RoleName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Size>(entity =>
         {
-            entity.HasKey(e => e.SizeId).HasName("PK__Sizes__83BD097A087F4E0F");
+            entity.HasKey(e => e.SizeId).HasName("PK__Sizes__83BD097A94D72508");
 
-            entity.HasIndex(e => e.SizeName, "UQ__Sizes__619EFC3EC35326C9").IsUnique();
+            entity.HasIndex(e => e.SizeName, "UQ__Sizes__619EFC3E1D5A63C3").IsUnique();
 
             entity.Property(e => e.SizeName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C42AEA34A");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CF061C1C8");
 
-            entity.HasIndex(e => e.Username, "UQ__Users__536C85E4F8CFEAC2").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__Users__536C85E45E117260").IsUnique();
 
-            entity.HasIndex(e => e.Email, "UQ__Users__A9D1053401A1967B").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Users__A9D105344E9B63AD").IsUnique();
 
             entity.Property(e => e.Active).HasDefaultValue(true);
             entity.Property(e => e.Email)
@@ -247,7 +296,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<UserContact>(entity =>
         {
-            entity.HasKey(e => e.UserContactId).HasName("PK__UserCont__3911BAA534DCCA29");
+            entity.HasKey(e => e.UserContactId).HasName("PK__UserCont__3911BAA5A2FDF694");
 
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.IsDefault).HasDefaultValue(false);

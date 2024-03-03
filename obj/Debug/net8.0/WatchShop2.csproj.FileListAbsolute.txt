@@ -247,12 +247,11 @@ H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\staticwebassets\msbuild.build.WatchShop2.
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.WatchShop2.props
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.WatchShop2.props
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\staticwebassets.pack.json
-H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\scopedcss\bundle\WatchShop2.styles.css
-H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\scopedcss\projectbundle\WatchShop2.bundle.scp.css
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\WatchShop2.csproj.CopyComplete
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\WatchShop2.dll
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\refint\WatchShop2.dll
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\WatchShop2.pdb
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\WatchShop2.genruntimeconfig.cache
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\ref\WatchShop2.dll
+H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\WatchShop2.sourcelink.json

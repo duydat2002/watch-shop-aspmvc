@@ -1,20 +1,452 @@
 {
   "Files": [
     {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WatchShop2.bundle.scp.css",
-      "PackagePath": "staticwebassets\\WatchShop2.bundle.scp.css"
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\css\\fontawesome.css",
+      "PackagePath": "staticwebassets\\css\\fontawesome.css"
     },
     {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\css\\site.css",
-      "PackagePath": "staticwebassets\\css\\site.css"
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\css\\main.css",
+      "PackagePath": "staticwebassets\\css\\main.css"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\css\\products.css",
+      "PackagePath": "staticwebassets\\css\\products.css"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\css\\swiper-bundle.min.css",
+      "PackagePath": "staticwebassets\\css\\swiper-bundle.min.css"
     },
     {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Banner-1.png",
+      "PackagePath": "staticwebassets\\image\\Banner-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Banner-2.png",
+      "PackagePath": "staticwebassets\\image\\Banner-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Banner-3.png",
+      "PackagePath": "staticwebassets\\image\\Banner-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Banner-4.png",
+      "PackagePath": "staticwebassets\\image\\Banner-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Brand-1.png",
+      "PackagePath": "staticwebassets\\image\\Brand-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Brand-2.png",
+      "PackagePath": "staticwebassets\\image\\Brand-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Brand-3.png",
+      "PackagePath": "staticwebassets\\image\\Brand-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Brand-4.png",
+      "PackagePath": "staticwebassets\\image\\Brand-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Brand-5.png",
+      "PackagePath": "staticwebassets\\image\\Brand-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Brand-6.png",
+      "PackagePath": "staticwebassets\\image\\Brand-6.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Brand-7.png",
+      "PackagePath": "staticwebassets\\image\\Brand-7.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Cart-empty.png",
+      "PackagePath": "staticwebassets\\image\\Cart-empty.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Categories-1.png",
+      "PackagePath": "staticwebassets\\image\\Categories-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Categories-2.png",
+      "PackagePath": "staticwebassets\\image\\Categories-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Categories-3.png",
+      "PackagePath": "staticwebassets\\image\\Categories-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Categories-4.png",
+      "PackagePath": "staticwebassets\\image\\Categories-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Logo.png",
+      "PackagePath": "staticwebassets\\image\\Logo.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Service-icon.png",
+      "PackagePath": "staticwebassets\\image\\Service-icon.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Slider-1.png",
+      "PackagePath": "staticwebassets\\image\\Slider-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Slider-2.png",
+      "PackagePath": "staticwebassets\\image\\Slider-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\american_express.png",
+      "PackagePath": "staticwebassets\\image\\american_express.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\banner-products.png",
+      "PackagePath": "staticwebassets\\image\\banner-products.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\left-banner-1.png",
+      "PackagePath": "staticwebassets\\image\\left-banner-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\master_card.png",
+      "PackagePath": "staticwebassets\\image\\master_card.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\55-home_default.png",
+      "PackagePath": "staticwebassets\\image\\products\\55-home_default.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\archetype-nemesis-automatic-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\archetype-nemesis-automatic-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\archetype-nemesis-automatic-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\archetype-nemesis-automatic-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-6.png",
+      "PackagePath": "staticwebassets\\image\\products\\california-watch-co-mavericks-chrono-ss-navy-red-6.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\devon-tread-1E-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\devon-tread-1E-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\devon-tread-1E-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\devon-tread-1E-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\gshock-ga2100-carbon-core-guard-anadigi-red-out-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\gshock-ga2100-carbon-core-guard-anadigi-red-out-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\gshock-ga2100-carbon-core-guard-anadigi-red-out-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\gshock-ga2100-carbon-core-guard-anadigi-red-out-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\gshock-ga2100-carbon-core-guard-anadigi-red-out-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\gshock-ga2100-carbon-core-guard-anadigi-red-out-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\gshock-ga2100-carbon-core-guard-anadigi-red-out-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\gshock-ga2100-carbon-core-guard-anadigi-red-out-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\nsquare-snake-queen-automatic-39mm-cherry-pink-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\nsquare-snake-queen-automatic-39mm-purple-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\nsquare-snake-queen-automatic-39mm-purple-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\nsquare-snake-queen-automatic-39mm-purple-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\nsquare-snake-queen-automatic-39mm-purple-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\nsquare-snake-queen-automatic-39mm-purple-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\nsquare-snake-queen-automatic-39mm-purple-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\nsquare-snake-queen-automatic-39mm-purple-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\nsquare-snake-queen-automatic-39mm-purple-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\suunto-9-peak-granite-blue-titanium-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\suunto-9-peak-granite-blue-titanium-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\suunto-9-peak-granite-blue-titanium-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\suunto-9-peak-granite-blue-titanium-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\suunto-9-peak-granite-blue-titanium-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\suunto-9-peak-granite-blue-titanium-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\suunto-9-peak-granite-blue-titanium-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\suunto-9-peak-granite-blue-titanium-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\suunto-9-peak-granite-blue-titanium-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\suunto-9-peak-granite-blue-titanium-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\suunto-9-peak-granite-blue-titanium-6.png",
+      "PackagePath": "staticwebassets\\image\\products\\suunto-9-peak-granite-blue-titanium-6.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\suunto-spartan-trainer-wrist-hr-black-techwear-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\suunto-spartan-trainer-wrist-hr-black-techwear-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\suunto-spartan-trainer-wrist-hr-black-techwear-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\suunto-spartan-trainer-wrist-hr-black-techwear-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\suunto-spartan-trainer-wrist-hr-black-techwear-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\suunto-spartan-trainer-wrist-hr-black-techwear-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\the-electricianz-s.now-gold-white-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\the-electricianz-s.now-gold-white-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\the-electricianz-s.now-gold-white-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\the-electricianz-s.now-gold-white-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\the-electricianz-s.now-gold-white-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\the-electricianz-s.now-gold-white-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\the-electricianz-s.now-gold-white-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\the-electricianz-s.now-gold-white-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\the-electricianz-s.now-gold-white-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\the-electricianz-s.now-gold-white-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-6.png",
+      "PackagePath": "staticwebassets\\image\\products\\thomas-earnshaw-longcase-automatic-rose-gold-brown-6.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-e3-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-e3-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-e3-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-e3-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-e3-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-e3-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-e3-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-e3-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-e3-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-e3-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-e3-6.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-e3-6.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-pro-3-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-pro-3-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-pro-3-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-pro-3-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-pro-3-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-pro-3-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-pro-3-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-pro-3-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\tickwatch-pro-3-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\tickwatch-pro-3-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-gold-ss-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-gold-ss-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-gold-ss-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-gold-ss-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-gold-ss-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-gold-ss-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-gold-ss-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-gold-ss-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-gold-ss-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-gold-ss-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-silver-ss-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-silver-ss-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-silver-ss-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-silver-ss-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-silver-ss-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-silver-ss-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-silver-ss-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-silver-ss-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\timex-midtown-36mm-silver-ss-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\timex-midtown-36mm-silver-ss-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-6.png",
+      "PackagePath": "staticwebassets\\image\\products\\undone-batman-chronograph-caped-crusader-special-edition-6.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-1.png",
+      "PackagePath": "staticwebassets\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-1.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-2.png",
+      "PackagePath": "staticwebassets\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-2.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-3.png",
+      "PackagePath": "staticwebassets\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-3.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-4.png",
+      "PackagePath": "staticwebassets\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-4.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-5.png",
+      "PackagePath": "staticwebassets\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-5.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\visa.png",
+      "PackagePath": "staticwebassets\\image\\visa.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\western_union.png",
+      "PackagePath": "staticwebassets\\image\\western_union.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\world_pay.png",
+      "PackagePath": "staticwebassets\\image\\world_pay.png"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\js\\detailProduct.js",
+      "PackagePath": "staticwebassets\\js\\detailProduct.js"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\js\\main.js",
+      "PackagePath": "staticwebassets\\js\\main.js"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\js\\products.js",
+      "PackagePath": "staticwebassets\\js\\products.js"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\js\\swiper-bundle.min.js",
+      "PackagePath": "staticwebassets\\js\\swiper-bundle.min.js"
     },
     {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\lib\\bootstrap\\LICENSE",
@@ -243,6 +675,38 @@
     {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\webfonts\\fa-brands-400.ttf",
+      "PackagePath": "staticwebassets\\webfonts\\fa-brands-400.ttf"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\webfonts\\fa-brands-400.woff2",
+      "PackagePath": "staticwebassets\\webfonts\\fa-brands-400.woff2"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\webfonts\\fa-regular-400.ttf",
+      "PackagePath": "staticwebassets\\webfonts\\fa-regular-400.ttf"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\webfonts\\fa-regular-400.woff2",
+      "PackagePath": "staticwebassets\\webfonts\\fa-regular-400.woff2"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\webfonts\\fa-solid-900.ttf",
+      "PackagePath": "staticwebassets\\webfonts\\fa-solid-900.ttf"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\webfonts\\fa-solid-900.woff2",
+      "PackagePath": "staticwebassets\\webfonts\\fa-solid-900.woff2"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\webfonts\\fa-v4compatibility.ttf",
+      "PackagePath": "staticwebassets\\webfonts\\fa-v4compatibility.ttf"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\webfonts\\fa-v4compatibility.woff2",
+      "PackagePath": "staticwebassets\\webfonts\\fa-v4compatibility.woff2"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WatchShop2.Microsoft.AspNetCore.StaticWebAssets.props",

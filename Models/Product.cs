@@ -7,8 +7,6 @@ public partial class Product
 {
     public int ProductId { get; set; }
 
-    public int CategoryId { get; set; }
-
     public int ColorId { get; set; }
 
     public int SizeId { get; set; }
@@ -27,9 +25,13 @@ public partial class Product
 
     public string ProductImages { get; set; } = null!;
 
-    public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
+    public string? ColorName { get; set; } = null!;
 
-    public virtual Category Category { get; set; } = null!;
+    public string? SizeName { get; set; } = null!;
+
+    public double PriceSale { get { return Price * (1 - Discount / 100); } }
+
+    public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
 
     public virtual Color Color { get; set; } = null!;
 
@@ -38,4 +40,6 @@ public partial class Product
     public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 
     public virtual Size Size { get; set; } = null!;
+
+    public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 }

@@ -1,49 +1,384 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WatchShop2</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/WatchShop2.styles.css" asp-append-version="true" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/fontawesome.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/swiper-bundle.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    @await RenderSectionAsync("Css", required: false)
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WatchShop2</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <div id="navbar" class="navbar">
+        <div class="navbar__title">
+            <i class="fas fa-times navbar__close"></i>
+            <span>Menu</span>
+        </div>
+        <div class="navbar__menu">
+            <a asp-controller="Home" asp-action="Index" class="navbar-item">Home</a>
+            <a asp-route="products/men-watches" class="navbar-item">Men Watches</a>
+            <a asp-route="products/women-watches" class="navbar-item">Womem Watches</a>
+            <a asp-route="products/sport-watches" class="navbar-item">Sport Watches</a>
+            <a asp-route="products/luxury-watches" class="navbar-item">Luxury Watches</a>
+            <a href="AboutUs.html" class="navbar-item">About Us</a>
+        </div>
+    </div>
+    <div id="overlay"></div>
+    <header id="header">
+        <div class="header-top">
+            <div class="container header-top-container flex">
+                <div class="navbar__open">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <a asp-controller="Home" asp-action="Index" class="header__logo-box">
+                    <img src="~/image/Logo.png" alt="Logo" class="header__logo">
+                </a>
+                <div class="header__search">
+                    <div class="header__search__container">
+                        <form id="searchForm" action="/products" method="get">
+                            <input type="text" name="search" placeholder="Search our catalog" autocomplete="off"
+                                class="search__input">
+                            <button type="submit" class="search__btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="header__widget flex">
+                    <div class="header__contact flex hide-md">
+                        <div class="contact__icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="contact__desc">
+                            <p class="contact__title">Call Us:</p>
+                            <p class="contact__text">91 89563 24789</p>
+                        </div>
+                    </div>
+                    <div class="header__search__open">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="header__cart">
+                        <div class="cart__link">
+                            <i class="fas fa-shopping-cart cart__icon"></i>
+                            <span class="cart__count">3</span>
+                        </div>
+                        <div class="cart__dropdown">
+                            <div class="cart__scroll">
+                                <div class="cart__item flex">
+                                    <a href="DetailProduct.html" class="cart-img">
+                                        <img src="~/image/products/suunto-spartan-trainer-wrist-hr-black-techwear-1.png"
+                                            alt="">
+                                    </a>
+                                    <div class="cart-info">
+                                        <a href="DetailProduct.html" class="cart-name">Suunto Spartan Trainer Wrist HR
+                                            Black</a>
+                                        <p class="cart-price">€171.55</p>
+                                        <p class="cart-qty">
+                                            Quantity:
+                                            <span class="cart-qty-number">1</span>
+                                        </p>
+                                    </div>
+                                    <div class="cart-remove">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                                <div class="cart__item flex">
+                                    <a href="DetailProduct.html" class="cart-img">
+                                        <img src="~/image/products/suunto-9-peak-granite-blue-titanium-1.png" alt="">
+                                    </a>
+                                    <div class="cart-info">
+                                        <a href="DetailProduct.html" class="cart-name">Suunto Spartan Trainer Wrist HR
+                                            Black</a>
+                                        <p class="cart-price">€477.30</p>
+                                        <p class="cart-qty">
+                                            Quantity:
+                                            <span class="cart-qty-number">1</span>
+                                        </p>
+                                    </div>
+                                    <div class="cart-remove">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                                <div class="cart__item flex">
+                                    <a href="DetailProduct.html" class="cart-img">
+                                        <img src="~/image/products/archetype-nemesis-automatic-1.png" alt="">
+                                    </a>
+                                    <div class="cart-info">
+                                        <a href="DetailProduct.html" class="cart-name">Suunto Spartan Trainer Wrist HR
+                                            Black</a>
+                                        <p class="cart-price">€245.80</p>
+                                        <p class="cart-qty">
+                                            Quantity:
+                                            <span class="cart-qty-number">1</span>
+                                        </p>
+                                    </div>
+                                    <div class="cart-remove">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cart__sumary">
+                                <div class="cart__sumary-items">
+                                    <span class="cart__sumary-count">3 items</span>
+                                    <span class="cart__items-price">€894.65</span>
+                                </div>
+                                <div class="cart__sumary-ship">
+                                    <span>Shipping</span>
+                                    <span class="cart__ship-price">€15.00</span>
+                                </div>
+                            </div>
+                            <div class="cart__total">
+                                <span>Total</span>
+                                <span class="cart__total-price">€879.65</span>
+                            </div>
+                            <div class="cart__view">
+                                <a href="Cart.html" class="button button-gb">View Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header__account">
+                        <div class="account__link">
+                            <i class="fas fa-user account__icon"></i>
+                        </div>
+                        <div class="account__dropdown">
+                            <div class="account__list">
+                                <p class="account__name">Phạm Duy Đạt</p>
+                                <a href="SignUp.html" class="account-item">
+                                    <i class="fas fa-user-plus"></i>
+                                    Sign Up
+                                </a>
+                                <a href="SignIn.html" class="account-item">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    Sign In
+                                </a>
+                                <a href="#" class="account-item">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Sign Out
+                                </a>
+                                <a href="#" class="account-item">
+                                    <i class="fas fa-heart"></i>
+                                    Wishlist
+                                </a>
+                                <a href="#" class="account-item">
+                                    <i class="fas fa-cog"></i>
+                                    Setting
+                                </a>
+                                <a href="manager.html" class="account-item">
+                                    <i class="fas fa-user-cog"></i>
+                                    Manager
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
+        <div class="header-bottom hide-md">
+            <div class="container header-bottom-container">
+                <ul class="header__menu">
+                    <li class="menu__item">
+                        <a asp-controller="Home" asp-action="Index" class="menu__link">Home</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="/products/men-watches" class="menu__link">Men watches</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="/products/women-watches" class="menu__link">Women watches</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="/products/sport-watches" class="menu__link">Sport watches</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="/products/luxury-watches" class="menu__link">Luxury watches</a>
+                    </li>
+                    <li class="menu__item">
+                        <a href="AboutUs.html" class="menu__link">About us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
+    <main>
+        @RenderBody()
+    </main>
+    <footer id="footer">
         <div class="container">
-            &copy; 2024 - WatchShop2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer__container">
+                <div class="flex cl-gap">
+                    <div class="col-3 col-md-12 pd-gap">
+                        <div class="footer__content footer__contact has-drop">
+                            <h3 class="footer__title">
+                                Contact Us
+                                <i class="fas fa-angle-right footer__title-icon"></i>
+                            </h3>
+                            <ul class="footer__list">
+                                <li>
+                                    <i class="fas fa-map-marker-alt location-icon"></i>
+                                    <span>
+                                        Vigils - Watch Store
+                                        <br>
+                                        United States
+                                    </span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-phone-alt"></i>
+                                    <span>000-000-0000</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-fax"></i>
+                                    <span>123456</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-envelope"></i>
+                                    <span>sales@yourcompany.com</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-3 col-md-12 pd-gap">
+                        <div class="footer__content footer__links has-drop">
+                            <h3 class="footer__title">
+                                Products
+                                <i class="fas fa-angle-right footer__title-icon"></i>
+                            </h3>
+                            <ul class="footer__list">
+                                <li>
+                                    <a href="#" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>Prices drop</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Product" asp-action="Index" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>New product</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>Best sale</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>Contact us</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>Sitemap</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-3 col-md-12 pd-gap">
+                        <div class="footer__content footer__links has-drop">
+                            <h3 class="footer__title">
+                                Our Company
+                                <i class="fas fa-angle-right footer__title-icon"></i>
+                            </h3>
+                            <ul class="footer__list">
+                                <li>
+                                    <a href="#" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>Delivery</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>Legal Notice</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>Terms and conditions of use</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="AboutUs.html" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>About us</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="footer__link">
+                                        <i class="fas fa-angle-right"></i>
+                                        <span>Secure payment</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-3 col-md-12 pd-gap">
+                        <div class="footer__content footer__newsletter">
+                            <h3 class="footer__title">Join Our Newsletter</h3>
+                            <span class="footer__subtitle">There are many variations of passages Lorem Ipsum
+                                available</span>
+                            <div class="footer__mail">
+                                <form action="#" method="get">
+                                    <input type="text" name="mail" placeholder="Enter Email" class="mail__input">
+                                    <button type="submit" class="mail__btn">SEND</button>
+                                </form>
+                                <p class="alert">Invalid email address.</p>
+                            </div>
+                            <div class="footer__social">
+                                <a href="#" class="social-item">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                                <a href="#" class="social-item">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="social-item">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </a>
+                                <a href="#" class="social-item">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <a href="#" class="footer__copyright">
+                    <span>© 2022 - Ecommerce software by PrestaShop™</span>
+                </a>
+                <div class="footer__payments">
+                    <a href="#" class="footer__payment">
+                        <img src="~/image/master_card.png" alt="">
+                    </a>
+                    <a href="#" class="footer__payment">
+                        <img src="~/image/world_pay.png" alt="">
+                    </a>
+                    <a href="#" class="footer__payment">
+                        <img src="~/image/western_union.png" alt="">
+                    </a>
+                    <a href="#" class="footer__payment">
+                        <img src="~/image/american_express.png" alt="">
+                    </a>
+                    <a href="#" class="footer__payment">
+                        <img src="~/image/visa.png" alt="">
+                    </a>
+                </div>
+            </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <a href="#" id="scrollup" class="scrollup">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script src="~/js/swiper-bundle.min.js" asp-append-version="true"></script>
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("JS", required: false)
 </body>
+
 </html>

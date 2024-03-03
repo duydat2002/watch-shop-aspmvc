@@ -11,5 +11,7 @@ public partial class Color
 
     public string ColorValue { get; set; } = null!;
 
+    public int? Quantity { get; set; }
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

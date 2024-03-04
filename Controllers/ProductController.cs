@@ -76,14 +76,14 @@ public class ProductController : Controller
     return PartialView("_ProductItems", products);
   }
 
-  [Route("products/get-colors")]
+  [Route("api/products/get-colors")]
   public IActionResult GetColors(string ProductName = "", string Categories = "")
   {
     List<Color> colors = _entityContext.GetColors(ProductName, Categories);
     return Json(colors);
   }
 
-  [Route("products/get-sizes")]
+  [Route("api/products/get-sizes")]
   public IActionResult GetSizes(string ProductName = "", string Categories = "")
   {
     List<Size> sizes = _entityContext.GetSizes(ProductName, Categories);
@@ -91,7 +91,7 @@ public class ProductController : Controller
   }
 
   [HttpPost]
-  [Route("products/add-product")]
+  [Route("api/products/add-product")]
   public IActionResult AddProduct([FromBody] AddProductModel product)
   {
     int cac = _entityContext.AddProduct(product.Categories, product.ColorId, product.SizeId, product.ProductName, product.ProductSlug, product.ProductDesc, product.Price, product.Quantity, product.Discount, product.ProductImages);

@@ -1,6 +1,7 @@
 using System.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using WatchShop2.Helpers;
 using WatchShop2.Models;
 
 namespace WatchShop2.Controllers;
@@ -11,10 +12,13 @@ public class HomeController : Controller
 
     private WatchShop2Context _entityContext { get; }
 
-    public HomeController(ILogger<HomeController> logger, WatchShop2Context entityContext)
+    private IWebHostEnvironment _environment;
+
+    public HomeController(ILogger<HomeController> logger, IWebHostEnvironment environment, WatchShop2Context entityContext)
     {
         _logger = logger;
         _entityContext = entityContext;
+        _environment = environment;
     }
 
     public IActionResult Index()
@@ -31,6 +35,44 @@ public class HomeController : Controller
     public IActionResult PageNotFound()
     {
         return View();
+    }
+
+    [Route("upload")]
+    public IActionResult Upload()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    [Route("upload")]
+    public async Task<IActionResult> Upload(IFormFile productImage)
+    {
+        try
+        {
+            string cac = await UploadHelper.UploadOne(_environment, productImage, "products");
+            ViewBag.FileStatus = cac;
+        }
+        catch (System.Exception)
+        {
+            ViewBag.FileStatus = "Error while file uploading.";
+        }
+        return View("Upload");
+    }
+
+    [HttpPost]
+    [Route("upload-multi")]
+    public async Task<IActionResult> Upload(IFormFile[] productImages)
+    {
+        try
+        {
+            List<string> cac = await UploadHelper.UploadMulti(_environment, productImages, "products");
+            ViewBag.FileStatus = string.Join(", ", cac);
+        }
+        catch (System.Exception)
+        {
+            ViewBag.FileStatus = "Error while file uploading.";
+        }
+        return View("Upload");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -23,6 +23,8 @@ public class HomeController : Controller
 
   public IActionResult Index()
   {
+    ViewBag.NewProducts = _entityContext.FilterProducts("", "New Watches");
+    ViewBag.SpecialProducts = _entityContext.FilterProducts("", "Special Watches");
     return View();
   }
 

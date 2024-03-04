@@ -1,5 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+
+    List<Product> newProducts = ViewBag.NewProducts;
+    List<Product> specialProducts = ViewBag.SpecialProducts;
 }
 
 <main id="main">
@@ -157,7 +160,8 @@
             <div class="product__container">
                 <a href="Products.aspx?type=new-watches" class="product__title">New products</a>
                 <form action="Cart.aspx" method="post">
-                    <div class="newproduct__slider product__slider" id="newproduct__slider" runat="server">
+                    <div class="newproduct__slider product__slider" id="newproduct__slider">
+                        <partial name="_ProductSlides" for="@newProducts" />
                     </div>
                 </form>
                 <div class="product__navigation">
@@ -230,7 +234,8 @@
             <div class="product__container">
                 <a href="Products.aspx?type=special-watches" class="product__title">Special products</a>
                 <form action="/" method="post">
-                    <div class="specialproduct__slider product__slider" id="specialproduct__slider" runat="server">
+                    <div class="specialproduct__slider product__slider" id="specialproduct__slider">
+                        <partial name="_ProductSlides" for="@specialProducts" />
                     </div>
                 </form>
                 <div class="product__navigation">

@@ -59,7 +59,10 @@
         <a href="/product/@product.ProductSlug" class='product__name'>@product.ProductName - @product.ColorName -
           @product.SizeName</a>
         <div class='product__price-box'>
-          <span class='product__price'>@product.Price.ToString("N0")₫</span>
+          @if (product.Discount != 0)
+          {
+            <span class='product__price'>@product.Price.ToString("N0")₫</span>
+          }
           <span class='product__price-sale'>@product.PriceSale.ToString("N0")₫</span>
         </div>
       </div>

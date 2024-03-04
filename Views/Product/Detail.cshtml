@@ -1,6 +1,9 @@
 @model WatchShop2.Models.Product;
 
 @{
+  List<Product> newProducts = ViewBag.NewProducts;
+  List<Product> specialProducts = ViewBag.SpecialProducts;
+
   ViewData["Title"] = @Model.ProductName;
 
   string[] alts = @Model.ProductImages.Split(',');
@@ -153,8 +156,8 @@
       <div class="newproduct__container container">
         <div class="product__container">
           <a href="Products.aspx?type=new-watches" class="product__title">New products</a>
-          <div class="newproduct__slider product__slider" id="newproduct__slider" runat="server">
-
+          <div class="newproduct__slider product__slider" id="newproduct__slider">
+            <partial name="_ProductSlides" for="@newProducts" />
           </div>
           <div class="product__navigation">
             <i class="fas fa-long-arrow-alt-left swiper-prev"></i>
@@ -167,8 +170,8 @@
       <div class="specialproduct__container container">
         <div class="product__container">
           <a href="Products.aspx?type=special-watches" class="product__title">Special products</a>
-          <div class="specialproduct__slider product__slider" id="specialproduct__slider" runat="server">
-
+          <div class="specialproduct__slider product__slider" id="specialproduct__slider">
+            <partial name="_ProductSlides" for="@specialProducts" />
           </div>
           <div class="product__navigation">
             <i class="fas fa-long-arrow-alt-left swiper-prev"></i>
@@ -179,3 +182,7 @@
     </section>
   </main>
 </form>
+
+@section JS {
+  <script src="~/js/detailProduct.js" asp-append-version="true"></script>
+}

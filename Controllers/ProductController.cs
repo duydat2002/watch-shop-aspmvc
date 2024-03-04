@@ -32,6 +32,12 @@ public class ProductController : Controller
       case "luxury-watches":
         categoryName = "Luxury Watches";
         break;
+      case "new-watches":
+        categoryName = "New Watches";
+        break;
+      case "special-watches":
+        categoryName = "Special Watches";
+        break;
       case "":
         break;
       default:
@@ -53,7 +59,11 @@ public class ProductController : Controller
     if (product == null)
       return RedirectToAction("PageNotFound", "Home");
     else
+    {
+      ViewBag.NewProducts = _entityContext.FilterProducts("", "New Watches");
+      ViewBag.SpecialProducts = _entityContext.FilterProducts("", "Special Watches");
       return View(product);
+    }
   }
 
   [Route("api/products/filter")]

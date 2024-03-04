@@ -102,7 +102,7 @@ filterButton.addEventListener("click", () => {
 const filterProducts = () => {
   AjaxRequest(
     "GET",
-    `api/products/filter?categories=${categoryName}${
+    `/api/products/filter?categories=${categoryName}${
       params.size == 0 ? "" : `&${params.toString()}`
     }`,
     (responseText) => {

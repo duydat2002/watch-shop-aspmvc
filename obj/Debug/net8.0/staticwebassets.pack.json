@@ -101,20 +101,12 @@
       "PackagePath": "staticwebassets\\image\\Slider-2.png"
     },
     {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\abcd\\cac.PNG",
-      "PackagePath": "staticwebassets\\image\\abcd\\cac.PNG"
-    },
-    {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\american_express.png",
       "PackagePath": "staticwebassets\\image\\american_express.png"
     },
     {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\banner-products.png",
       "PackagePath": "staticwebassets\\image\\banner-products.png"
-    },
-    {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\cac\\abcd.PNG",
-      "PackagePath": "staticwebassets\\image\\cac\\abcd.PNG"
     },
     {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\left-banner-1.png",
@@ -427,30 +419,6 @@
     {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-5.png",
       "PackagePath": "staticwebassets\\image\\products\\xeric-halograph-ii-automatic-green-brown-limited-edition-5.png"
-    },
-    {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\test\\ahe.PNG",
-      "PackagePath": "staticwebassets\\image\\test\\ahe.PNG"
-    },
-    {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\test\\c.PNG",
-      "PackagePath": "staticwebassets\\image\\test\\c.PNG"
-    },
-    {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\tests\\Khaosatdoluongsuhailong.PNG",
-      "PackagePath": "staticwebassets\\image\\tests\\Khaosatdoluongsuhailong.PNG"
-    },
-    {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\tests\\Khảo sát hiện trạng các CSGD trên địa bàn HN.PNG",
-      "PackagePath": "staticwebassets\\image\\tests\\Khảo sát hiện trạng các CSGD trên địa bàn HN.PNG"
-    },
-    {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\tests\\hoplop.PNG",
-      "PackagePath": "staticwebassets\\image\\tests\\hoplop.PNG"
-    },
-    {
-      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\tests\\logo.PNG",
-      "PackagePath": "staticwebassets\\image\\tests\\logo.PNG"
     },
     {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\visa.png",

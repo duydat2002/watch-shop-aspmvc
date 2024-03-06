@@ -5,13 +5,14 @@
     List<Product> specialProducts = ViewBag.SpecialProducts;
 }
 
+<div>@ViewBag.Name</div>
 <main id="main">
     <section class="home-banner">
         <div class="home-banner__slider">
             <div class="swiper">
                 <div class="swiper-wrapper">
                     <div class="home-banner-item swiper-slide">
-                        <a href="Products.aspx" class="home-banner__img">
+                        <a href="/products" class="home-banner__img">
                             <img src="~/image/Slider-1.png" alt="">
                         </a>
                         <div class="home-banner__text">
@@ -23,7 +24,7 @@
                         </div>
                     </div>
                     <div class="home-banner-item swiper-slide">
-                        <a href="Products.aspx" class="home-banner__img">
+                        <a href="/products" class="home-banner__img">
                             <img src="~/image/Slider-2.png" alt="">
                         </a>
                         <div class="home-banner__text">
@@ -72,7 +73,7 @@
                                         <a asp-controller="Product" asp-action="Index" asp-route-category="men-watches"
                                             class="categories__name">Men
                                             Watches</a>
-                                        <span class="categoies__qty" id="menwatches__qty" runat="server">0 Items</span>
+                                        <span class="categoies__qty" id="menwatches__qty">0 Items</span>
                                         <span></span>
                                     </div>
                                 </div>
@@ -85,7 +86,7 @@
                                         <a asp-controller="Product" asp-action="Index"
                                             asp-route-category="women-watches" class="categories__name">Women
                                             Watches</a>
-                                        <span class="categoies__qty" id="womenwatches__qty" runat="server">0
+                                        <span class="categoies__qty" id="womenwatches__qty">0
                                             Items</span>
                                     </div>
                                 </div>
@@ -98,7 +99,7 @@
                                         <a asp-controller="Product" asp-action="Index"
                                             asp-route-category="sport-watches" class="categories__name">Sport
                                             Watches</a>
-                                        <span class="categoies__qty" id="sportwatches__qty" runat="server">0
+                                        <span class="categoies__qty" id="sportwatches__qty">0
                                             Items</span>
                                     </div>
                                 </div>
@@ -111,7 +112,7 @@
                                         <a asp-controller="Product" asp-action="Index"
                                             asp-route-category="luxury-watches" class="categories__name">Luxury
                                             Watches</a>
-                                        <span class="categoies__qty" id="luxurywatches__qty" runat="server">0
+                                        <span class="categoies__qty" id="luxurywatches__qty">0
                                             Items</span>
                                     </div>
                                 </div>

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "20T6AbWGX7RnsAnEO0HKK9I7+z7NWFZAzVkVNeRWCPGnLTLTdjyZjH5nscV0TEqFYYvUQJuBLWnYY0mYyDbCuQ==",
+  "dgSpecHash": "GYK4GhBk45O1VZjyGbJjcY06a9u2UDs1tViPlYk8e8r4KKOvxstOcwyqGhylryn+PkASOY2Jz7Y2OoWqdQImZg==",
   "success": true,
   "projectFilePath": "H:\\ASP_MVC\\WatchShop2\\WatchShop2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DuyDat\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\DuyDat\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\DuyDat\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\DuyDat\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\DuyDat\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\DuyDat\\.nuget\\packages\\humanizer.core.af\\2.14.1\\humanizer.core.af.2.14.1.nupkg.sha512",

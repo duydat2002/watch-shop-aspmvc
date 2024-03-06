@@ -1145,6 +1145,12 @@ button {
   transition: 0.3s;
 }
 
+.signout-button {
+  width: 100%;
+  text-align: left;
+  background: none;
+}
+
 .account-item:hover {
   color: var(--green-color);
 }

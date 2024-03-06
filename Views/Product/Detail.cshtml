@@ -9,7 +9,7 @@
   string[] alts = @Model.ProductImages.Split(',');
 }
 
-<form action="Cart.aspx" method="post">
+<form action="/cart/add-to-cart" method="post">
   <main id="main">
     <section class="wrapper productpage">
       <div class="container" id="productpage__container">
@@ -68,10 +68,15 @@
                       <i class='fas fa-angle-down quantity-down'></i>
                     </div>
                   </div>
-                  @* {((int)Session["userID"] == -1 ?
-                  "<a class='button button-gb addCart' href='SignIn.aspx'>Add To Cart</a>" :
-                  $"<button type='submit' name='order' value='{pr.Id}' class='button button-gb addCart'>Add To
-                  Cart</button>")} *@
+                  @if (Context.Session.GetInt32("UserId") != null)
+                  {
+                    <button type='submit' name='order' value='@Model.ProductId' class='button button-gb addCart'>Add To
+                      Cart</button>
+                  }
+                  else
+                  {
+                    <a class='button button-gb addCart' href='SignIn.aspx'>Add To Cart</a>
+                  }
                 </div>
               </div>
               <div class='productpage__social'>

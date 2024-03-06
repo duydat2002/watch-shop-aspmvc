@@ -1,0 +1,59 @@
+<div class='cartpage-item'>
+  <div class='flex cl-gap'>
+    <div class='col-3 col-xsm-12 pd-gap'>
+      <a href='DetailProduct.aspx?id={pr.Id}' class='cartpage-item__img'>
+        <img src='assets/image/{alts[0]}' alt='{alts[0]}'>
+      </a>
+    </div>
+    <div class='col-9 col-xsm-12 pd-gap'>
+      <div class='flex cl-gap'>
+        <div class='col-5 col-sm-12 pd-gap'>
+          <div class='cartpage-item__detail'>
+            <input type='text' name='id' value='{cart.IdProduct}' style='display: none;'>
+            <a href='DetailProduct.aspx?id={pr.Id}' class='product__name'>{pr.Name}</a>
+            <div class='product__rating'>
+              {fs.renderStars(pr.Stars)}
+            </div>
+            <div class='product__price-box'>
+              @* {(pr.Discount == 0 ?
+              $"<span class='product__price-sale'>${pr.Price:0.00}</span>" :
+              $@"<span class='product__price'>${pr.Price:0.00}</span> *@
+              <span class='product__price-sale'>${(pr.Price * (1 - (pr.Discount / 100))):0.00}</span>")}
+            </div>
+            <div class='product__size'>
+              <span class='action__title'>Size</span>
+              <span class='action__item size-item'>{pr.Size}mm</span>
+            </div>
+            <div class='product__color'>
+              <span class='action__title'>Color</span>
+              <div class='action__item color-item color-{pr.Color.ToLower()}'></div>
+            </div>
+          </div>
+        </div>
+        <div class='col-7 col-sm-12 pd-gap'>
+          <div class='flex align-items-center cl-gap'>
+            <div class='col-5 pd-gap'>
+              <div class='cartpage-item__quantity'>
+                <div class='quantity'>
+                  <input type='text' name='qty' value='{cart.Quantity}' class='quantity__input'>
+                  <div class='quantity__btns'>
+                    <i class='fas fa-angle-up quantity-up'></i>
+                    <i class='fas fa-angle-down quantity-down'></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class='col-5 pd-gap'>
+              <span class='cartpage-item__total'></span>
+            </div>
+            <div class='col-2 pd-gap'>
+              <button type='submit' name='delete' value='{cart.IdProduct}' class='cartpage-item-delete'>
+                <i class='fas fa-trash-alt'></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

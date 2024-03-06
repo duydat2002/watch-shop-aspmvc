@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    int? RoleId = Context.Session.GetInt32("RoleId");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -19,10 +23,10 @@
         </div>
         <div class="navbar__menu">
             <a asp-controller="Home" asp-action="Index" class="navbar-item">Home</a>
-            <a asp-route="products/men-watches" class="navbar-item">Men Watches</a>
-            <a asp-route="products/women-watches" class="navbar-item">Womem Watches</a>
-            <a asp-route="products/sport-watches" class="navbar-item">Sport Watches</a>
-            <a asp-route="products/luxury-watches" class="navbar-item">Luxury Watches</a>
+            <a href="products/men-watches" class="navbar-item">Men Watches</a>
+            <a href="products/women-watches" class="navbar-item">Womem Watches</a>
+            <a href="products/sport-watches" class="navbar-item">Sport Watches</a>
+            <a href="products/luxury-watches" class="navbar-item">Luxury Watches</a>
             <a href="AboutUs.html" class="navbar-item">About Us</a>
         </div>
     </div>
@@ -135,7 +139,7 @@
                                 <span class="cart__total-price">€879.65</span>
                             </div>
                             <div class="cart__view">
-                                <a href="Cart.html" class="button button-gb">View Cart</a>
+                                <a href="/cart" class="button button-gb">View Cart</a>
                             </div>
                         </div>
                     </div>
@@ -145,31 +149,49 @@
                         </div>
                         <div class="account__dropdown">
                             <div class="account__list">
-                                <p class="account__name">Phạm Duy Đạt</p>
-                                <a href="SignUp.html" class="account-item">
-                                    <i class="fas fa-user-plus"></i>
-                                    Sign Up
-                                </a>
-                                <a href="SignIn.html" class="account-item">
-                                    <i class="fas fa-sign-in-alt"></i>
-                                    Sign In
-                                </a>
-                                <a href="#" class="account-item">
-                                    <i class="fas fa-sign-out-alt"></i>
-                                    Sign Out
-                                </a>
-                                <a href="#" class="account-item">
-                                    <i class="fas fa-heart"></i>
-                                    Wishlist
-                                </a>
-                                <a href="#" class="account-item">
-                                    <i class="fas fa-cog"></i>
-                                    Setting
-                                </a>
-                                <a href="manager.html" class="account-item">
-                                    <i class="fas fa-user-cog"></i>
-                                    Manager
-                                </a>
+                                @if (RoleId == null)
+                                {
+                                    <a href="/account/signup" class="account-item">
+                                        <i class="fas fa-user-plus"></i>
+                                        Sign Up
+                                    </a>
+                                    <a href="/account/signin" class="account-item">
+                                        <i class="fas fa-sign-in-alt"></i>
+                                        Sign In
+                                    </a>
+                                }
+                                else if (RoleId == 2)
+                                {
+                                    <p class="account__name">@Context.Session.GetString("FullName")</p>
+                                    <a href='Account.aspx' class='account-item'>
+                                        <i class='fas fa-user'></i>
+                                        My Account
+                                    </a>
+                                    <a href='Cart.aspx' class='account-item'>
+                                        <i class='fas fa-shopping-cart'></i>
+                                        My Cart
+                                    </a>
+                                    <form action="/account/signout" method="post">
+                                        <button type="submit" class="account-item signout-button">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            Sign Out
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <p class="account__name">@Context.Session.GetString("FullName")</p>
+                                    <a href='ProductManagement.aspx' class='account-item'>
+                                        <i class='fas fa-box'></i>
+                                        Product Management
+                                    </a>
+                                    <form action="/account/signout" method="post">
+                                        <button type="submit" class="account-item signout-button">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            Sign Out
+                                        </button>
+                                    </form>
+                                }
                             </div>
                         </div>
                     </div>

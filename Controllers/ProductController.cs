@@ -67,7 +67,7 @@ public class ProductController : Controller
   }
 
   [Route("api/products/filter")]
-  public IActionResult Filter(string search = "", string categories = "", string colors = "", string sizes = "", string price = "", int pageNumber = 1, int pageSize = 10, string sort = "auto")
+  public IActionResult Filter(string search = "", string categories = "", string colors = "", string sizes = "", string price = "", int pageNumber = 1, int pageSize = 90, string sort = "auto")
   {
     float priceStart = 0, priceEnd = float.MaxValue;
 

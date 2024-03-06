@@ -1,0 +1,151 @@
+@model User
+
+@{
+  ViewData["Title"] = "Sign up";
+}
+
+@section Css {
+  <link rel="stylesheet" href="~/css/account.css" asp-append-version="true">
+}
+
+<main id="main">
+  <section class="wrapper">
+    <div class="container">
+      <div class="content flex cl-gap">
+        <div class="col-3 col-md-12 pd-gap">
+          <div class="column-left">
+            <div class="block-categories">
+              <h2 class="categories__title section-title">Categories</h2>
+              <div class="categories__list">
+                <a href="Products.aspx" class="categories-item">Men Watches</a>
+                <a href="Products.aspx" class="categories-item">Women Watches</a>
+                <a href="Products.aspx" class="categories-item">Sport Watches</a>
+                <a href="Products.aspx" class="categories-item">Luxury Watches</a>
+              </div>
+            </div>
+            <a href="Products.aspx" class="left-banner hide-md">
+              <img src="assets/image/left-banner-1.png" alt="">
+            </a>
+          </div>
+        </div>
+        <div class="col-9 col-md-12 pd-gap">
+          <div class="column-right">
+            <div class="signup__container">
+              <h2 class="section-title">Create An Account</h2>
+              <div class="form-container">
+                <form method="post">
+                  <div id="signupError_box">
+                  </div>
+                  <div class="form-group">
+                    <div class="flex ai-center">
+                      <label asp-for="FirstName" class="form-label required-input">First name</label>
+                      <div class="form-input-box">
+                        <input asp-for="FirstName" class="form-control" id="firstname" type="text">
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <div class="form-label"></div>
+                      <span asp-validation-for="FirstName" class="form-error" id="firstname_error"></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="flex ai-center">
+                      <label asp-for="LastName" class="form-label required-input">Last name</label>
+                      <div class="form-input-box">
+                        <input asp-for="LastName" class="form-control" id="lastname" type="text">
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <div class="form-label"></div>
+                      <span asp-validation-for="LastName" class="form-error" id="lastname_error"></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="flex ai-center">
+                      <label asp-for="Email" class="form-label required-input">Email</label>
+                      <div class="form-input-box">
+                        <input asp-for="Email" class="form-control" id="email" type="email">
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <div class="form-label"></div>
+                      <span asp-validation-for="Email" class="form-error" id="email_error"></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="flex ai-center">
+                      <label asp-for="Password" class="form-label required-input">Password</label>
+                      <div class="form-input-box">
+                        <div class="form-input-password">
+                          <input asp-for="Password" class="form-control form-control-password" type="password"
+                            id="password" autocomplete="new-password">
+                          <span class="form-password-btn">
+                            <i class="fas fa-eye"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <div class="form-label"></div>
+                      <span asp-validation-for="Password" class="form-error" id="password_error"></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="flex ai-center">
+                      <label asp-for="ConfirmPassword" class="form-label required-input">Confirm Password</label>
+                      <div class="form-input-box">
+                        <div class="form-input-password">
+                          <input asp-for="ConfirmPassword" class="form-control form-control-password" type="password"
+                            id="confirm-password" autocomplete="new-password">
+                          <span class="form-password-btn">
+                            <i class="fas fa-eye"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <div class="form-label"></div>
+                      <span asp-validation-for="ConfirmPassword" class="form-error"></span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="flex ai-center">
+                      <label asp-for="Birthdate" class="form-label">Birthdate</label>
+                      <div class="form-input-box">
+                        <input asp-for="Birthdate" class="form-control" type="date" id="birthdate">
+                      </div>
+                    </div>
+                    <div class="flex">
+                      <div class="form-label"></div>
+                      <span asp-validation-for="Birthdate" class="form-error" id="birthdate_error"></span>
+                    </div>
+                  </div>
+                  <div class="form-group social-group">
+                    <div class="flex ai-center">
+                      <label class="form-label required-input">Social title</label>
+                      <div class="form-input-box">
+                        <input asp-for="Gender" class="form-social" id="social-male" type="radio" value="true" checked>
+                        <label for="social-male"> Mr</label>
+                        <input asp-for="Gender" class="form-social" id="social-female" type="radio" value="false">
+                        <label for="social-female"> Mrs</label>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="form-error server-error">@ViewBag.ErrorMessage</span>
+                  <p class="form-text-top">Already have an account? <a href="/account/signin" class="form-link">Log in
+                      instead!</a></p>
+                  <button type="submit" name="signup" value="signup" class="button button-gb sign-btn">Save</button>
+                  <p class="form-text-bottom">Have a good day <3 </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+@section JS {
+  <script src="~/js/account.js" asp-append-version="true"></script>
+}

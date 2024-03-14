@@ -67,79 +67,13 @@
                     <div class="header__cart">
                         <div class="cart__link">
                             <i class="fas fa-shopping-cart cart__icon"></i>
-                            <span class="cart__count">3</span>
+                            <span class="cart__count">0</span>
                         </div>
                         <div class="cart__dropdown">
-                            <div class="cart__scroll">
-                                <div class="cart__item flex">
-                                    <a href="DetailProduct.html" class="cart-img">
-                                        <img src="~/image/products/suunto-spartan-trainer-wrist-hr-black-techwear-1.png"
-                                            alt="">
-                                    </a>
-                                    <div class="cart-info">
-                                        <a href="DetailProduct.html" class="cart-name">Suunto Spartan Trainer Wrist HR
-                                            Black</a>
-                                        <p class="cart-price">€171.55</p>
-                                        <p class="cart-qty">
-                                            Quantity:
-                                            <span class="cart-qty-number">1</span>
-                                        </p>
-                                    </div>
-                                    <div class="cart-remove">
-                                        <i class="fas fa-times"></i>
-                                    </div>
-                                </div>
-                                <div class="cart__item flex">
-                                    <a href="DetailProduct.html" class="cart-img">
-                                        <img src="~/image/products/suunto-9-peak-granite-blue-titanium-1.png" alt="">
-                                    </a>
-                                    <div class="cart-info">
-                                        <a href="DetailProduct.html" class="cart-name">Suunto Spartan Trainer Wrist HR
-                                            Black</a>
-                                        <p class="cart-price">€477.30</p>
-                                        <p class="cart-qty">
-                                            Quantity:
-                                            <span class="cart-qty-number">1</span>
-                                        </p>
-                                    </div>
-                                    <div class="cart-remove">
-                                        <i class="fas fa-times"></i>
-                                    </div>
-                                </div>
-                                <div class="cart__item flex">
-                                    <a href="DetailProduct.html" class="cart-img">
-                                        <img src="~/image/products/archetype-nemesis-automatic-1.png" alt="">
-                                    </a>
-                                    <div class="cart-info">
-                                        <a href="DetailProduct.html" class="cart-name">Suunto Spartan Trainer Wrist HR
-                                            Black</a>
-                                        <p class="cart-price">€245.80</p>
-                                        <p class="cart-qty">
-                                            Quantity:
-                                            <span class="cart-qty-number">1</span>
-                                        </p>
-                                    </div>
-                                    <div class="cart-remove">
-                                        <i class="fas fa-times"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cart__sumary">
-                                <div class="cart__sumary-items">
-                                    <span class="cart__sumary-count">3 items</span>
-                                    <span class="cart__items-price">€894.65</span>
-                                </div>
-                                <div class="cart__sumary-ship">
-                                    <span>Shipping</span>
-                                    <span class="cart__ship-price">€15.00</span>
-                                </div>
-                            </div>
-                            <div class="cart__total">
-                                <span>Total</span>
-                                <span class="cart__total-price">€879.65</span>
-                            </div>
-                            <div class="cart__view">
-                                <a href="/cart" class="button button-gb">View Cart</a>
+                            <div class="cart-empty__box">
+                                <img src='~/image/Cart-empty.png' alt='Cart empty'>
+                                <p class="cart-empty__desc">Your cart is empty.</p>
+                                <a href="/cart" class="cart-empty__button button button-wg">Shop now</a>
                             </div>
                         </div>
                     </div>
@@ -167,7 +101,7 @@
                                         <i class='fas fa-user'></i>
                                         My Account
                                     </a>
-                                    <a href='Cart.aspx' class='account-item'>
+                                    <a href='/cart' class='account-item'>
                                         <i class='fas fa-shopping-cart'></i>
                                         My Cart
                                     </a>
@@ -397,7 +331,43 @@
     <a href="#" id="scrollup" class="scrollup">
         <i class="fas fa-arrow-up"></i>
     </a>
+    <div class="modals">
+        <div class="not-user-modal modal hidden">
+            <div class="modal-content">
+                <div class="modal__icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <p class="modal__title color-primary">You need to log in</p>
+                <p class="modal__decs">Please log in to continue.</p>
+                <a href="/account/signin" class="modal__button button button-gb ">Login</a>
+            </div>
+        </div>
+        <div class="add-to-cart-modal-success modal hidden">
+            <div class="modal-content">
+                <div class="modal__icon">
+                    <i class="fa-solid fa-check color-primary"></i>
+                </div>
+                <p class="modal__title color-primary">Successfully</p>
+                <p class="modal__decs">The product has been added to cart.</p>
+            </div>
+        </div>
+        <div class="add-to-cart-modal-fail modal hidden">
+            <div class="modal-content">
+                <div class="modal__icon">
+                    <i class="fa-solid fa-x color-error"></i>
+                </div>
+                <p class="modal__title color-error">Unsuccessful</p>
+                <p class="modal__decs">Something went wrong, try again in a few minutes.</p>
+            </div>
+        </div>
+        @await RenderSectionAsync("Modal", required: false)
+    </div>
 
+    <script>
+        var UserId = @(Context.Session.GetInt32("UserId")?.ToString() ?? "null");
+
+        var RoleId = @(Context.Session.GetInt32("RoleId")?.ToString() ?? "null");
+    </script>
     <script src="~/js/swiper-bundle.min.js" asp-append-version="true"></script>
     <script src="~/js/main.js" asp-append-version="true"></script>
     @await RenderSectionAsync("JS", required: false)

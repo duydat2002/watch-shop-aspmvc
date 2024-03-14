@@ -8,8 +8,7 @@ const filterClearBtn = document.querySelector(".search-filter-clearall");
 const filterButton = document.querySelector(".filter__price-btn");
 
 const renderFilterAjax = () => {
-  AjaxRequest(
-    "GET",
+  AjaxGet(
     `/products/get-colors?categories=${categoryName}${
       params.has("search") ? "&" + params.get("search") : ""
     }`,
@@ -36,8 +35,7 @@ const renderFilterAjax = () => {
     }
   );
 
-  AjaxRequest(
-    "GET",
+  AjaxGet(
     `/products/get-sizes?categories=${categoryName}${
       params.has("search") ? "&" + params.get("search") : ""
     }`,
@@ -100,8 +98,7 @@ filterButton.addEventListener("click", () => {
 });
 
 const filterProducts = () => {
-  AjaxRequest(
-    "GET",
+  AjaxGet(
     `/api/products/filter?categories=${categoryName}${
       params.size == 0 ? "" : `&${params.toString()}`
     }`,

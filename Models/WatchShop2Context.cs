@@ -18,8 +18,6 @@ public partial class WatchShop2Context : DbContext
 
     public virtual DbSet<Cart> Carts { get; set; }
 
-    public virtual DbSet<CartDetail> CartDetails { get; set; }
-
     public virtual DbSet<Category> Categories { get; set; }
 
     public virtual DbSet<Color> Colors { get; set; }
@@ -125,11 +123,47 @@ public partial class WatchShop2Context : DbContext
         ).ToList().SingleOrDefault();
     }
 
+    public List<CartModel> GetCart(int UserId)
+    {
+        return this.Database.SqlQueryRaw<CartModel>("EXECUTE pr_GetUserCart @UserId",
+            new SqlParameter("@UserId", UserId)
+        ).ToList();
+    }
+
+    public int AddCart(int UserId, int ProductId, int Quantity)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_AddToCart @UserId, @ProductId, @Quantity",
+            new SqlParameter("@UserId", UserId),
+            new SqlParameter("@ProductId", ProductId),
+            new SqlParameter("@Quantity", Quantity)
+        );
+    }
+
+    public int UpdateCart(int CartId, int Quantity)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_UpdateCart @CartId, @Quantity",
+            new SqlParameter("@CartId", CartId),
+            new SqlParameter("@Quantity", Quantity)
+        );
+    }
+
+    public int DeleteCart(int CartId)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_RemoveFromCart @CartId",
+            new SqlParameter("@CartId", CartId)
+        );
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.CartId).HasName("PK__Carts__51BCD7B79624B2D7");
+            entity.HasKey(e => e.CartId).HasName("PK__Carts__51BCD7B77043D853");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.Carts)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Cart_Product");
 
             entity.HasOne(d => d.User).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.UserId)
@@ -137,35 +171,20 @@ public partial class WatchShop2Context : DbContext
                 .HasConstraintName("FK_Cart_User");
         });
 
-        modelBuilder.Entity<CartDetail>(entity =>
-        {
-            entity.HasKey(e => e.CartDetailId).HasName("PK__CartDeta__01B6A6B4A21CF3D0");
-
-            entity.HasOne(d => d.Cart).WithMany(p => p.CartDetails)
-                .HasForeignKey(d => d.CartId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CartDetail_Cart");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.CartDetails)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_CartDetail_Product");
-        });
-
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B9F895855");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0BCB742BD4");
 
             entity.Property(e => e.CategoryName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Color>(entity =>
         {
-            entity.HasKey(e => e.ColorId).HasName("PK__Colors__8DA7674D0D67560B");
+            entity.HasKey(e => e.ColorId).HasName("PK__Colors__8DA7674D29D8DD59");
 
-            entity.HasIndex(e => e.ColorValue, "UQ__Colors__2E5AF42661A1BEC0").IsUnique();
+            entity.HasIndex(e => e.ColorName, "UC_Color_ColorName").IsUnique();
 
-            entity.HasIndex(e => e.ColorName, "UQ__Colors__C71A5A7B674EBF8D").IsUnique();
+            entity.HasIndex(e => e.ColorValue, "UC_Color_ColorValue").IsUnique();
 
             entity.Property(e => e.ColorName).HasMaxLength(255);
             entity.Property(e => e.ColorValue)
@@ -175,7 +194,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCFBC20A744");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF1CB422D0");
 
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
 
@@ -187,7 +206,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36CC979560E");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36CA6785A85");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
@@ -202,7 +221,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A388F5BCA9C");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A389A3351AB");
 
             entity.Property(e => e.BankName).HasMaxLength(255);
             entity.Property(e => e.CardNumber)
@@ -218,9 +237,9 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Products__B40CC6CD840D5E5C");
+            entity.HasKey(e => e.ProductId).HasName("PK__Products__B40CC6CD7AFED55F");
 
-            entity.HasIndex(e => e.ProductSlug, "UQ__Products__A8918E70882D5F5D").IsUnique();
+            entity.HasIndex(e => e.ProductSlug, "UC_Product_ProductSlug").IsUnique();
 
             entity.Property(e => e.ProductName).HasMaxLength(255);
             entity.Property(e => e.ProductSlug)
@@ -257,7 +276,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Rating>(entity =>
         {
-            entity.HasKey(e => e.RatingId).HasName("PK__Ratings__FCCDF87C10AB8081");
+            entity.HasKey(e => e.RatingId).HasName("PK__Ratings__FCCDF87C0604CC3C");
 
             entity.Property(e => e.Comment)
                 .HasMaxLength(255)
@@ -276,7 +295,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Reply>(entity =>
         {
-            entity.HasKey(e => e.ReplyId).HasName("PK__Replies__C25E46096091F731");
+            entity.HasKey(e => e.ReplyId).HasName("PK__Replies__C25E4609EDFA6628");
 
             entity.Property(e => e.Comment).HasDefaultValue("");
 
@@ -293,27 +312,27 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE1A272A914C");
+            entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE1A8C7E28C3");
 
-            entity.HasIndex(e => e.RoleName, "UQ__Roles__8A2B61603765B3B4").IsUnique();
+            entity.HasIndex(e => e.RoleName, "UC_Role_RoleName").IsUnique();
 
             entity.Property(e => e.RoleName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Size>(entity =>
         {
-            entity.HasKey(e => e.SizeId).HasName("PK__Sizes__83BD097A0622FED4");
+            entity.HasKey(e => e.SizeId).HasName("PK__Sizes__83BD097AE2BBC170");
 
-            entity.HasIndex(e => e.SizeName, "UQ__Sizes__619EFC3E9410370E").IsUnique();
+            entity.HasIndex(e => e.SizeName, "UC_Size_SizeName").IsUnique();
 
             entity.Property(e => e.SizeName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CBAA3DFDC");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C8E6BB50A");
 
-            entity.HasIndex(e => e.Email, "UQ__Users__A9D10534C4F2E4BD").IsUnique();
+            entity.HasIndex(e => e.Email, "UC_User_Email").IsUnique();
 
             entity.Property(e => e.Active).HasDefaultValue(true);
             entity.Property(e => e.Email)
@@ -333,7 +352,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<UserContact>(entity =>
         {
-            entity.HasKey(e => e.UserContactId).HasName("PK__UserCont__3911BAA5F6E8085D");
+            entity.HasKey(e => e.UserContactId).HasName("PK__UserCont__3911BAA567A26824");
 
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.IsDefault).HasDefaultValue(false);

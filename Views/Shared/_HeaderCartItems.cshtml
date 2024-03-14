@@ -1,0 +1,55 @@
+@model List<CartModel>
+
+@{
+    int count = Model.Sum(c => c.CartQuantity);
+    double total = Model.Sum(c => c.PriceSale * c.CartQuantity);
+}
+
+@if (Model.Count == 0)
+{
+    <div class="cart-empty__box">
+        <img src='~/image/Cart-empty.png' alt='Cart empty'>
+        <p class="cart-empty__desc">Your cart is empty.</p>
+        <a href="/cart" class="cart-empty__button button button-wg">Shop now</a>
+    </div>
+}
+else
+{
+    <div class="cart__scroll" id="cart__scroll" data-cartcount="@Model.Count">
+        @foreach (CartModel product in Model)
+        {
+            string[] alts = @product.ProductImages.Split(',');
+
+            <div class='cart__item flex'>
+                <a href='/product/@product.ProductSlug' class='cart-img'>
+                    <img src='~/image/products/@alts[0]' alt='@alts[0]'>
+                </a>
+                <div class='cart-info'>
+                    <a href='/product/@product.ProductSlug' class='cart-name'>@product.ProductName</a>
+                    <p class='cart-price'>@product.PriceSale.ToString("N0")₫</p>
+                    <p class='cart-qty'>
+                        Quantity:
+                        <span class='cart-qty-number'>@product.CartQuantity</span>
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="cart__sumary">
+        <div class="cart__sumary-items">
+            <span class="cart__sumary-count">@count items</span>
+            <span class="cart__items-price">@total.ToString("N0")₫</span>
+        </div>
+        <div class="cart__sumary-ship">
+            <span>Shipping</span>
+            <span class="cart__ship-price">000₫</span>
+        </div>
+    </div>
+    <div class="cart__total">
+        <span>Total</span>
+        <span class="cart__total-price">@total.ToString("N0")₫</span>
+    </div>
+    <div class="cart__view">
+        <a href="/cart" class="button button-gb">View Cart</a>
+    </div>
+}

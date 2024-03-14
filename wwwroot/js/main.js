@@ -1,8 +1,8 @@
 ﻿// callback(responseText)
-const AjaxRequest = (method, url, callback) => {
+const AjaxGet = (url, callback) => {
   const xhr = new XMLHttpRequest();
 
-  xhr.open(method, url, true);
+  xhr.open("GET", url, true);
   xhr.onreadystatechange = () => {
     if (xhr.readyState == 4 && xhr.status == 200) {
       callback(xhr.responseText);
@@ -10,6 +10,69 @@ const AjaxRequest = (method, url, callback) => {
   };
   xhr.send();
 };
+
+const AjaxPost = (url, obj, callback) => {
+  const xhr = new XMLHttpRequest();
+
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      callback(xhr.responseText);
+    }
+  };
+  xhr.send(JSON.stringify(obj));
+};
+
+// Modal
+const modals = document.querySelectorAll(".modals .modal");
+modals.forEach((modal) => {
+  modal.addEventListener("click", (e) => {
+    if (e.target == modal) modal.classList.add("hidden");
+  });
+
+  const closeBtn = modal.querySelector(".modal-close");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+  }
+});
+
+const notUserModal = document.querySelector(".not-user-modal");
+const notUserButton = notUserModal.querySelector(".modal__button");
+
+notUserButton.addEventListener("click", (e) => {
+  notUserModal.classList.add("hidden");
+});
+
+function addToCart(ProductId) {
+  if (!UserId) {
+    notUserModal.classList.remove("hidden");
+  } else {
+    AjaxPost(
+      "/api/cart/add-to-cart",
+      { ProductId, Quantity: 1 },
+      (responseText) => {
+        const data = JSON.parse(responseText);
+
+        let modal;
+        if (!data.success)
+          modal = document.querySelector(".add-to-cart-modal-fail");
+        else {
+          getCartHeader();
+
+          modal = document.querySelector(".add-to-cart-modal-success");
+          modal.classList.remove("hidden");
+
+          setTimeout(() => {
+            modal.classList.add("hidden");
+          }, 1500);
+        }
+      }
+    );
+  }
+}
 
 // Scroll Header
 function scrollHeader() {
@@ -74,44 +137,22 @@ function cartControl() {
       cartDropdown.classList.remove("active");
     }
   });
-
-  // Calculate total product price
-  const cartProductItems = document.querySelectorAll(".cart__item");
-  const productPriceSubtotal = document.querySelector(".cart__items-price");
-  const productShipping = document.querySelector(".cart__ship-price");
-  const productPriceTotal = document.querySelector(".cart__total-price");
-  const productCount = document.querySelector(".header__cart .cart__count");
-  const cartProctCount = document.querySelector(".cart__sumary-count");
-
-  if (cartProductItems.length == 0) {
-    cartDropdown.innerHTML = `<div class="cart-empty__box">
-              <img src='assets/image/Cart-empty.png' alt='Cart empty'>
-              <p class="cart-empty__desc">Your cart is empty</p>
-              <a href="Home.aspx" class="cart-empty__button button button-wg">Shop now</a>
-          </div>`;
-  }
-
-  var count = 0,
-    priceSubtotal = 0,
-    priceTotal = 0;
-
-  cartProductItems.forEach((item) => {
-    const productPrice = item.querySelector(".cart-price");
-    const productQuantity = item.querySelector(".cart-qty-number");
-
-    count += parseInt(productQuantity.innerHTML);
-    priceSubtotal +=
-      parseFloat(productPrice.innerHTML.slice(1)) *
-      parseInt(productQuantity.innerHTML);
-  });
-  priceTotal = priceSubtotal - parseFloat(productShipping.innerHTML.slice(1));
-
-  productCount.innerHTML = `${count}`;
-  cartProctCount.innerHTML = `${count} items`;
-  productPriceSubtotal.innerHTML = `$${priceSubtotal.toFixed(2)}`;
-  productPriceTotal.innerHTML = `$${priceTotal.toFixed(2)}`;
 }
 cartControl();
+
+function getCartHeader() {
+  const cartDropdown = document.querySelector(".cart__dropdown");
+  const cartCount = document.querySelector(".cart__count");
+
+  AjaxGet("/api/cart/get-header-cart", (responseText) => {
+    cartDropdown.innerHTML = responseText;
+
+    const count =
+      cartDropdown.querySelector(".cart__scroll")?.dataset?.cartcount;
+    cartCount.innerHTML = count ?? 0;
+  });
+}
+getCartHeader();
 
 // Account Header Control
 function headerAccountControl() {

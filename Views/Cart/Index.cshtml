@@ -1,94 +1,110 @@
+@{
+  ViewData["Title"] = "Cart Page";
+}
+
 @section Css {
   <link rel="stylesheet" href="~/css/cart.css" asp-append-version="true">
 }
 
-<form method="post">
-  <main id="main">
-    <div class="modals">
-      <div class="payment-modal" id="payment_modal">
-        <i class="payment-close fas fa-times"></i>
-        <div class="payment__icon">
-          <i class="fas fa-check"></i>
-        </div>
-        <p class="payment__title">Payment Successful</p>
-        <p class="payment__desc">
-          <span>We received your purchase request.</span>
-          <span>We'll be in touch shortly!</span>
-        </p>
+<main id="main">
+  <div class="modals">
+    <div class="payment-modal" id="payment_modal">
+      <i class="payment-close fas fa-times"></i>
+      <div class="payment__icon">
+        <i class="fas fa-check"></i>
       </div>
-      <div class="missing-address-modal" id="address_modal">
-        <i class="missing-address-close fas fa-times"></i>
-        <div class="missing-address__icon">
-          <i class="fas fa-address-card"></i>
-        </div>
-        <p class="missing-address__title">To order, please add a delivery address</p>
-        <a href="Account.aspx?tab=contact" class="missing-address__link">Add a new address</a>
-      </div>
+      <p class="payment__title">Payment Successful</p>
+      <p class="payment__desc">
+        <span>We received your purchase request.</span>
+        <span>We'll be in touch shortly!</span>
+      </p>
     </div>
-    <div class="cartpage wrapper">
-      <div class="container">
-        <div class="cartpage__container flex cl-gap">
-          <div class="col-8 col-md-12 pd-gap">
-            <div class="cartpage__body">
-              <div class="cartpage__detail">
-                <div class="cartpage__title-box">
-                  <h2 class="cartpage__title">Shopping Cart</h2>
-                  <button type="submit" id="change_cart" name="change-cart" value="change-cart"
-                    class="change-qty button button-gb">Save Changes</button>
-                </div>
-                <div id="cartError_box">
-                </div>
-                <div class="cartpage__list" id="cartpage__list">
-                </div>
+    <div class="missing-address-modal" id="address_modal">
+      <i class="missing-address-close fas fa-times"></i>
+      <div class="missing-address__icon">
+        <i class="fas fa-address-card"></i>
+      </div>
+      <p class="missing-address__title">To order, please add a delivery address</p>
+      <a href="Account.aspx?tab=contact" class="missing-address__link">Add a new address</a>
+    </div>
+  </div>
+  <div class="cartpage wrapper">
+    <div class="container">
+      <div class="cartpage__container flex cl-gap">
+        <div class="col-8 col-md-12 pd-gap">
+          <div class="cartpage__body">
+            <div class="cartpage__detail">
+              <div class="cartpage__title-box">
+                <h2 class="cartpage__title">Shopping Cart</h2>
               </div>
-              <a href="/" class="backto-home flex align-items-center">
-                <i class="fas fa-angle-left"></i>
-                Continue shopping
-              </a>
+              <div id="cartError_box">
+              </div>
+              <div class="cartpage__list" id="cartpage__list">
+              </div>
             </div>
+            <a href="/" class="backto-home flex align-items-center">
+              <i class="fas fa-angle-left"></i>
+              Continue shopping
+            </a>
           </div>
-          <div class="col-4 col-md-12 pd-gap">
-            <div class="cartpage__right">
-              <div class="cartpage__summary__container">
-                <div class="cartpage__summary">
-                  <div class="summary__subtotal-products">
-                    <span class="subtotal-products-count">0 Items</span>
-                    <span class="subtotal-products-price">000₫</span>
-                  </div>
-                  <div class="summary__subtotal-shipping">
-                    <span>Shipping</span>
-                    <span class="subtotal-shipping-price">000₫</span>
-                  </div>
+        </div>
+        <div class="col-4 col-md-12 pd-gap">
+          <div class="cartpage__right">
+            <div class="cartpage__summary__container">
+              <div class="cartpage__summary">
+                <div class="summary__subtotal-products">
+                  <span class="subtotal-products-count">0 Items</span>
+                  <span class="subtotal-products-price">000₫</span>
                 </div>
-                <div class="cartpage__total">
-                  <span>Total</span>
-                  <span class="total-price">000₫</span>
+                <div class="summary__subtotal-shipping">
+                  <span>Shipping</span>
+                  <span class="subtotal-shipping-price">000₫</span>
                 </div>
-                <button type="submit" id="purchase" name="purchase" value="purchase"
-                  class="cartpage__button button button-gb">Proceed to checkout</button>
               </div>
-              <div class="cartpage__reassurance">
-                <div class="reassurance-item">
-                  <i class="fas fa-shield-alt"></i>
-                  Security policy (edit with Customer reassurance module)
-                </div>
-                <div class="reassurance-item">
-                  <i class="fas fa-truck-moving"></i>
-                  Delivery policy (edit with Customer reassurance module)
-                </div>
-                <div class="reassurance-item">
-                  <i class="fas fa-exchange-alt"></i>
-                  Return policy (edit with Customer reassurance module)
-                </div>
+              <div class="cartpage__total">
+                <span>Total</span>
+                <span class="total-price">000₫</span>
+              </div>
+              <button type="submit" id="purchase" name="purchase" value="purchase"
+                class="cartpage__button button button-gb">Proceed to checkout</button>
+            </div>
+            <div class="cartpage__reassurance">
+              <div class="reassurance-item">
+                <i class="fas fa-shield-alt"></i>
+                Security policy (edit with Customer reassurance module)
+              </div>
+              <div class="reassurance-item">
+                <i class="fas fa-truck-moving"></i>
+                Delivery policy (edit with Customer reassurance module)
+              </div>
+              <div class="reassurance-item">
+                <i class="fas fa-exchange-alt"></i>
+                Return policy (edit with Customer reassurance module)
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </main>
-</form>
+  </div>
+</main>
+
+@section Modal {
+  <div class="confirm-delete-cart-modal modal hidden">
+    <div class="modal-content">
+      <div class="modal__icon">
+        <i class="fa-solid fa-question"></i>
+      </div>
+      <p class="modal__title color-primary">Are you sure?</p>
+      <p class="modal__decs">Are you sure you want to remove this product from your cart?</p>
+      <div class="modal__buttons">
+        <button class="modal__button modal-close button button-wg">Cancel</button>
+        <button class="modal__button modal-confirm button button-rw">Delete</button>
+      </div>
+    </div>
+  </div>
+}
 
 @section JS {
-  @* <script src="~/js/cart.js" asp-append-version="true"></script> *@
+  <script src="~/js/cart.js" asp-append-version="true"></script>
 }

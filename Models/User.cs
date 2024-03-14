@@ -23,7 +23,6 @@ public partial class User
     [Compare("Password", ErrorMessage = "The password and confirm password do not match.")]
     public string? ConfirmPassword { get; set; } = null!;
 
-
     [Required(ErrorMessage = "Please enter your firstname.")]
     [RegularExpression(@"^[\p{L}0-9_-]+$", ErrorMessage = "Firstname can only contain letters, numbers, underscores, and hyphens.")]
     public string FirstName { get; set; } = null!;

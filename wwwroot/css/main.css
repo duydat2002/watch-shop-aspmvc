@@ -105,7 +105,7 @@ button {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .wrapper {
@@ -181,9 +181,11 @@ button {
 .color-blue {
   background: #0897cc;
 }
+
 .color-green {
   background: #63a404;
 }
+
 .color-red {
   background: #f20519;
 }
@@ -195,6 +197,82 @@ button {
 }
 .color-purple {
   background: #c580f2;
+}
+
+.color-primary {
+  color: var(--green-light-color) !important;
+}
+
+.color-error {
+  color: #f20519 !important;
+}
+
+.quantity__input::-webkit-inner-spin-button,
+.quantity__input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ===== Modal ===== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: #e2e2e2;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 300px;
+}
+
+.modal__icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  border: 1px solid #b4b4b4;
+}
+
+.modal__icon i {
+  font-size: 25px;
+  color: #343434;
+}
+
+.modal__title {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.modal__decs {
+  font-size: 14px;
+  padding: 5px 0;
+  align-items: center;
+}
+
+.modal__buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.modal__button {
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 /* ===== Alert server ===== */
@@ -258,6 +336,15 @@ button {
 .button-wg:hover {
   background: var(--green-color);
   color: #fff;
+}
+
+.button-rw {
+  background: #ff3e3e;
+  color: #fff;
+}
+.button-rw:hover {
+  background: #fff;
+  color: #000;
 }
 
 .button-disable {

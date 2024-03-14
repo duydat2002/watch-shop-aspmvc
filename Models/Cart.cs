@@ -9,9 +9,11 @@ public partial class Cart
 
     public int UserId { get; set; }
 
-    public double Total { get; set; }
+    public int ProductId { get; set; }
 
-    public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
+    public int Quantity { get; set; }
+
+    public virtual Product Product { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
 }

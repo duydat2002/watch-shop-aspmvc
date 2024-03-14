@@ -9,184 +9,175 @@
   string[] alts = @Model.ProductImages.Split(',');
 }
 
-<form action="/cart/add-to-cart" method="post">
-  <main id="main">
-    <section class="wrapper productpage">
-      <div class="container" id="productpage__container">
-        <div class='productpage__container flex cl-gap'>
-          <div class='col-5 col-sm-12 pd-gap'>
-            <div class='productpage__slider-container'>
-              <div class='productpage__mainimg'>
-                <img src='~/image/products/@alts[0]' alt='@alts[0]'>
-              </div>
-              <div class='productpage__slider'>
-                <div class='swiper'>
-                  <div class='swiper-wrapper'>
-                    @foreach (string alt in alts)
-                    {
-                      <div class='productpage-item swiper-slide'>
-                        <div class='productpage__img'>
-                          <img src='~/image/products/@alt' alt='@alt'>
-                        </div>
+<main id="main">
+  <section class="wrapper productpage">
+    <div class="container" id="productpage__container">
+      <div class='productpage__container flex cl-gap'>
+        <div class='col-5 col-sm-12 pd-gap'>
+          <div class='productpage__slider-container'>
+            <div class='productpage__mainimg'>
+              <img src='~/image/products/@alts[0]' alt='@alts[0]'>
+            </div>
+            <div class='productpage__slider'>
+              <div class='swiper'>
+                <div class='swiper-wrapper'>
+                  @foreach (string alt in alts)
+                  {
+                    <div class='productpage-item swiper-slide'>
+                      <div class='productpage__img'>
+                        <img src='~/image/products/@alt' alt='@alt'>
                       </div>
-                    }
-                  </div>
-                </div>
-                <div class='productpage__navigation'>
-                  <i class='fas fa-long-arrow-alt-left swiper-prev'></i>
-                  <i class='fas fa-long-arrow-alt-right swiper-next'></i>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class='col-7 col-sm-12 pd-gap'>
-            <div class='productpage__detail'>
-              <h1 class='productpage__name'>@Model.ProductName</h1>
-              <div class='productpage__price-box'>
-                <span class='productpage__price'>@Model.Price.ToString("N0")</span>
-                <span class='productpage__price-sale'>@Model.PriceSale.ToString("N0")₫</span>
-                @if (Model.Discount != 0)
-                {
-                  <span class='productpage__discount'>Save @Model.Discount%</span>
-                }
-              </div>
-              <p class='productpage__desc'>@Model.ProductDesc</p>
-              <div class='productpage__size'>
-                <span class='action__title'>Size</span>
-                <span class='action__item size-item'>@Model.SizeName</span>
-              </div>
-              <div class='productpage__color'>
-                <span class='action__title'>Color</span>
-                <div class='action__item color-item' style="background:@Model.ColorValue;"></div>
-              </div>
-              <div class='productpage__action'>
-                <div class='productpage__quantity'>
-                  <div class='quantity'>
-                    <input type='text' name='qty' value='1' class='quantity__input'>
-                    <div class='quantity__btns'>
-                      <i class='fas fa-angle-up quantity-up'></i>
-                      <i class='fas fa-angle-down quantity-down'></i>
                     </div>
-                  </div>
-                  @if (Context.Session.GetInt32("UserId") != null)
-                  {
-                    <button type='submit' name='order' value='@Model.ProductId' class='button button-gb addCart'>Add To
-                      Cart</button>
-                  }
-                  else
-                  {
-                    <a class='button button-gb addCart' href='SignIn.aspx'>Add To Cart</a>
                   }
                 </div>
               </div>
-              <div class='productpage__social'>
-                <a href='#' class='social-item facebook-icon'>
-                  <i class='fab fa-facebook-f'></i>
-                </a>
-                <a href='#' class='social-item twitter-icon'>
-                  <i class='fab fa-twitter'></i>
-                </a>
-                <a href='#' class='social-item google-icon'>
-                  <i class='fab fa-google-plus-g'></i>
-                </a>
-                <a href='#' class='social-item instagram-icon'>
-                  <i class='fab fa-instagram'></i>
-                </a>
-              </div>
-              <div class='productpage__reassurance'>
-                <div class='reassurance-item'>
-                  <i class='fas fa-shield-alt'></i>
-                  Security policy (edit with Customer reassurance module)
-                </div>
-                <div class='reassurance-item'>
-                  <i class='fas fa-truck-moving'></i>
-                  Delivery policy (edit with Customer reassurance module)
-                </div>
-                <div class='reassurance-item'>
-                  <i class='fas fa-exchange-alt'></i>
-                  Return policy (edit with Customer reassurance module)
-                </div>
+              <div class='productpage__navigation'>
+                <i class='fas fa-long-arrow-alt-left swiper-prev'></i>
+                <i class='fas fa-long-arrow-alt-right swiper-next'></i>
               </div>
             </div>
           </div>
-          <div class='detail-product flex'>
-            <div class='col-6 col-md-12 pd-gap'>
-              <div class='detail-product__desc'>
-                <h2>DESCRIPTION</h2>
-                <div class='product__desc-wrapper'>
-                  <p>The especially dramatic and enduring design concept of the OMEGA Constellation line is
-                    characterized by its famous “Griffes”, or claws, and striking dials.</p>
-                  <p>This model features a grey lacquered dial decorated with a feathered pattern. The dial is complete
-                    with 11 diamond indexes and a date window at 6 o'clock.</p>
-                  <p>The diamond-set, stainless steel bezel is mounted on a 27 mm stainless steel casebody and is
-                    presented on a stainless steel bracelet. This timepiece is powered by the OMEGA Co-Axial calibre
-                    8520.</p>
-                  <p>In this 44.25 mm model, the Speedmaster's lunar history is celebrated on the blackened movement,
-                    which has been laser-ablated to represent the moon's surface. The near side can be seen through the
-                    blackened skeletonised dial, while the far side can be seen through the caseback.</p>
-                </div>
-              </div>
+        </div>
+        <div class='col-7 col-sm-12 pd-gap'>
+          <div class='productpage__detail'>
+            <input type="text" name="ProductId" value="@Model.ProductId" class="hidden">
+            <h1 class='productpage__name'>@Model.ProductName</h1>
+            <div class='productpage__price-box'>
+              <span class='productpage__price'>@Model.Price.ToString("N0")</span>
+              <span class='productpage__price-sale'>@Model.PriceSale.ToString("N0")₫</span>
+              @if (Model.Discount != 0)
+              {
+                <span class='productpage__discount'>Save @Model.Discount%</span>
+              }
             </div>
-            <div class='col-6 col-md-12 pd-gap'>
-              <div class='detail-product__info'>
-                <div class='product-info-item'>
-                  <h3 class='product-info__title'>5-YEAR WARRANTY</h3>
-                  <div class='product-info__desc'>
-                    <p>All OMEGA watches are delivered with a 5-year warranty that covers the repair of any material or
-                      manufacturing defects. Please refer to the operating instructions for specific information about
-                      the warranty conditions and restrictions.</p>
+            <p class='productpage__desc'>@Model.ProductDesc</p>
+            <div class='productpage__size'>
+              <span class='action__title'>Size</span>
+              <span class='action__item size-item'>@Model.SizeName</span>
+            </div>
+            <div class='productpage__color'>
+              <span class='action__title'>Color</span>
+              <div class='action__item color-item' style="background:@Model.ColorValue;"></div>
+            </div>
+            <div class='productpage__action'>
+              <div class='productpage__quantity'>
+                <div class='quantity'>
+                  <input type='number' name='Quantity' value='1' min="1" class='quantity__input'>
+                  <div class='quantity__btns'>
+                    <i class='fas fa-angle-up quantity-up'></i>
+                    <i class='fas fa-angle-down quantity-down'></i>
                   </div>
                 </div>
-                <div class='product-info-item'>
-                  <h3 class='product-info__title'>TECHNICAL DATA</h3>
-                  <div class='product-info__desc'>
-                    <p><b>Between lugs:</b> 18 mm</p>
-                    <p><b>Bracelet:</b> steel</p>
-                    <p><b>Case:</b> Steel</p>
-                    <p><b>Case diameter:</b> 27 mm</p>
-                    <p><b>Dial colour:</b> Grey</p>
-                    <p><b>Crystal:</b> Domed scratch-resistant sapphire crystal with anti-reflective treatment on both
-                      sides</p>
-                    <p><b>Water resistance:</b> 10 bar (100 metres / 330 feet)</p>
-                    <p><b>Movement Type:</b> Self winding</p>
-                  </div>
+                <button id="addCart" onclick="addCart()" class='button button-gb addCart'>Add To Cart</button>
+              </div>
+            </div>
+            <div class='productpage__social'>
+              <a href='#' class='social-item facebook-icon'>
+                <i class='fab fa-facebook-f'></i>
+              </a>
+              <a href='#' class='social-item twitter-icon'>
+                <i class='fab fa-twitter'></i>
+              </a>
+              <a href='#' class='social-item google-icon'>
+                <i class='fab fa-google-plus-g'></i>
+              </a>
+              <a href='#' class='social-item instagram-icon'>
+                <i class='fab fa-instagram'></i>
+              </a>
+            </div>
+            <div class='productpage__reassurance'>
+              <div class='reassurance-item'>
+                <i class='fas fa-shield-alt'></i>
+                Security policy (edit with Customer reassurance module)
+              </div>
+              <div class='reassurance-item'>
+                <i class='fas fa-truck-moving'></i>
+                Delivery policy (edit with Customer reassurance module)
+              </div>
+              <div class='reassurance-item'>
+                <i class='fas fa-exchange-alt'></i>
+                Return policy (edit with Customer reassurance module)
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='detail-product flex'>
+          <div class='col-6 col-md-12 pd-gap'>
+            <div class='detail-product__desc'>
+              <h2>DESCRIPTION</h2>
+              <div class='product__desc-wrapper'>
+                <p>The especially dramatic and enduring design concept of the OMEGA Constellation line is
+                  characterized by its famous “Griffes”, or claws, and striking dials.</p>
+                <p>This model features a grey lacquered dial decorated with a feathered pattern. The dial is complete
+                  with 11 diamond indexes and a date window at 6 o'clock.</p>
+                <p>The diamond-set, stainless steel bezel is mounted on a 27 mm stainless steel casebody and is
+                  presented on a stainless steel bracelet. This timepiece is powered by the OMEGA Co-Axial calibre
+                  8520.</p>
+                <p>In this 44.25 mm model, the Speedmaster's lunar history is celebrated on the blackened movement,
+                  which has been laser-ablated to represent the moon's surface. The near side can be seen through the
+                  blackened skeletonised dial, while the far side can be seen through the caseback.</p>
+              </div>
+            </div>
+          </div>
+          <div class='col-6 col-md-12 pd-gap'>
+            <div class='detail-product__info'>
+              <div class='product-info-item'>
+                <h3 class='product-info__title'>5-YEAR WARRANTY</h3>
+                <div class='product-info__desc'>
+                  <p>All OMEGA watches are delivered with a 5-year warranty that covers the repair of any material or
+                    manufacturing defects. Please refer to the operating instructions for specific information about
+                    the warranty conditions and restrictions.</p>
+                </div>
+              </div>
+              <div class='product-info-item'>
+                <h3 class='product-info__title'>TECHNICAL DATA</h3>
+                <div class='product-info__desc'>
+                  <p><b>Between lugs:</b> 18 mm</p>
+                  <p><b>Bracelet:</b> steel</p>
+                  <p><b>Case:</b> Steel</p>
+                  <p><b>Case diameter:</b> 27 mm</p>
+                  <p><b>Dial colour:</b> Grey</p>
+                  <p><b>Crystal:</b> Domed scratch-resistant sapphire crystal with anti-reflective treatment on both
+                    sides</p>
+                  <p><b>Water resistance:</b> 10 bar (100 metres / 330 feet)</p>
+                  <p><b>Movement Type:</b> Self winding</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-    <section class="wrapper newproduct">
-      <div class="newproduct__container container">
-        <div class="product__container">
-          <a href="Products.aspx?type=new-watches" class="product__title">New products</a>
-          <div class="newproduct__slider product__slider" id="newproduct__slider">
-            <partial name="_ProductSlides" for="@newProducts" />
-          </div>
-          <div class="product__navigation">
-            <i class="fas fa-long-arrow-alt-left swiper-prev"></i>
-            <i class="fas fa-long-arrow-alt-right swiper-next"></i>
-          </div>
+    </div>
+  </section>
+  <section class="wrapper newproduct">
+    <div class="newproduct__container container">
+      <div class="product__container">
+        <a href="Products.aspx?type=new-watches" class="product__title">New products</a>
+        <div class="newproduct__slider product__slider" id="newproduct__slider">
+          <partial name="_ProductSlides" for="@newProducts" />
+        </div>
+        <div class="product__navigation">
+          <i class="fas fa-long-arrow-alt-left swiper-prev"></i>
+          <i class="fas fa-long-arrow-alt-right swiper-next"></i>
         </div>
       </div>
-    </section>
-    <section class="wrapper specialproduct">
-      <div class="specialproduct__container container">
-        <div class="product__container">
-          <a href="Products.aspx?type=special-watches" class="product__title">Special products</a>
-          <div class="specialproduct__slider product__slider" id="specialproduct__slider">
-            <partial name="_ProductSlides" for="@specialProducts" />
-          </div>
-          <div class="product__navigation">
-            <i class="fas fa-long-arrow-alt-left swiper-prev"></i>
-            <i class="fas fa-long-arrow-alt-right swiper-next"></i>
-          </div>
+    </div>
+  </section>
+  <section class="wrapper specialproduct">
+    <div class="specialproduct__container container">
+      <div class="product__container">
+        <a href="Products.aspx?type=special-watches" class="product__title">Special products</a>
+        <div class="specialproduct__slider product__slider" id="specialproduct__slider">
+          <partial name="_ProductSlides" for="@specialProducts" />
+        </div>
+        <div class="product__navigation">
+          <i class="fas fa-long-arrow-alt-left swiper-prev"></i>
+          <i class="fas fa-long-arrow-alt-right swiper-next"></i>
         </div>
       </div>
-    </section>
-  </main>
-</form>
+    </div>
+  </section>
+</main>
 
 @section JS {
   <script src="~/js/detailProduct.js" asp-append-version="true"></script>

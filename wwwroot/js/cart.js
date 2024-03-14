@@ -1,102 +1,142 @@
-function quantityControl() {
-    const cartpageItems = document.querySelectorAll(".cartpage-item");
-    
-    cartpageItems.forEach((item) => {
-        const quantityInput = item.querySelector(".cartpage-item .quantity__input");
-        const quantityUp = item.querySelector(".cartpage-item .quantity-up");
-        const quantityDown = item.querySelector(".cartpage-item .quantity-down");
-        const productPrice = item.querySelector(".cartpage-item .product__price-sale");
-        const cartpageTotal = item.querySelector(".cartpage-item .cartpage-item__total");
-        
-        //quantityInput.value = 1;
-        cartpageTotal.innerHTML = `$${(parseFloat(productPrice.innerHTML.slice(1)) * quantityInput.value).toFixed(2)}`;
+const cartList = document.querySelector("#cartpage__list");
+const confirmDeleteModal = document.querySelector(".confirm-delete-cart-modal");
+const confirmDeleteBtn = document.querySelector(
+  ".confirm-delete-cart-modal .modal-confirm"
+);
+let cartDeleteId;
 
-        quantityUp.addEventListener("click", () => {
-            const quantityNumber = parseInt(quantityInput.value);
-            quantityInput.value = quantityNumber + 1;
-            changePrice(cartpageTotal, quantityInput, productPrice);
-        })
-        quantityDown.addEventListener("click", () => {
-            const quantityNumber = parseInt(quantityInput.value);
-            quantityInput.value = quantityNumber == 1 ? 1 : quantityNumber - 1;
-            changePrice(cartpageTotal, quantityInput, productPrice);
-        })
+AjaxGet(`/api/cart/get-cart`, (responseText) => {
+  cartList.innerHTML = responseText;
 
-        quantityInput.addEventListener("keyup", () => {
-            changePrice(cartpageTotal, quantityInput, productPrice);
-        })
+  addEvent();
+  updateSumary();
+});
 
-        quantityInput.addEventListener("blur", () => {
-            if (quantityInput.value == "") {
-                quantityInput.value = 1;
-                changePrice(cartpageTotal, quantityInput, productPrice)
-            }
-        })
-    })
+function addEvent() {
+  const items = document.querySelectorAll(".cartpage-item");
 
-    function changePrice(cartpageTotal, quantityInput, productPrice) {
-        if (isNaN(quantityInput.value) || (quantityInput.value <= 0 && quantityInput.value != ""))
-            quantityInput.value = 1;
+  items.forEach((item) => {
+    const quantity = item.querySelector(".quantity__input");
+    const quantityUp = item.querySelector(".quantity-up");
+    const quantityDown = item.querySelector(".quantity-down");
+    const deleteBtn = item.querySelector(".cartpage-item-delete");
 
-        cartpageTotal.innerHTML = `$${parseFloat(quantityInput.value*productPrice.innerHTML.slice(1)).toFixed(2)}`;
-        
-        changeSumary();
-    }
+    quantityUp.addEventListener("click", () => {
+      quantity.stepUp();
+      updateCart(item, quantity.value);
+    });
 
-    function changeSumary() {
-        const productCount = document.querySelector(".subtotal-products-count");
-        const productPriceSubtotal = document.querySelector(".subtotal-products-price");
-        const productShipping = document.querySelector(".subtotal-shipping-price");
-        const productPriceTotal = document.querySelector(".total-price");
+    quantityDown.addEventListener("click", () => {
+      quantity.stepDown();
+      updateCart(item, quantity.value);
+    });
 
-        var count = 0, priceSubtotal = 0, priceTotal = 0;
+    quantity.addEventListener("change", (e) => {
+      if (e.target.value <= 0) quantity.value = 1;
+      updateCart(item, quantity.value);
+    });
 
-        cartpageItems.forEach((item) => {
-            const quantityInput = item.querySelector(".cartpage-item .quantity__input");
-            const cartpageTotal = item.querySelector(".cartpage-item .cartpage-item__total");
+    deleteBtn.addEventListener("click", () => {
+      cartDeleteId = item.dataset.cartid;
+      confirmDeleteModal.classList.remove("hidden");
+    });
+  });
 
-            count += parseInt(quantityInput.value);
-            priceSubtotal += parseFloat(cartpageTotal.innerHTML.slice(1));
-        })
-        priceTotal = priceSubtotal - productShipping.innerHTML.slice(1)
+  function updateCart(cartItem, quantity) {
+    const cartId = cartItem.dataset.cartid;
+    const price = cartItem.querySelector(".product__price-sale").dataset
+      .pricesale;
+    const priceTotal = cartItem.querySelector(".cartpage-item__total");
 
-        productCount.innerHTML = `${count} items`;
-        productPriceSubtotal.innerHTML = `$${priceSubtotal.toFixed(2)}`;
-        productPriceTotal.innerHTML = `$${priceTotal.toFixed(2)}`;
-    }
-    changeSumary();
+    AjaxPost(
+      "/api/cart/update-cart",
+      { CartId: cartId, Quantity: quantity },
+      (responseText) => {
+        const data = JSON.parse(responseText);
+        if (data.success) {
+          priceTotal.innerHTML = `${(price * quantity).toLocaleString(
+            "en-US"
+          )}₫`;
+          priceTotal.dataset.totalprice = price * quantity;
+
+          updateSumary();
+        }
+      }
+    );
+  }
 }
-quantityControl();
+
+confirmDeleteBtn.addEventListener("click", () => {
+  AjaxPost(
+    "/api/cart/delete-cart",
+    { CartId: cartDeleteId },
+    (responseText) => {
+      const data = JSON.parse(responseText);
+      if (data.success) {
+        const deletedCartItem = cartList.querySelector(
+          `.cartpage-item[data-cartid='${cartDeleteId}']`
+        );
+        confirmDeleteModal.classList.add("hidden");
+        deletedCartItem.remove();
+        updateSumary();
+      }
+    }
+  );
+});
+
+function updateSumary() {
+  const cartItems = document.querySelectorAll("#cartpage__list .cartpage-item");
+  const totalCount = document.querySelector(".subtotal-products-count");
+  const subTotal = document.querySelector(".subtotal-products-price");
+  const totalPrice = document.querySelector(".total-price");
+
+  let count = 0;
+  let total = 0;
+  cartItems.forEach((item) => {
+    const quantity = parseInt(item.querySelector(".quantity__input").value);
+    const price = parseFloat(
+      item.querySelector(".cartpage-item__total").dataset.totalprice
+    );
+    count += quantity;
+    total += price;
+  });
+
+  totalCount.innerHTML = `${count} Items`;
+  subTotal.innerHTML = `${total.toLocaleString("en-US")}₫`;
+  totalPrice.innerHTML = `${total.toLocaleString("en-US")}₫`;
+
+  getCartHeader();
+}
 
 function modalPayment() {
-    const paymentModal = document.querySelector(".payment-modal");
-    const paymentClose = document.querySelector(".payment-close")
+  const paymentModal = document.querySelector(".payment-modal");
+  const paymentClose = document.querySelector(".payment-close");
 
-    paymentClose.addEventListener("click", () => {
-        paymentModal.classList.remove("active");
-    })
+  paymentClose.addEventListener("click", () => {
+    paymentModal.classList.remove("active");
+  });
 
-    window.addEventListener("click", (e) => {
-        if (!paymentModal.contains(e.target)) {
-            paymentModal.classList.remove("active");
-        }
-    })
+  window.addEventListener("click", (e) => {
+    if (!paymentModal.contains(e.target)) {
+      paymentModal.classList.remove("active");
+    }
+  });
 }
 modalPayment();
 
 function modalAddress() {
-    const AddressModal = document.querySelector("#address_modal");
-    const AddressClose = document.querySelector(".missing-address-close")
+  const AddressModal = document.querySelector("#address_modal");
+  const AddressClose = document.querySelector(".missing-address-close");
 
-    AddressClose.addEventListener("click", () => {
-        AddressModal.classList.remove("active");
-        console.log(123);
-    })
+  AddressClose.addEventListener("click", () => {
+    AddressModal.classList.remove("active");
+    console.log(123);
+  });
 
-    window.addEventListener("click", (e) => {
-        if (!AddressModal.contains(e.target)) {
-            AddressModal.classList.remove("active");
-        }
-    })
+  window.addEventListener("click", (e) => {
+    if (!AddressModal.contains(e.target)) {
+      AddressModal.classList.remove("active");
+    }
+  });
 }
 modalAddress();

@@ -1,59 +1,91 @@
-<div class='cartpage-item'>
-  <div class='flex cl-gap'>
-    <div class='col-3 col-xsm-12 pd-gap'>
-      <a href='DetailProduct.aspx?id={pr.Id}' class='cartpage-item__img'>
-        <img src='assets/image/{alts[0]}' alt='{alts[0]}'>
-      </a>
-    </div>
-    <div class='col-9 col-xsm-12 pd-gap'>
-      <div class='flex cl-gap'>
-        <div class='col-5 col-sm-12 pd-gap'>
-          <div class='cartpage-item__detail'>
-            <input type='text' name='id' value='{cart.IdProduct}' style='display: none;'>
-            <a href='DetailProduct.aspx?id={pr.Id}' class='product__name'>{pr.Name}</a>
-            <div class='product__rating'>
-              {fs.renderStars(pr.Stars)}
-            </div>
-            <div class='product__price-box'>
-              @* {(pr.Discount == 0 ?
-              $"<span class='product__price-sale'>${pr.Price:0.00}</span>" :
-              $@"<span class='product__price'>${pr.Price:0.00}</span> *@
-              <span class='product__price-sale'>${(pr.Price * (1 - (pr.Discount / 100))):0.00}</span>")}
-            </div>
-            <div class='product__size'>
-              <span class='action__title'>Size</span>
-              <span class='action__item size-item'>{pr.Size}mm</span>
-            </div>
-            <div class='product__color'>
-              <span class='action__title'>Color</span>
-              <div class='action__item color-item color-{pr.Color.ToLower()}'></div>
+@model List<CartModel>
+
+@{
+  void renderStars(float stars)
+  {
+    for (int i = 1; i <= 5; i++)
+    {
+      if (i <= stars)
+      {
+        <i class='fas fa-star'></i>
+      }
+      else if (i - stars == 0.5)
+      {
+        <i class='fas fa-star-half-alt'></i>
+      }
+      else
+      {
+        <i class='far fa-star'></i>
+      }
+    }
+  }
+}
+
+@foreach (CartModel product in Model)
+{
+  string[] alts = @product.ProductImages.Split(',');
+
+  <div class='cartpage-item' data-cartid=@product.CartId>
+    <div class='flex cl-gap'>
+      <div class='col-3 col-xsm-12 pd-gap'>
+        <a href='/product/@product.ProductSlug' class='cartpage-item__img'>
+          <img src='~/image/products/@alts[0]' alt='@alts[0]'>
+        </a>
+      </div>
+      <div class='col-9 col-xsm-12 pd-gap'>
+        <div class='flex cl-gap'>
+          <div class='col-5 col-sm-12 pd-gap'>
+            <div class='cartpage-item__detail'>
+              <a href='/product/@product.ProductSlug' class='product__name'>@product.ProductName</a>
+              <div class='product__rating'>
+                @{
+                  renderStars((new Random().Next(0, 10) / 2f));
+                }
+              </div>
+              <div class='product__price-box'>
+                @if (product.Discount != 0)
+                {
+                  <span class='product__price'>@product.Price.ToString("N0")₫</span>
+                }
+                <span class='product__price-sale'
+                  data-pricesale="@product.PriceSale">@product.PriceSale.ToString("N0")₫</span>
+              </div>
+              <div class='product__size'>
+                <span class='action__title'>Size</span>
+                <span class='action__item size-item'>@product.SizeName</span>
+              </div>
+              <div class='product__color'>
+                <span class='action__title'>Color</span>
+                <div class='action__item color-item' style="background:@product.ColorValue;"></div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class='col-7 col-sm-12 pd-gap'>
-          <div class='flex align-items-center cl-gap'>
-            <div class='col-5 pd-gap'>
-              <div class='cartpage-item__quantity'>
-                <div class='quantity'>
-                  <input type='text' name='qty' value='{cart.Quantity}' class='quantity__input'>
-                  <div class='quantity__btns'>
-                    <i class='fas fa-angle-up quantity-up'></i>
-                    <i class='fas fa-angle-down quantity-down'></i>
+          <div class='col-7 col-sm-12 pd-gap'>
+            <div class='flex ai-center cl-gap'>
+              <div class='col-5 pd-gap'>
+                <div class='cartpage-item__quantity'>
+                  <div class='quantity'>
+                    <input type='number' name='qty' value='@product.CartQuantity' min="1" class='quantity__input'>
+                    <div class='quantity__btns'>
+                      <i class='fas fa-angle-up quantity-up'></i>
+                      <i class='fas fa-angle-down quantity-down'></i>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class='col-5 pd-gap'>
-              <span class='cartpage-item__total'></span>
-            </div>
-            <div class='col-2 pd-gap'>
-              <button type='submit' name='delete' value='{cart.IdProduct}' class='cartpage-item-delete'>
-                <i class='fas fa-trash-alt'></i>
-              </button>
+              <div class='col-5 pd-gap'>
+                <span class='cartpage-item__total'
+                  data-totalprice="@product.TotalPrice">@product.TotalPrice.ToString("N0")₫</span>
+              </div>
+              <div class='col-2 pd-gap'>
+                <button class='cartpage-item-delete'>
+                  <i class='fas fa-trash-alt'></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+}

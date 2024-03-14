@@ -33,7 +33,7 @@ public partial class Product
 
     public double PriceSale { get; set; }
 
-    public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
+    public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
     public virtual Color Color { get; set; } = null!;
 

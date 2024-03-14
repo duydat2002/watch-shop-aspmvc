@@ -1,3 +1,31 @@
+const addCart = () => {
+  if (!UserId) {
+    notUserModal.classList.remove("hidden");
+  } else {
+    const ProductId = document.querySelector("input[name='ProductId']").value;
+    const Quantity = document.querySelector("input[name='Quantity']").value;
+
+    AjaxPost(
+      "/api/cart/add-to-cart",
+      { ProductId, Quantity },
+      (responseText) => {
+        const data = JSON.parse(responseText);
+
+        let modal;
+        if (data.success)
+          modal = document.querySelector(".add-to-cart-modal-success");
+        else modal = document.querySelector(".add-to-cart-modal-fail");
+
+        modal.classList.remove("hidden");
+
+        setTimeout(() => {
+          modal.classList.add("hidden");
+        }, 1500);
+      }
+    );
+  }
+};
+
 function productpageSwiper() {
   const productpageSwiper = new Swiper(".productpage__slider .swiper", {
     speed: 500,
@@ -29,20 +57,23 @@ function productpageAction() {
   const quantityInput = document.querySelector(
     ".productpage__quantity .quantity__input"
   );
-  quantityInput.value = 1;
   const quantityUp = document.querySelector(
     ".productpage__quantity .quantity-up"
   );
   const quantityDown = document.querySelector(
     ".productpage__quantity .quantity-down"
   );
+
   quantityUp.addEventListener("click", () => {
-    const quantityNumber = parseInt(quantityInput.value);
-    quantityInput.value = quantityNumber + 1;
+    quantityInput.stepUp();
   });
+
   quantityDown.addEventListener("click", () => {
-    const quantityNumber = parseInt(quantityInput.value);
-    quantityInput.value = quantityNumber == 1 ? 1 : quantityNumber - 1;
+    quantityInput.stepDown();
+  });
+
+  quantityInput.addEventListener("change", (e) => {
+    if (e.target.value <= 0) quantityInput.value = 1;
   });
 
   const productpageImg = document.querySelector(".productpage__mainimg > img");

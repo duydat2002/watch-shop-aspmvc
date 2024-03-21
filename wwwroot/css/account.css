@@ -22,17 +22,23 @@
   padding-right: 25px;
 }
 
+.form-success,
 .form-error {
   width: 50%;
   text-align: left;
   display: block;
   color: rgb(218, 63, 63);
-  margin-top: 5px;
+  margin-top: 15px;
 }
 
+.server-success,
 .server-error {
   width: 100%;
   text-align: center;
+}
+
+.form-success {
+  color: #2883ad;
 }
 
 .form-input-box {

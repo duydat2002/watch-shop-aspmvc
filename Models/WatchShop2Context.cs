@@ -45,6 +45,13 @@ public partial class WatchShop2Context : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DuyDat");
 
+    public User? GetUserById(int UserId)
+    {
+        return this.Users.FromSqlRaw("EXECUTE pr_GetUserById @UserId",
+            new SqlParameter("@UserId", UserId)
+        ).ToList().SingleOrDefault();
+    }
+
     public List<Size> GetSizes(string ProductName = "", string Categories = "")
     {
         var sizes = this.Sizes.FromSqlRaw("EXECUTE pr_GetSizes @ProductName, @Categories",
@@ -121,6 +128,75 @@ public partial class WatchShop2Context : DbContext
         return this.Users.FromSqlRaw("EXECUTE pr_SignIn @Email",
             new SqlParameter("@Email", Email)
         ).ToList().SingleOrDefault();
+    }
+
+    public int UpdateUserPassword(int UserId, string Password)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_UpdateUserPassword @UserId, @Password",
+            new SqlParameter("@UserId", UserId),
+            new SqlParameter("@Password", Password)
+        );
+    }
+
+    public User? GetUserInfo(int UserId)
+    {
+        return this.Users.FromSqlRaw("EXECUTE pr_GetUserInfo @UserId",
+            new SqlParameter("@UserId", UserId)
+        ).ToList().SingleOrDefault();
+    }
+
+    public List<UserContact> GetUserContact(int UserId)
+    {
+        return this.UserContacts.FromSqlRaw("EXECUTE pr_GetUserContact @UserId",
+            new SqlParameter("@UserId", UserId)
+        ).ToList();
+    }
+
+    public int UpdateUserInfo(User user)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_UpdateUserInfo @UserId, @Email, @FirstName, @LastName, @Gender, @Birthdate",
+            new SqlParameter("@UserId", user.UserId),
+            new SqlParameter("@Email", user.Email),
+            new SqlParameter("@FirstName", user.FirstName),
+            new SqlParameter("@LastName", user.LastName),
+            new SqlParameter("@Gender", user.Gender),
+            new SqlParameter("@Birthdate", user.Birthdate)
+        );
+    }
+
+    public int AddUserContact(UserContact userContact)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_AddUserContact @UserId, @Address, @PhoneNumber",
+            new SqlParameter("@UserId", userContact.UserId),
+            new SqlParameter("@Address", userContact.Address),
+            new SqlParameter("@PhoneNumber", userContact.PhoneNumber)
+        );
+    }
+
+    public int UpdateUserContact(UserContact userContact)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_UpdateUserContact @UserId, @UserContactId, @Address, @PhoneNumber",
+            new SqlParameter("@UserId", userContact.UserId),
+            new SqlParameter("@UserContactId", userContact.UserContactId),
+            new SqlParameter("@Address", userContact.Address),
+            new SqlParameter("@PhoneNumber", userContact.PhoneNumber)
+        );
+    }
+
+    public int SetDefaultUserContact(UserContact userContact)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_SetDefaultUserContact @UserId, @UserContactId",
+            new SqlParameter("@UserId", userContact.UserId),
+            new SqlParameter("@UserContactId", userContact.UserContactId)
+        );
+    }
+
+    public int DeleteUserContact(UserContact userContact)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_DeleteUserContact @UserId, @UserContactId",
+            new SqlParameter("@UserId", userContact.UserId),
+            new SqlParameter("@UserContactId", userContact.UserContactId)
+        );
     }
 
     public List<CartModel> GetCart(int UserId)

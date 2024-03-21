@@ -1,0 +1,40 @@
+@model List<UserContact>
+
+@foreach (UserContact uc in Model)
+{
+  <div class='contact-item flex ai-center' data-contactid="@uc.UserContactId" data-address="@uc.Address"
+    data-phonenumber="@uc.PhoneNumber">
+    <div class='col-9 col-sm-12'>
+      <div class='contact__content'>
+        <div class='contact-row flex'>
+          <span class='contact__label pd-gap'>Phone number</span>
+          <span class='contact__desc pd-gap'>@uc.PhoneNumber</span>
+        </div>
+        <div class='contact-row flex'>
+          <span class='contact__label pd-gap'>Address</span>
+          <span class='contact__desc pd-gap'>@uc.Address</span>
+        </div>
+      </div>
+    </div>
+    <div class='col-3 col-sm-12'>
+      <div class='contact__btns'>
+        <div class='contact-row'>
+          <button class='contact-edit'>Edit</button>
+          @if (uc.IsDefault == false)
+          {
+            <button class='contact-delete'>Delete</button>
+          }
+        </div>
+        @if (uc.IsDefault == true)
+        {
+          <button class='contact-setdefault button button-gb button-disable'>Set as
+            default</button>
+        }
+        else
+        {
+          <button class='contact-setdefault button button-gb'>Set as default</button>
+        }
+      </div>
+    </div>
+  </div>
+}

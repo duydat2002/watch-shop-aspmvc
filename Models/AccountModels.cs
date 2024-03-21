@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WatchShop2.Models;
@@ -14,4 +12,13 @@ public class SignInModel
   [StringLength(maximumLength: 255, ErrorMessage = "Password must be at least 6 characters long.", MinimumLength = 6)]
   public string Password { get; set; } = null!;
 
+}
+
+public class UpdateUserPasswordModel
+{
+  public int UserId { get; set; }
+
+  public string OldPassword { get; set; } = null!;
+
+  public string NewPassword { get; set; } = null!;
 }

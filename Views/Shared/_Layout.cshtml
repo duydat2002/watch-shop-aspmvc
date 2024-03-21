@@ -97,7 +97,7 @@
                                 else if (RoleId == 2)
                                 {
                                     <p class="account__name">@Context.Session.GetString("FullName")</p>
-                                    <a href='Account.aspx' class='account-item'>
+                                    <a href='/account' class='account-item'>
                                         <i class='fas fa-user'></i>
                                         My Account
                                     </a>
@@ -365,8 +365,10 @@
 
     <script>
         var UserId = @(Context.Session.GetInt32("UserId")?.ToString() ?? "null");
-
-        var RoleId = @(Context.Session.GetInt32("RoleId")?.ToString() ?? "null");
+        var UserInfo = {
+            UserId,
+            RoleId: @(Context.Session.GetInt32("RoleId")?.ToString() ?? "null"),
+        }
     </script>
     <script src="~/js/swiper-bundle.min.js" asp-append-version="true"></script>
     <script src="~/js/main.js" asp-append-version="true"></script>

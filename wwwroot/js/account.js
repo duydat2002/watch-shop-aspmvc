@@ -1,3 +1,13 @@
+function getUserContact() {
+  const contactList = document.querySelector("#contact_list");
+  AjaxGet(`/api/account/get-user-contact?UserId=${UserId}`, (responseText) => {
+    contactList.innerHTML = responseText;
+
+    handleContactButtons();
+  });
+}
+getUserContact();
+
 function validateProfile() {
   const firstname = document.querySelector("#firstname").value.trim();
   const lastname = document.querySelector("#lastname").value.trim();
@@ -7,8 +17,14 @@ function validateProfile() {
   const lastnameError = document.querySelector("#lastname_error");
   const emailError = document.querySelector("#email_error");
   const birthdateError = document.querySelector("#birthdate_error");
-  console.log("Profile");
+  const errorDom = document.querySelector(".profile__container .server-error");
+  const successDom = document.querySelector(
+    ".profile__container .server-success"
+  );
   var check = true;
+
+  errorDom.classList.add("hidden");
+  successDom.classList.add("hidden");
 
   const checkText = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]+/;
   const checkEmail = /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,4})+)$/;
@@ -50,7 +66,33 @@ function validateProfile() {
     birthdateError.innerHTML = "";
   }
 
-  return check;
+  if (check) {
+    const gender = document.querySelector("input[name='gender']:checked").value;
+
+    AjaxPost(
+      "/api/account/update-user-info",
+      {
+        UserId,
+        FirstName: firstname,
+        Lastname: lastname,
+        Email: email,
+        Birthdate: birthdate,
+        Gender: gender == "male",
+      },
+      (responseText) => {
+        const data = JSON.parse(responseText);
+
+        if (data.success) {
+          const accountName = document.querySelector(".account__name");
+          accountName.innerHTML = firstname + " " + lastname;
+          // location.reload();
+          successDom.classList.remove("hidden");
+        } else {
+          errorDom.classList.remove("hidden");
+        }
+      }
+    );
+  }
 }
 
 function validatePassword() {
@@ -68,20 +110,28 @@ function validatePassword() {
   );
   const newPasswordError = document.querySelector("#newpassword_error");
   const reNewPasswordError = document.querySelector("#re_newpassword_error");
-  console.log("Password");
+  const errorDom = document.querySelector(
+    ".change-password__container .server-error"
+  );
+  const successDom = document.querySelector(
+    ".change-password__container .server-success"
+  );
   var check = true;
 
-  if (currentPassword.length < 8) {
+  errorDom.classList.add("hidden");
+  successDom.classList.add("hidden");
+
+  if (currentPassword.length < 6) {
     currentPasswordError.innerHTML =
-      "Your current password needs to be at least 8 characters long.";
+      "Your current password needs to be at least 6 characters long.";
     check = false;
   } else {
     currentPasswordError.innerHTML = "";
   }
 
-  if (newPassword.length < 8) {
+  if (newPassword.length < 6) {
     newPasswordError.innerHTML =
-      "Your new password needs to be at least 8 characters long.";
+      "Your new password needs to be at least 6 characters long.";
     check = false;
   } else {
     newPasswordError.innerHTML = "";
@@ -94,19 +144,113 @@ function validatePassword() {
     reNewPasswordError.innerHTML = "";
   }
 
-  return check;
+  if (check) {
+    AjaxPost(
+      "/api/account/update-user-password",
+      { UserId, OldPassword: currentPassword, NewPassword: newPassword },
+      (responseText) => {
+        const data = JSON.parse(responseText);
+
+        if (data.success) {
+          successDom.classList.remove("hidden");
+        } else {
+          errorDom.innerHTML =
+            data.message ?? "Something went wrong, try again in a few minutes.";
+          errorDom.classList.remove("hidden");
+        }
+      }
+    );
+  }
 }
 
-function validateContact() {
+var userContactId = null;
+function setUserContactId(id) {
+  userContactId = id;
+}
+
+function handleContactButtons() {
+  const contactInput = document.querySelector(".address__container");
+  const contactItems = document.querySelectorAll(
+    ".address__container .contact-item"
+  );
+  const phoneNumberDom = document.querySelector("input[name='phonenumber']");
+  const addressDom = document.querySelector("input[name='address']");
+
+  contactItems.forEach((item) => {
+    const contactId = item.dataset.contactid;
+    const address = item.dataset.address;
+    const phonenumber = item.dataset.phonenumber;
+    const editBtn = item.querySelector(".contact-edit");
+    const deleteBtn = item.querySelector(".contact-delete");
+    const setDefaultBtn = item.querySelector(".contact-setdefault");
+    const errorDom = document.querySelector(
+      ".address__container .server-error"
+    );
+
+    editBtn.addEventListener("click", () => {
+      userContactId = contactId;
+
+      phoneNumberDom.value = phonenumber;
+      addressDom.value = address;
+
+      contactInput.scrollIntoView();
+    });
+
+    deleteBtn?.addEventListener("click", () => {
+      userContactId = contactId;
+
+      AjaxPost(
+        "/api/account/delete-user-contact",
+        { UserId, UserContactId: userContactId },
+        (responseText) => {
+          const data = JSON.parse(responseText);
+
+          if (data.success) {
+            getUserContact();
+          } else {
+            errorDom.classList.remove("hidden");
+          }
+        }
+      );
+    });
+
+    setDefaultBtn.addEventListener("click", () => {
+      userContactId = contactId;
+
+      AjaxPost(
+        "/api/account/set-default-user-contact",
+        { UserId, UserContactId: userContactId },
+        (responseText) => {
+          const data = JSON.parse(responseText);
+
+          if (data.success) {
+            getUserContact();
+          } else {
+            errorDom.classList.remove("hidden");
+          }
+        }
+      );
+    });
+  });
+}
+
+// type = 'create' || 'update'
+function validateContact(type) {
   const phoneNumber = document
     .querySelector("input[name='phonenumber']")
     .value.trim();
   const address = document.querySelector("input[name='address']").value.trim();
   const phoneNumberError = document.querySelector("#phonenumber_error");
   const addressError = document.querySelector("#address_error");
+  const errorDom = document.querySelector(".address__container .server-error");
+  const successDom = document.querySelector(
+    ".address__container .server-success"
+  );
   var check = true;
-  console.log("Address");
   const checkPhoneNumber = /^0[\d]{9}$/;
+
+  errorDom.classList.add("hidden");
+  successDom.classList.add("hidden");
 
   if (phoneNumber == "") {
     phoneNumberError.innerHTML = "Please enter your phone number.";
@@ -126,7 +270,51 @@ function validateContact() {
     addressError.innerHTML = "";
   }
 
-  return check;
+  if (check) {
+    if (type == "create") {
+      AjaxPost(
+        "/api/account/add-user-contact",
+        {
+          UserId,
+          Address: address,
+          PhoneNumber: phoneNumber,
+        },
+        (responseText) => {
+          const data = JSON.parse(responseText);
+
+          if (data.success) {
+            successDom.classList.remove("hidden");
+            getUserContact();
+          } else {
+            errorDom.innerHTML =
+              data.message ??
+              "Something went wrong, try again in a few minutes.";
+            errorDom.classList.remove("hidden");
+          }
+        }
+      );
+    } else if (type == "update") {
+      AjaxPost(
+        "/api/account/update-user-contact",
+        {
+          UserId,
+          UserContactId: userContactId,
+          Address: address,
+          PhoneNumber: phoneNumber,
+        },
+        (responseText) => {
+          const data = JSON.parse(responseText);
+
+          if (data.success) {
+            successDom.classList.remove("hidden");
+            getUserContact();
+          } else {
+            errorDom.classList.remove("hidden");
+          }
+        }
+      );
+    }
+  }
 }
 
 // Active tab
@@ -177,19 +365,6 @@ function activeTab() {
   }
 }
 activeTab();
-
-// Render User
-function renderUser(firstname, lastname, email, birthdate, sex) {
-  const socialMale = document.querySelector("#social-male");
-  const socialFemale = document.querySelector("#social-female");
-
-  document.querySelector("#firstname").value = firstname;
-  document.querySelector("#lastname").value = lastname;
-  document.querySelector("#email").value = email;
-  document.querySelector("#birthdate").value = birthdate;
-  if (sex) socialMale.checked = true;
-  else socialFemale.checked = true;
-}
 
 // Show/ Hide Password
 function showPassword() {

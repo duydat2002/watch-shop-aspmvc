@@ -15,18 +15,12 @@ public class CartController : Controller
 
   public IActionResult Index()
   {
-    if (HttpContext.Session.GetInt32("UserId") == null)
+    int? UserId = HttpContext.Session.GetInt32("UserId");
+    if (UserId == null)
       return Redirect("/account/signin");
     else
       return View();
   }
-
-  // public class AddToCartParams
-  // {
-  //   public int ProductId { get; set; }
-
-  //   public int Quantity { get; set; }
-  // }
 
   [HttpPost]
   [Route("/api/cart/add-to-cart")]
@@ -80,5 +74,13 @@ public class CartController : Controller
   {
     int delete = _entityContext.DeleteCart(deleteCartParam.CartId);
     return Json(new { success = delete > 0 });
+  }
+
+  [HttpPost]
+  [Route("/api/cart/add-order")]
+  public IActionResult AddOrder([FromBody] AddOrderModel addOrder)
+  {
+    int add = _entityContext.AddOrder(addOrder.UserId, addOrder.Carts);
+    return Json(new { success = add > 0, add });
   }
 }

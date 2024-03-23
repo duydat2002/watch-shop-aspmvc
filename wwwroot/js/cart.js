@@ -5,21 +5,33 @@ const confirmDeleteBtn = document.querySelector(
 );
 let cartDeleteId;
 
-AjaxGet(`/api/cart/get-cart`, (responseText) => {
-  cartList.innerHTML = responseText;
+function getCart() {
+  AjaxGet(`/api/cart/get-cart`, (responseText) => {
+    cartList.innerHTML = responseText;
 
-  addEvent();
-  updateSumary();
-});
+    addEvent();
+    updateTotal();
+  });
+}
+getCart();
 
 function addEvent() {
   const items = document.querySelectorAll(".cartpage-item");
+  const selectAll = document.querySelector("#order-all");
+  const checkboxList = document.querySelectorAll(
+    ".cartpage__list input[name='orders']"
+  );
 
   items.forEach((item) => {
+    const checkbox = item.querySelector("input[name='orders']");
     const quantity = item.querySelector(".quantity__input");
     const quantityUp = item.querySelector(".quantity-up");
     const quantityDown = item.querySelector(".quantity-down");
     const deleteBtn = item.querySelector(".cartpage-item-delete");
+
+    checkbox.addEventListener("change", () => {
+      updateSumary();
+    });
 
     quantityUp.addEventListener("click", () => {
       quantity.stepUp();
@@ -42,6 +54,12 @@ function addEvent() {
     });
   });
 
+  selectAll.addEventListener("change", () => {
+    checkboxList.forEach((c) => {
+      c.checked = selectAll.checked;
+    });
+  });
+
   function updateCart(cartItem, quantity) {
     const cartId = cartItem.dataset.cartid;
     const price = cartItem.querySelector(".product__price-sale").dataset
@@ -59,6 +77,7 @@ function addEvent() {
           )}₫`;
           priceTotal.dataset.totalprice = price * quantity;
 
+          updateTotal();
           updateSumary();
         }
       }
@@ -78,65 +97,150 @@ confirmDeleteBtn.addEventListener("click", () => {
         );
         confirmDeleteModal.classList.add("hidden");
         deletedCartItem.remove();
+        updateTotal();
         updateSumary();
       }
     }
   );
 });
 
-function updateSumary() {
+function updateTotal() {
   const cartItems = document.querySelectorAll("#cartpage__list .cartpage-item");
+  const cartTotal = document.querySelector(".action__total-cart");
+  const orderAllLabel = document.querySelector(".label-order-all");
+
+  let count = 0;
+  let total = 0;
+  cartItems.forEach((item) => {
+    count += parseInt(item.querySelector(".quantity__input").value);
+    total += parseFloat(
+      item.querySelector(".cartpage-item__total").dataset.totalprice
+    );
+  });
+
+  orderAllLabel.innerHTML = `Select All (${count})`;
+  cartTotal.innerHTML = `Cart total: ${total.toLocaleString("en-US")}₫`;
+
+  getCartHeader();
+}
+
+function updateSumary() {
+  const cartCheckedItems = document.querySelectorAll(
+    ".cartpage-item:has(input[name='orders']:checked)"
+  );
   const totalCount = document.querySelector(".subtotal-products-count");
   const subTotal = document.querySelector(".subtotal-products-price");
   const totalPrice = document.querySelector(".total-price");
 
   let count = 0;
   let total = 0;
-  cartItems.forEach((item) => {
-    const quantity = parseInt(item.querySelector(".quantity__input").value);
-    const price = parseFloat(
+  cartCheckedItems.forEach((item) => {
+    count += parseInt(item.querySelector(".quantity__input").value);
+    total += parseFloat(
       item.querySelector(".cartpage-item__total").dataset.totalprice
     );
-    count += quantity;
-    total += price;
   });
 
   totalCount.innerHTML = `${count} Items`;
   subTotal.innerHTML = `${total.toLocaleString("en-US")}₫`;
   totalPrice.innerHTML = `${total.toLocaleString("en-US")}₫`;
-
-  getCartHeader();
 }
 
-function modalPayment() {
-  const paymentModal = document.querySelector(".payment-modal");
-  const paymentClose = document.querySelector(".payment-close");
+const orderSuccessModal = document.querySelector(".payment-modal");
+const orderError = document.querySelector(".order-error");
 
-  paymentClose.addEventListener("click", () => {
-    paymentModal.classList.remove("active");
-  });
+function orderClick() {
+  orderError.classList.add("hidden");
+  const orders = document.querySelectorAll("input[name='orders']:checked");
 
-  window.addEventListener("click", (e) => {
-    if (!paymentModal.contains(e.target)) {
-      paymentModal.classList.remove("active");
+  if (orders.length > 0) {
+    const carts = [];
+    orders.forEach((o) => carts.push(o.value));
+
+    AjaxPost(
+      "/api/cart/add-order",
+      { UserId, Carts: carts.join(",") },
+      (responseText) => {
+        const data = JSON.parse(responseText);
+        if (data.success) {
+          orderSuccessModal.classList.remove("hidden");
+          setTimeout(() => {
+            orderSuccessModal.classList.add("hidden");
+          }, 1500);
+
+          getCart();
+        } else {
+          orderError.classList.remove("hidden");
+        }
+      }
+    );
+  }
+}
+
+// Address Modal
+const addressList = document.querySelector(".address-modal__list");
+const addressBody = document.querySelector(".address__body");
+
+function getUserContact() {
+  AjaxGet(
+    `/api/account/get-user-contact-raw?UserId=${UserId}`,
+    (responseText) => {
+      const data = JSON.parse(responseText);
+      const userContacts = data.userContacts;
+      let defaultContact;
+
+      if (userContacts && userContacts.length > 0) {
+        let htmls = "";
+
+        userContacts?.forEach((c) => {
+          htmls += `
+              <div class="address-modal__item">
+                <div class="address-modal__radio">
+                  <input type="radio" class="address-radio" name="address" value="${
+                    c.userContactId
+                  }" ${c.isDefault ? "checked" : ""}>
+                  <div class="inner"></div>
+                </div>
+                <div class="address-modal__desc">
+                  <span class="phonenumber">${c.phoneNumber}</span>
+                  <span class="address">${c.address}</span>
+                </div>
+              </div>
+            `;
+
+          if (c.isDefault) {
+            defaultContact = c;
+          }
+        });
+
+        addressList.innerHTML = htmls;
+
+        addressBody.innerHTML = `
+          <div class="address__desc">
+            <span>${defaultContact.phoneNumber}</span>
+            <span class="address">${defaultContact.address}</span>
+          </div>
+          <div class="address__button">
+            <button class="change-address-button button button-gb">Change</button>
+          </div>
+        `;
+
+        const changeAddressModal = document.querySelector(
+          ".change-address-modal"
+        );
+        const changeAddressButton = document.querySelector(
+          ".change-address-button"
+        );
+        changeAddressButton?.addEventListener("click", () => {
+          changeAddressModal.classList.remove("hidden");
+        });
+      } else {
+        addressBody.innerHTML = `
+          <span class="no-address">To order, please add a delivery address</span>
+          <a href="/account" class="missing-address__link">Add a new address</a>
+        `;
+      }
     }
-  });
+  );
 }
-modalPayment();
-
-function modalAddress() {
-  const AddressModal = document.querySelector("#address_modal");
-  const AddressClose = document.querySelector(".missing-address-close");
-
-  AddressClose.addEventListener("click", () => {
-    AddressModal.classList.remove("active");
-    console.log(123);
-  });
-
-  window.addEventListener("click", (e) => {
-    if (!AddressModal.contains(e.target)) {
-      AddressModal.classList.remove("active");
-    }
-  });
-}
-modalAddress();
+getUserContact();

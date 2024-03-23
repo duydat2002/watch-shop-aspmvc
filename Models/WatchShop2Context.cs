@@ -230,6 +230,14 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    public int AddOrder(int UserId, string Carts)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_AddOrder @UserId, @Carts",
+            new SqlParameter("@UserId", UserId),
+            new SqlParameter("@Carts", Carts)
+        );
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>

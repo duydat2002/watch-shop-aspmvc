@@ -26,6 +26,10 @@
   string[] alts = @product.ProductImages.Split(',');
 
   <div class='cartpage-item' data-cartid=@product.CartId>
+    <div class="item-checkbox">
+      <input class="checkbox" type="checkbox" name="orders" value="@product.CartId">
+      <i class='fas fa-check checkbox-icon'></i>
+    </div>
     <div class='flex cl-gap'>
       <div class='col-3 col-xsm-12 pd-gap'>
         <a href='/product/@product.ProductSlug' class='cartpage-item__img'>

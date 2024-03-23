@@ -24,11 +24,9 @@ public partial class User
     public string? ConfirmPassword { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter your firstname.")]
-    [RegularExpression(@"^[\p{L}0-9_-]+$", ErrorMessage = "Firstname can only contain letters, numbers, underscores, and hyphens.")]
     public string FirstName { get; set; } = null!;
 
     [Required(ErrorMessage = "Please enter your lastname.")]
-    [RegularExpression(@"^[\p{L}0-9_-]+$", ErrorMessage = "Lastname can only contain letters, numbers, underscores, and hyphens.")]
     public string LastName { get; set; } = null!;
 
     [NotMapped]

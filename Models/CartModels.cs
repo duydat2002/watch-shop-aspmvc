@@ -32,3 +32,10 @@ public class CartModel
 
   public double PriceSale { get; set; }
 }
+
+public class AddOrderModel
+{
+  public int UserId { get; set; }
+
+  public string Carts { get; set; } = null!;
+}

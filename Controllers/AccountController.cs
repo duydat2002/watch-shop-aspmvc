@@ -162,6 +162,13 @@ public class AccountController : Controller
     return Json(new { success = update > 0 });
   }
 
+  [Route("/api/account/get-user-contact-raw")]
+  public IActionResult GetUserContactRaw(int UserId)
+  {
+    List<UserContact> userContacts = _entityContext.GetUserContact(UserId);
+    return Json(new { userContacts });
+  }
+
   [Route("/api/account/get-user-contact")]
   public IActionResult GetUserContact(int UserId)
   {

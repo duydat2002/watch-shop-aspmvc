@@ -73,7 +73,7 @@
                             <div class="cart-empty__box">
                                 <img src='~/image/Cart-empty.png' alt='Cart empty'>
                                 <p class="cart-empty__desc">Your cart is empty.</p>
-                                <a href="/cart" class="cart-empty__button button button-wg">Shop now</a>
+                                <a href="/products" class="cart-empty__button button button-wg">Shop now</a>
                             </div>
                         </div>
                     </div>
@@ -85,13 +85,13 @@
                             <div class="account__list">
                                 @if (RoleId == null)
                                 {
-                                    <a href="/account/signup" class="account-item">
-                                        <i class="fas fa-user-plus"></i>
-                                        Sign Up
-                                    </a>
                                     <a href="/account/signin" class="account-item">
                                         <i class="fas fa-sign-in-alt"></i>
                                         Sign In
+                                    </a>
+                                    <a href="/account/signup" class="account-item">
+                                        <i class="fas fa-user-plus"></i>
+                                        Sign Up
                                     </a>
                                 }
                                 else if (RoleId == 2)
@@ -334,16 +334,20 @@
     <div class="modals">
         <div class="not-user-modal modal hidden">
             <div class="modal-content">
+                <i class="modal-close fas fa-times"></i>
                 <div class="modal__icon">
                     <i class="fa-solid fa-user"></i>
                 </div>
                 <p class="modal__title color-primary">You need to log in</p>
                 <p class="modal__decs">Please log in to continue.</p>
-                <a href="/account/signin" class="modal__button button button-gb ">Login</a>
+                <div class="modal__buttons">
+                    <a href="/account/signin" class="modal__button button button-gb ">Login</a>
+                </div>
             </div>
         </div>
         <div class="add-to-cart-modal-success modal hidden">
             <div class="modal-content">
+                <i class="modal-close fas fa-times"></i>
                 <div class="modal__icon">
                     <i class="fa-solid fa-check color-primary"></i>
                 </div>
@@ -353,6 +357,7 @@
         </div>
         <div class="add-to-cart-modal-fail modal hidden">
             <div class="modal-content">
+                <i class="modal-close fas fa-times"></i>
                 <div class="modal__icon">
                     <i class="fa-solid fa-x color-error"></i>
                 </div>

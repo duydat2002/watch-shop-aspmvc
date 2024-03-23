@@ -1,10 +1,15 @@
 function getUserContact() {
   const contactList = document.querySelector("#contact_list");
-  AjaxGet(`/api/account/get-user-contact?UserId=${UserId}`, (responseText) => {
-    contactList.innerHTML = responseText;
+  if (contactList) {
+    AjaxGet(
+      `/api/account/get-user-contact?UserId=${UserId}`,
+      (responseText) => {
+        contactList.innerHTML = responseText;
 
-    handleContactButtons();
-  });
+        handleContactButtons();
+      }
+    );
+  }
 }
 getUserContact();
 
@@ -26,14 +31,10 @@ function validateProfile() {
   errorDom.classList.add("hidden");
   successDom.classList.add("hidden");
 
-  const checkText = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?0-9]+/;
   const checkEmail = /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,4})+)$/;
 
   if (firstname == "") {
     firstnameError.innerHTML = "Please enter your firstname.";
-    check = false;
-  } else if (checkText.test(firstname)) {
-    firstnameError.innerHTML = "The firstname you provided is not valid.";
     check = false;
   } else {
     firstnameError.innerHTML = "";
@@ -41,9 +42,6 @@ function validateProfile() {
 
   if (lastname == "") {
     lastnameError.innerHTML = "Please enter your lastname.";
-    check = false;
-  } else if (checkText.test(lastname)) {
-    lastnameError.innerHTML = "The lastname you provided is not valid.";
     check = false;
   } else {
     lastnameError.innerHTML = "";

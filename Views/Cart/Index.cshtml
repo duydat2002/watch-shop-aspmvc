@@ -7,37 +7,28 @@
 }
 
 <main id="main">
-  <div class="modals">
-    <div class="payment-modal" id="payment_modal">
-      <i class="payment-close fas fa-times"></i>
-      <div class="payment__icon">
-        <i class="fas fa-check"></i>
-      </div>
-      <p class="payment__title">Payment Successful</p>
-      <p class="payment__desc">
-        <span>We received your purchase request.</span>
-        <span>We'll be in touch shortly!</span>
-      </p>
-    </div>
-    <div class="missing-address-modal" id="address_modal">
-      <i class="missing-address-close fas fa-times"></i>
-      <div class="missing-address__icon">
-        <i class="fas fa-address-card"></i>
-      </div>
-      <p class="missing-address__title">To order, please add a delivery address</p>
-      <a href="Account.aspx?tab=contact" class="missing-address__link">Add a new address</a>
-    </div>
-  </div>
   <div class="cartpage wrapper">
     <div class="container">
       <div class="cartpage__container flex cl-gap">
-        <div class="col-8 col-md-12 pd-gap">
+        <div class="col-9 col-md-12 pd-gap">
           <div class="cartpage__body">
             <div class="cartpage__detail">
               <div class="cartpage__title-box">
                 <h2 class="cartpage__title">Shopping Cart</h2>
               </div>
               <div id="cartError_box">
+              </div>
+              <div class="cartpage__actions">
+                <div class="actions">
+                  <div class="action-checkall">
+                    <div class="item-checkbox">
+                      <input id="order-all" class="checkbox" type="checkbox" name="order-all" />
+                      <i class='fas fa-check checkbox-icon'></i>
+                    </div>
+                    <label class="label-order-all" for="order-all">Chọn tất cả</label>
+                  </div>
+                </div>
+                <span class="action__total-cart">Cart total: 0₫</span>
               </div>
               <div class="cartpage__list" id="cartpage__list">
               </div>
@@ -48,38 +39,49 @@
             </a>
           </div>
         </div>
-        <div class="col-4 col-md-12 pd-gap">
+        <div class="col-3 col-md-12 pd-gap">
           <div class="cartpage__right">
+            <div class="cartpage__address__container">
+              <div class="address__title">Delivery Address</div>
+              <div class="address__body">
+                <div class="address__desc">
+                  <span class="no-address">To order, please add a delivery address</span>
+                  <a href="/account" class="missing-address__link">Add a new address</a>
+                </div>
+              </div>
+            </div>
             <div class="cartpage__summary__container">
+              <div class="summary__title">Order Info</div>
               <div class="cartpage__summary">
                 <div class="summary__subtotal-products">
                   <span class="subtotal-products-count">0 Items</span>
-                  <span class="subtotal-products-price">000₫</span>
+                  <span class="subtotal-products-price">0₫</span>
                 </div>
                 <div class="summary__subtotal-shipping">
                   <span>Shipping</span>
-                  <span class="subtotal-shipping-price">000₫</span>
+                  <span class="subtotal-shipping-price">0₫</span>
                 </div>
               </div>
               <div class="cartpage__total">
                 <span>Total</span>
-                <span class="total-price">000₫</span>
+                <span class="total-price">0₫</span>
               </div>
               <button type="submit" id="purchase" name="purchase" value="purchase"
-                class="cartpage__button button button-gb">Proceed to checkout</button>
+                class="cartpage__button button button-gb" onclick="orderClick()">Order</button>
+              <span class="order-error color-error hidden">Something went wrong, try again in a few minutes.</span>
             </div>
             <div class="cartpage__reassurance">
               <div class="reassurance-item">
                 <i class="fas fa-shield-alt"></i>
-                Security policy (edit with Customer reassurance module)
+                Security policy
               </div>
               <div class="reassurance-item">
                 <i class="fas fa-truck-moving"></i>
-                Delivery policy (edit with Customer reassurance module)
+                Delivery policy
               </div>
               <div class="reassurance-item">
                 <i class="fas fa-exchange-alt"></i>
-                Return policy (edit with Customer reassurance module)
+                Return policy
               </div>
             </div>
           </div>
@@ -90,16 +92,53 @@
 </main>
 
 @section Modal {
+  <div class="change-address-modal modal hidden">
+    <div class="modal-content">
+      <i class="modal-close fas fa-times"></i>
+      <div class="modal__body">
+        <div class="address-modal__title">
+          <span>My address</span>
+        </div>
+        <div class="address-modal__list"></div>
+        <div class="modal__buttons">
+          <button class="modal__button modal-confirm button button-gb">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="confirm-delete-cart-modal modal hidden">
     <div class="modal-content">
+      <i class="modal-close fas fa-times"></i>
       <div class="modal__icon">
         <i class="fa-solid fa-question"></i>
       </div>
       <p class="modal__title color-primary">Are you sure?</p>
       <p class="modal__decs">Are you sure you want to remove this product from your cart?</p>
       <div class="modal__buttons">
-        <button class="modal__button modal-close button button-wg">Cancel</button>
+        <button class="modal__button modal-cancel button button-wg">Cancel</button>
         <button class="modal__button modal-confirm button button-rw">Delete</button>
+      </div>
+    </div>
+  </div>
+  <div class="payment-modal modal hidden ">
+    <div class="modal-content">
+      <i class="modal-close fas fa-times"></i>
+      <div class="modal__icon">
+        <i class="fas fa-check"></i>
+      </div>
+      <p class="modal__title color-primary">Order Successful</p>
+      <p class="modal__decs">We received your order request. <br /> We'll be in touch shortly!</p>
+    </div>
+  </div>
+  <div class="missing-address-modal modal hidden">
+    <div class="modal-content">
+      <i class="modal-close fas fa-times"></i>
+      <div class="modal__icon">
+        <i class="fas fa-address-card"></i>
+      </div>
+      <p class="modal__title color-primary">To order, please add a delivery address</p>
+      <div class="modal__buttons">
+        <a href="/account" class="missing-address__link">Add a new address</a>
       </div>
     </div>
   </div>

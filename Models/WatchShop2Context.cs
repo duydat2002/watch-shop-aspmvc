@@ -230,11 +230,13 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
-    public int AddOrder(int UserId, string Carts)
+    public int AddOrder(AddOrderModel addOrderModel)
     {
-        return this.Database.ExecuteSqlRaw("EXECUTE pr_AddOrder @UserId, @Carts",
-            new SqlParameter("@UserId", UserId),
-            new SqlParameter("@Carts", Carts)
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_AddOrder @UserId, @Carts, @PhoneNumber, @Address",
+            new SqlParameter("@UserId", addOrderModel.UserId),
+            new SqlParameter("@Carts", addOrderModel.Carts),
+            new SqlParameter("@PhoneNumber", addOrderModel.PhoneNumber),
+            new SqlParameter("@Address", addOrderModel.Address)
         );
     }
 
@@ -278,9 +280,13 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF1CB422D0");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCFD6FFF37C");
 
+            entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
+            entity.Property(e => e.PhoneNumber)
+                .HasMaxLength(15)
+                .IsUnicode(false);
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
@@ -290,7 +296,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36CA6785A85");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36C4EC15A39");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
@@ -305,7 +311,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A389A3351AB");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A385CDFF1C7");
 
             entity.Property(e => e.BankName).HasMaxLength(255);
             entity.Property(e => e.CardNumber)

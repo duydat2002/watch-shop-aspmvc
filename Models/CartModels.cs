@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace WatchShop2.Models;
 
 public class CartModel
@@ -38,4 +40,8 @@ public class AddOrderModel
   public int UserId { get; set; }
 
   public string Carts { get; set; } = null!;
+
+  public string PhoneNumber { get; set; } = null!;
+
+  public string Address { get; set; } = null!;
 }

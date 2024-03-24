@@ -351,15 +351,6 @@ function activeTab() {
       document.querySelector(`#${tab}Title`).classList.add("active");
       document.querySelector(`#${tab}`).classList.add("active");
     }
-
-    if (tab == "contact") {
-      document.querySelector("input[name='phonenumber']").value =
-        params.get("phonenumber");
-      document.querySelector("input[name='address']").value =
-        params.get("address");
-      document.querySelector("input[name='ordernumber']").value =
-        params.get("ordernumber");
-    }
   }
 }
 activeTab();

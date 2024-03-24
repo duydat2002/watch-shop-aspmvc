@@ -80,7 +80,7 @@ public class CartController : Controller
   [Route("/api/cart/add-order")]
   public IActionResult AddOrder([FromBody] AddOrderModel addOrder)
   {
-    int add = _entityContext.AddOrder(addOrder.UserId, addOrder.Carts);
+    int add = _entityContext.AddOrder(addOrder);
     return Json(new { success = add > 0, add });
   }
 }

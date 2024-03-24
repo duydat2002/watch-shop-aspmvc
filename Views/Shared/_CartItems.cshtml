@@ -65,15 +65,19 @@
             </div>
           </div>
           <div class='col-7 col-sm-12 pd-gap'>
-            <div class='flex ai-center cl-gap'>
+            <div class='flex cl-gap'>
               <div class='col-5 pd-gap'>
                 <div class='cartpage-item__quantity'>
                   <div class='quantity'>
-                    <input type='number' name='qty' value='@product.CartQuantity' min="1" class='quantity__input'>
+                    <input type='number' name='qty' value='@product.CartQuantity' min="1" max="@product.ProductQuantity"
+                      class='quantity__input'>
                     <div class='quantity__btns'>
                       <i class='fas fa-angle-up quantity-up'></i>
                       <i class='fas fa-angle-down quantity-down'></i>
                     </div>
+                  </div>
+                  <div class="instock">
+                    <span>In Stock: @product.ProductQuantity</span>
                   </div>
                 </div>
               </div>

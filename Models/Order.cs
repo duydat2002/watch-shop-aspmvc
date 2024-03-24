@@ -11,6 +11,10 @@ public partial class Order
 
     public DateTime OrderDate { get; set; }
 
+    public string Address { get; set; } = null!;
+
+    public string PhoneNumber { get; set; } = null!;
+
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();

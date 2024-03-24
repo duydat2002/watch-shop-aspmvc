@@ -46,7 +46,7 @@
               <div class="address__body">
                 <div class="address__desc">
                   <span class="no-address">To order, please add a delivery address</span>
-                  <a href="/account" class="missing-address__link">Add a new address</a>
+                  <a href="/account?tab=contact" class="missing-address__link">Add a new address</a>
                 </div>
               </div>
             </div>
@@ -66,8 +66,7 @@
                 <span>Total</span>
                 <span class="total-price">0₫</span>
               </div>
-              <button type="submit" id="purchase" name="purchase" value="purchase"
-                class="cartpage__button button button-gb" onclick="orderClick()">Order</button>
+              <button type="submit" class="cartpage__button button button-gb" onclick="orderClick()">Order</button>
               <span class="order-error color-error hidden">Something went wrong, try again in a few minutes.</span>
             </div>
             <div class="cartpage__reassurance">
@@ -101,7 +100,7 @@
         </div>
         <div class="address-modal__list"></div>
         <div class="modal__buttons">
-          <button class="modal__button modal-confirm button button-gb">Confirm</button>
+          <button class="modal__button modal-confirm button button-gb" onclick="changeAddress()">Confirm</button>
         </div>
       </div>
     </div>

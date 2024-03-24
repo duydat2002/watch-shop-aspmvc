@@ -4,6 +4,7 @@ const confirmDeleteBtn = document.querySelector(
   ".confirm-delete-cart-modal .modal-confirm"
 );
 let cartDeleteId;
+let userContacts;
 
 function getCart() {
   AjaxGet(`/api/cart/get-cart`, (responseText) => {
@@ -11,6 +12,7 @@ function getCart() {
 
     addEvent();
     updateTotal();
+    updateSumary();
   });
 }
 getCart();
@@ -28,6 +30,8 @@ function addEvent() {
     const quantityUp = item.querySelector(".quantity-up");
     const quantityDown = item.querySelector(".quantity-down");
     const deleteBtn = item.querySelector(".cartpage-item-delete");
+    const quantityMin = parseInt(quantity.min);
+    const quantityMax = parseInt(quantity.max);
 
     checkbox.addEventListener("change", () => {
       updateSumary();
@@ -44,7 +48,15 @@ function addEvent() {
     });
 
     quantity.addEventListener("change", (e) => {
-      if (e.target.value <= 0) quantity.value = 1;
+      const value = parseInt(e.target.value);
+      if (value < quantityMin) quantity.value = 1;
+      else if (value > quantityMax) quantity.value = quantityMax;
+    });
+
+    quantity.addEventListener("blur", (e) => {
+      const value = parseInt(e.target.value);
+      if (value < quantityMin) quantity.value = 1;
+      else if (value > quantityMax) quantity.value = quantityMax;
       updateCart(item, quantity.value);
     });
 
@@ -58,6 +70,7 @@ function addEvent() {
     checkboxList.forEach((c) => {
       c.checked = selectAll.checked;
     });
+    updateSumary();
   });
 
   function updateCart(cartItem, quantity) {
@@ -146,20 +159,33 @@ function updateSumary() {
   totalPrice.innerHTML = `${total.toLocaleString("en-US")}₫`;
 }
 
+let orderContact;
+
 const orderSuccessModal = document.querySelector(".payment-modal");
 const orderError = document.querySelector(".order-error");
+const missingAddressModal = document.querySelector(".missing-address-modal");
 
 function orderClick() {
   orderError.classList.add("hidden");
   const orders = document.querySelectorAll("input[name='orders']:checked");
 
-  if (orders.length > 0) {
+  if (!userContacts || userContacts.length == 0) {
+    missingAddressModal.classList.remove("hidden");
+    return;
+  }
+
+  if (orders.length > 0 && orderContact) {
     const carts = [];
     orders.forEach((o) => carts.push(o.value));
 
     AjaxPost(
       "/api/cart/add-order",
-      { UserId, Carts: carts.join(",") },
+      {
+        UserId,
+        Carts: carts.join(","),
+        PhoneNumber: orderContact.phoneNumber,
+        Address: orderContact.address,
+      },
       (responseText) => {
         const data = JSON.parse(responseText);
         if (data.success) {
@@ -186,7 +212,7 @@ function getUserContact() {
     `/api/account/get-user-contact-raw?UserId=${UserId}`,
     (responseText) => {
       const data = JSON.parse(responseText);
-      const userContacts = data.userContacts;
+      userContacts = data.userContacts;
       let defaultContact;
 
       if (userContacts && userContacts.length > 0) {
@@ -194,7 +220,9 @@ function getUserContact() {
 
         userContacts?.forEach((c) => {
           htmls += `
-              <div class="address-modal__item">
+              <div class="address-modal__item" data-phonenumber='${
+                c.phoneNumber
+              }' data-address='${c.address}'>
                 <div class="address-modal__radio">
                   <input type="radio" class="address-radio" name="address" value="${
                     c.userContactId
@@ -210,6 +238,7 @@ function getUserContact() {
 
           if (c.isDefault) {
             defaultContact = c;
+            orderContact = c;
           }
         });
 
@@ -237,10 +266,23 @@ function getUserContact() {
       } else {
         addressBody.innerHTML = `
           <span class="no-address">To order, please add a delivery address</span>
-          <a href="/account" class="missing-address__link">Add a new address</a>
+          <a href="/account?tab=contact" class="missing-address__link">Add a new address</a>
         `;
       }
     }
   );
 }
 getUserContact();
+
+function changeAddress() {
+  const selectedAddress = document.querySelector(
+    ".address-modal__item:has(input[name='address']:checked)"
+  );
+  const changeAddressModal = document.querySelector(".change-address-modal");
+  const phoneNumber = selectedAddress.dataset.phonenumber;
+  const address = selectedAddress.dataset.address;
+
+  orderContact = { phoneNumber, address };
+
+  changeAddressModal.classList.add("hidden");
+}

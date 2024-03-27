@@ -1254,6 +1254,11 @@ button {
   transition: 0.3s;
 }
 
+.account-item {
+  display: flex;
+  align-items: center;
+}
+
 .signout-button {
   width: 100%;
   text-align: left;
@@ -1266,6 +1271,8 @@ button {
 
 .account-item > i {
   margin-right: 5px;
+  width: 15px;
+  text-align: center;
 }
 
 .account__dropdown.active,

@@ -1,0 +1,87 @@
+@{
+  ViewData["Title"] = "Purchase Order";
+}
+
+@section Css {
+  <link rel="stylesheet" href="~/css/cart.css" asp-append-version="true">
+}
+
+<main id="main">
+  <section class="wrapper">
+    <div class="container">
+      <div class="content flex cl-gap">
+        <div class="col-3 col-md-12 pd-gap">
+          <div class="column-left">
+            <div class="block-categories">
+              <h2 class="categories__title section-title">Categories</h2>
+              <div class="categories__list">
+                <a href="/products/men-watches" class="categories-item">Men Watches</a>
+                <a href="/products/women-watches" class="categories-item">Women Watches</a>
+                <a href="/products/sport-watches" class="categories-item">Sport Watches</a>
+                <a href="/products/luxury-watches" class="categories-item">Luxury Watches</a>
+              </div>
+            </div>
+            <a href="/products" class="left-banner hide-md">
+              <img src="~/image/left-banner-1.png" alt="">
+            </a>
+          </div>
+        </div>
+        <div class="col-9 col-md-12 pd-gap">
+          <div class="column-right">
+            <div class="order__search">
+              <div class="order__search__icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+              <input type="text" name='order_search' placeholder="You can search for orders by product name"
+                value="@ViewBag.Search" class="order__search__input">
+            </div>
+            <div class="order__container">
+              <div class="order__title">Purchase Order</div>
+              <div class="order__list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+@section JS {
+  <script>
+    const orderList = document.querySelector(".order__list");
+    const search = document.querySelector("input[name='order_search']")
+
+    search.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        changeUrl({ search: e.target.value })
+        getOrders()
+      }
+    })
+
+    function getOrders() {
+      AjaxGet(`/api/cart/get-order?UserId=${UserId}&ProductName=${search.value}`, (responseText) => {
+        orderList.innerHTML = responseText
+
+        const orders = document.querySelectorAll(".order-item")
+
+        orders.forEach(order => {
+          const orderId = order.dataset.orderid
+          const cancelButton = order.querySelector(".cancel-order")
+          const statusDOM = order.querySelector(".order-status")
+
+          cancelButton?.addEventListener("click", () => {
+            AjaxPost("/api/cart/cancel-order", { OrderId: orderId }, (responseText) => {
+              const data = JSON.parse(responseText)
+
+              if (data.success) {
+                statusDOM.innerHTML = "Cancelled"
+                cancelButton.remove()
+              }
+            })
+          })
+        })
+      })
+    }
+    getOrders()
+  </script>
+}

@@ -22,6 +22,17 @@ public class CartController : Controller
       return View();
   }
 
+  [Route("/order")]
+  public IActionResult PurchaseOrder(string search = "")
+  {
+    int? UserId = HttpContext.Session.GetInt32("UserId");
+    if (UserId == null)
+      return Redirect("/account/signin");
+
+    ViewBag.Search = search;
+    return View();
+  }
+
   [HttpPost]
   [Route("/api/cart/add-to-cart")]
   public IActionResult AddToCart([FromBody] Cart addToCartParams)
@@ -82,5 +93,24 @@ public class CartController : Controller
   {
     int add = _entityContext.AddOrder(addOrder);
     return Json(new { success = add > 0, add });
+  }
+
+  [Route("/api/cart/get-order")]
+  public IActionResult GetOrder(string ProductName = "")
+  {
+    int? UserId = HttpContext.Session.GetInt32("UserId");
+    List<Order> orders = new List<Order>();
+    if (UserId != null)
+      orders = _entityContext.GetOrder((int)UserId, ProductName);
+
+    return PartialView("_OrderItems", orders);
+  }
+
+  [HttpPost]
+  [Route("/api/cart/cancel-order")]
+  public IActionResult CancelOrder([FromBody] CancelOrderModel cancelOrder)
+  {
+    int cancel = _entityContext.CancelOrder(cancelOrder.OrderId);
+    return Json(new { success = cancel > 0 });
   }
 }

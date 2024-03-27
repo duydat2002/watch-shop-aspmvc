@@ -24,6 +24,18 @@ const AjaxPost = (url, obj, callback) => {
   xhr.send(JSON.stringify(obj));
 };
 
+const changeUrl = (params) => {
+  var url = new URL(window.location.href);
+
+  for (var key in params) {
+    if (params.hasOwnProperty(key)) {
+      url.searchParams.set(key, params[key]);
+    }
+  }
+
+  window.history.pushState({}, "", url);
+};
+
 // Modal
 const modals = document.querySelectorAll(".modals .modal");
 modals.forEach((modal) => {

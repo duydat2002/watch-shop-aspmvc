@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using NuGet.Protocol;
 
 namespace WatchShop2.Models;
 
@@ -240,6 +242,21 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    public List<Order> GetOrder(int UserId, string ProductName)
+    {
+        return this.Orders.FromSqlRaw("EXECUTE pr_GetOrder @UserId, @ProductName",
+            new SqlParameter("@UserId", UserId),
+            new SqlParameter("@ProductName", ProductName)
+        ).ToList();
+    }
+
+    public int CancelOrder(int OrderId)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_CancelOrder @OrderId",
+            new SqlParameter("@OrderId", OrderId)
+        );
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>
@@ -280,13 +297,16 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCFD6FFF37C");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF6B3D9AFC");
 
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(15)
                 .IsUnicode(false);
+            entity.Property(e => e.Status)
+                .HasMaxLength(255)
+                .HasDefaultValue("Pending");
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
@@ -296,7 +316,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36C4EC15A39");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36C4A170C3E");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
@@ -311,7 +331,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A385CDFF1C7");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A3875C2422F");
 
             entity.Property(e => e.BankName).HasMaxLength(255);
             entity.Property(e => e.CardNumber)

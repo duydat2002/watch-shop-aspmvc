@@ -32,6 +32,8 @@ public class AccountController : Controller
   [Route("signup")]
   public IActionResult SignUp()
   {
+    if (HttpContext.Session.GetInt32("UserId") != null)
+      return Redirect("/");
     return View();
   }
 
@@ -71,6 +73,8 @@ public class AccountController : Controller
   [Route("signin")]
   public IActionResult SignIn()
   {
+    if (HttpContext.Session.GetInt32("UserId") != null)
+      return Redirect("/");
     return View();
   }
 
@@ -124,7 +128,7 @@ public class AccountController : Controller
 
   [HttpPost]
   [Route("signout")]
-  public IActionResult SignOut()
+  public IActionResult SignOutPost()
   {
     HttpContext.Session.Clear();
     return RedirectToAction("Index", "Home");

@@ -1,0 +1,101 @@
+@model List<Order>
+
+@{
+  void renderStars(float stars)
+  {
+    for (int i = 1; i <= 5; i++)
+    {
+      if (i <= stars)
+      {
+        <i class='fas fa-star'></i>
+      }
+      else if (i - stars == 0.5)
+      {
+        <i class='fas fa-star-half-alt'></i>
+      }
+      else
+      {
+        <i class='far fa-star'></i>
+      }
+    }
+  }
+}
+
+@foreach (Order order in Model)
+{
+  double total = order.Details.Sum(detail => detail.TotalPrice);
+
+  <div class="order-item" data-orderid='@order.OrderId'>
+    <div class="order__header">
+      <div class="header__top">
+        <span class="order-date">Order date: @order.OrderDate</span>
+        <div>
+          <span class="order-total">Total: @total.ToString("N0")₫</span> |
+          <span class="order-status">@order.Status</span>
+        </div>
+      </div>
+      <div class="header__bottom">
+        <div class="order-contact">
+          <span class="order-phonenumber">@order.PhoneNumber</span> |
+          <span class="order-address">Address: @order.Address</span>
+        </div>
+        @if (order.Status == "Pending")
+        {
+          <button class="cancel-order button button-rw">Cancel</button>
+        }
+      </div>
+    </div>
+    <div class="order__details">
+      @foreach (OrderDetailModel detail in order.Details)
+      {
+        string[] alts = @detail.ProductImages.Split(',');
+
+        <div class="detail-item">
+          <div class='flex cl-gap'>
+            <div class='col-3 col-xsm-12 pd-gap'>
+              <a href='/product/@detail.ProductSlug' class='detail-img'>
+                <img src='~/image/products/@alts[0]' alt='@alts[0]'>
+              </a>
+            </div>
+            <div class='col-9 col-xsm-12 pd-gap'>
+              <div class="flex cl-gap">
+                <div class="col-6 pd-gap">
+                  <div class="detail-info">
+                    <a href='/product/@detail.ProductSlug' class='product__name'>@detail.ProductName</a>
+                    <div class='product__rating'>
+                      @{
+                        renderStars((new Random().Next(7, 10) / 2f));
+                      }
+                    </div>
+                    <div class='product__price-box'>
+                      @if (detail.Discount != 0)
+                      {
+                        <span class='product__price'>@detail.Price.ToString("N0")₫</span>
+                      }
+                      <span class='product__price-sale'
+                        data-pricesale="@detail.PriceSale">@detail.PriceSale.ToString("N0")₫</span>
+                    </div>
+                    <div class='product__size'>
+                      <span class='action__title'>Size</span>
+                      <span class='action__item size-item'>@detail.SizeName</span>
+                    </div>
+                    <div class='product__color'>
+                      <span class='action__title'>Color</span>
+                      <div class='action__item color-item' style="background:@detail.ColorValue;"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-3 pd-gap">
+                  <span class="detail-quantity">Quantity: @detail.Quantity</span>
+                </div>
+                <div class="col-3 pd-gap">
+                  <span class='detail-total' data-totalprice="@detail.TotalPrice">@detail.TotalPrice.ToString("N0")₫</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+}

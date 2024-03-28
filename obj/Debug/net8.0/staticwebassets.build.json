@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ljwosTV/7erZaHEL1O1mj22dZM9pGxq8KUEvXY2EwI8=",
+  "Hash": "M9aBfOsAIgWCGsP9/tCJWz+1h3cBDEzl7l2S2O9kWH8=",
   "Source": "WatchShop2",
   "BasePath": "_content/WatchShop2",
   "Mode": "Default",
@@ -34,6 +34,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\account.css"
+    },
+    {
+      "Identity": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\css\\admin.css",
+      "SourceId": "WatchShop2",
+      "SourceType": "Discovered",
+      "ContentRoot": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\",
+      "BasePath": "_content/WatchShop2",
+      "RelativePath": "css/admin.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\admin.css"
     },
     {
       "Identity": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\css\\cart.css",

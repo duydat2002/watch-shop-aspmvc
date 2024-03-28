@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\css\\account.css"
     },
     {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\css\\admin.css",
+      "PackagePath": "staticwebassets\\css\\admin.css"
+    },
+    {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\css\\cart.css",
       "PackagePath": "staticwebassets\\css\\cart.css"
     },

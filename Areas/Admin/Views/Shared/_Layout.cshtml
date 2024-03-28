@@ -1,0 +1,100 @@
+﻿@{
+    int? RoleId = Context.Session.GetInt32("RoleId");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/fontawesome.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    @await RenderSectionAsync("Css", required: false)
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="header-logo">
+                <img src="~/image/Logo.png" alt="Logo">
+            </div>
+        </div>
+        <div class="sidebar-scroll">
+            <div class="sidebar-navs">
+                <div class="nav-category">
+                    <span>Manage</span>
+                </div>
+                <div class="navs">
+                    <a href="" class="nav-item">
+                        <i class="fa-solid fa-user-tie icon"></i>
+                        <span class="nav-name">Administrators</span>
+                    </a>
+                    <a href="" class="nav-item">
+                        <i class="fa-solid fa-layer-group icon"></i>
+                        <span class="nav-name">Category</span>
+                    </a>
+                    <a href="" class="nav-item">
+                        <i class="fa-solid fa-palette icon"></i>
+                        <span class="nav-name">Color</span>
+                    </a>
+                    <a href="" class="nav-item">
+                        <i class="fa-solid fa-ruler-horizontal icon"></i>
+                        <span class="nav-name">Size</span>
+                    </a>
+                    <a href="" class="nav-item">
+                        <i class="fa-solid fa-cube icon"></i>
+                        <span class="nav-name">Product</span>
+                    </a>
+                    <a href="" class="nav-item">
+                        <i class="fa-solid fa-users-line icon"></i>
+                        <span class="nav-name">Customer</span>
+                    </a>
+                </div>
+                <div class="nav-category">
+                    <span>Statistic</span>
+                </div>
+                <div class="navs">
+                    <a href="" class="nav-item">
+                        <i class="fa-solid fa-chart-column icon"></i>
+                        <span class="nav-name">Statistic</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header">
+        <div class="header__account">
+            <div class="account__link">
+                <i class="fas fa-user account__icon"></i>
+            </div>
+            <div class="account__dropdown">
+                <a href="/admin/account/change-password" class="account-item">
+                    <i class="fa-solid fa-key"></i>
+                    <span>Change Password</span>
+                </a>
+                <form action="/admin/signout" method="post">
+                    <button type="submit" class="account-item signout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sign Out
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <main class="content">
+        @RenderBody()
+    </main>
+
+    <script>
+        var UserId = @(Context.Session.GetInt32("UserId")?.ToString() ?? "null");
+        var UserInfo = {
+            UserId,
+            RoleId: @(Context.Session.GetInt32("RoleId")?.ToString() ?? "null"),
+        }
+    </script>
+    @await RenderSectionAsync("JS", required: false)
+</body>
+
+</html>

@@ -722,6 +722,12 @@ button {
   margin-bottom: 10px;
 }
 
+.productpage__instock {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
 .productpage__action {
   border-bottom: 1px solid #dfdfdf;
   padding-bottom: 30px;

@@ -24,16 +24,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.Use(async (context, next) =>
-{
-    await next();
 
-    if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
-    {
-        context.Request.Path = "/PageNotFound";
-        await next();
-    }
-});
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -42,6 +35,66 @@ app.UseRouting();
 
 app.UseAuthorization();
 app.UseSession();
+
+
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path;
+    var isAdminPath = context.Request.Path.StartsWithSegments("/admin");
+    var isApiPath = context.Request.Path.StartsWithSegments("/api");
+    // RoleId = 2 = Customer
+    var RoleId = context.Session.GetInt32("RoleId");
+    Console.WriteLine("path: " + path);
+    Console.WriteLine("RoleId: " + RoleId);
+    Console.WriteLine("isAdminPath: " + isAdminPath);
+
+    if (isApiPath)
+    {
+        await next();
+        return;
+    }
+
+    if (isAdminPath && (RoleId == null || RoleId == 2))
+    {
+        Console.WriteLine("noadmin");
+        context.Response.Redirect("/");
+        return;
+    }
+
+    if (!isAdminPath && RoleId != null && RoleId != 2)
+    {
+        Console.WriteLine("admin");
+        context.Response.Redirect("/admin");
+        return;
+    }
+
+    await next();
+});
+
+app.Use(async (context, next) =>
+{
+    await next();
+
+    if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+    {
+        Console.WriteLine("Not found");
+        if (context.Request.Path.StartsWithSegments("/admin"))
+        {
+            Console.WriteLine("Not found admin");
+            context.Response.Redirect("/admin/PageNotFound");
+        }
+        else
+        {
+            Console.WriteLine("Not found normal");
+            context.Response.Redirect("/PageNotFound");
+        }
+    }
+});
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+);
 
 app.MapControllerRoute(
     name: "default",

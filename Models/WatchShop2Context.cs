@@ -257,6 +257,26 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    public List<UserWithRoleName> GetAdministrators()
+    {
+        return this.Database.SqlQueryRaw<UserWithRoleName>("EXECUTE pr_GetAdministrators").ToList();
+    }
+
+    public List<UserWithRoleName> GetCustomers()
+    {
+        return this.Database.SqlQueryRaw<UserWithRoleName>("EXECUTE pr_GetCustomers").ToList();
+    }
+
+    public List<CategoryWithProductCountModel> GetCategories()
+    {
+        return this.Database.SqlQueryRaw<CategoryWithProductCountModel>("EXECUTE pr_GetCategories").ToList();
+    }
+
+    public List<ProductModel> GetProducts()
+    {
+        return this.Database.SqlQueryRaw<ProductModel>("EXECUTE pr_GetProducts").ToList();
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>

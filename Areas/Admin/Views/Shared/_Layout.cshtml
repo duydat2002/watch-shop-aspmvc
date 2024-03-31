@@ -17,9 +17,9 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-header">
-            <div class="header-logo">
+            <a href="/admin" class="header-logo">
                 <img src="~/image/Logo.png" alt="Logo">
-            </div>
+            </a>
         </div>
         <div class="sidebar-scroll">
             <div class="sidebar-navs">
@@ -27,27 +27,29 @@
                     <span>Manage</span>
                 </div>
                 <div class="navs">
-                    <a href="" class="nav-item">
+                    <a href="/admin/user/administrators"
+                        class="nav-item @(ViewBag.NavActive == "Administrator" ? "active" : "")">
                         <i class="fa-solid fa-user-tie icon"></i>
-                        <span class="nav-name">Administrators</span>
+                        <span class="nav-name">Administrator</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="/admin/attributes/categories"
+                        class="nav-item @(ViewBag.NavActive == "Category" ? "active" : "")">
                         <i class="fa-solid fa-layer-group icon"></i>
                         <span class="nav-name">Category</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="/admin/attributes/colors" class="nav-item @(ViewBag.NavActive == "Color" ? "active" : "")">
                         <i class="fa-solid fa-palette icon"></i>
                         <span class="nav-name">Color</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="/admin/attributes/sizes" class="nav-item @(ViewBag.NavActive == "Size" ? "active" : "")">
                         <i class="fa-solid fa-ruler-horizontal icon"></i>
                         <span class="nav-name">Size</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="/admin/products" class="nav-item @(ViewBag.NavActive == "Product" ? "active" : "")">
                         <i class="fa-solid fa-cube icon"></i>
                         <span class="nav-name">Product</span>
                     </a>
-                    <a href="" class="nav-item">
+                    <a href="/admin/user/customers" class="nav-item @(ViewBag.NavActive == "Customer" ? "active" : "")">
                         <i class="fa-solid fa-users-line icon"></i>
                         <span class="nav-name">Customer</span>
                     </a>
@@ -56,7 +58,7 @@
                     <span>Statistic</span>
                 </div>
                 <div class="navs">
-                    <a href="" class="nav-item">
+                    <a href="" class="nav-item @(ViewBag.NavActive == "Statistic" ? "active" : "")">
                         <i class="fa-solid fa-chart-column icon"></i>
                         <span class="nav-name">Statistic</span>
                     </a>
@@ -65,6 +67,9 @@
         </div>
     </div>
     <div class="header">
+        <div class="header__username">
+            <span>@Context.Session.GetString("FullName")</span>
+        </div>
         <div class="header__account">
             <div class="account__link">
                 <i class="fas fa-user account__icon"></i>
@@ -83,7 +88,7 @@
             </div>
         </div>
     </div>
-    <main class="content">
+    <main class="main">
         @RenderBody()
     </main>
 
@@ -93,6 +98,59 @@
             UserId,
             RoleId: @(Context.Session.GetInt32("RoleId")?.ToString() ?? "null"),
         }
+    </script>
+    <script>
+        const AjaxGet = (url, callback) => {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.send();
+        };
+
+        const AjaxPost = (url, obj, callback) => {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.send(JSON.stringify(obj));
+        };
+
+        const changeUrl = (params) => {
+            var url = new URL(window.location.href);
+
+            for (var key in params) {
+                if (params.hasOwnProperty(key)) {
+                    url.searchParams.set(key, params[key]);
+                }
+            }
+
+            window.history.pushState({}, "", url);
+        };
+    </script>
+    <script>
+        const headerAccountBtn = document.querySelector(".account__link");
+        const headerAccountDropdown = document.querySelector(".account__dropdown");
+
+        headerAccountBtn.addEventListener("click", () => {
+            headerAccountDropdown.classList.toggle("active");
+        });
+
+        window.addEventListener("click", (e) => {
+            const headerAccount = document.querySelector(".header__account");
+            if (!headerAccount.contains(e.target)) {
+                headerAccountDropdown.classList.remove("active");
+            }
+        });
     </script>
     @await RenderSectionAsync("JS", required: false)
 </body>

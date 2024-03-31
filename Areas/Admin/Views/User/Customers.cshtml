@@ -1,0 +1,101 @@
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<UserWithRoleName>
+
+
+@{
+  ViewData["Title"] = "Customers";
+  ViewBag.NavActive = "Customer";
+}
+
+
+<h3 class="page-title">Customers</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/user/customers">Customers</a></span>
+</div>
+<div class="content">
+  <div class="actions">
+    <button class="button button-gb create-button">Create</button>
+  </div>
+  <div class="card list-container">
+    <div class="card-header">
+      <span class="card-title">Customer List</span>
+    </div>
+    <div class="card-body">
+      <div class="card-body-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>FirstName</th>
+              <th>LastName</th>
+              <th>Email</th>
+              <th>Gender</th>
+              <th>Birthdate</th>
+              <th>RoleName</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var user in Model)
+            {
+              <tr>
+                <td>@user.UserId</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                <td>@(user.Gender ? "Man" : "Woman")</td>
+                <td>@user.Birthdate</td>
+                <td>@user.RoleName</td>
+                <td>
+                  @if (user.Active)
+                  {
+                    <span class="badge badge-success">Active</span>
+                  }
+                  else
+                  {
+                    <span class="badge badge-danger">Unactive</span>
+                  }
+                </td>
+                <td>
+                  <div class="table-actions">
+                    <a href="" class="action-item view bg-info text-info">
+                      <i class="fa-regular fa-eye "></i>
+                    </a>
+                    <a href="" class="action-item edit bg-warning  text-warning">
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <a href="" class="action-item delete bg-danger  text-danger">
+                      <i class="fa-solid fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      @Html.PagedListPager(Model, page => Url.Action("Customers",
+             new { page }),
+             new PagedListRenderOptions
+      {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        MaximumPageNumbersToDisplay = 5,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always
+      })
+    </div>
+  </div>
+</div>
+
+@section JS {
+  <script>
+  </script>
+}

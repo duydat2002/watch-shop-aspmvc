@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WatchShop2.Models;
 
@@ -21,4 +22,31 @@ public class UpdateUserPasswordModel
   public string OldPassword { get; set; } = null!;
 
   public string NewPassword { get; set; } = null!;
+}
+
+public class UserWithRoleName
+{
+  public int UserId { get; set; }
+
+  public int RoleId { get; set; }
+
+  public string RoleName { get; set; } = null!;
+
+  public string Email { get; set; } = null!;
+
+  [NotMapped]
+  public string Password { get; set; } = null!;
+
+  public string FirstName { get; set; } = null!;
+
+  public string LastName { get; set; } = null!;
+
+  [NotMapped]
+  public string? FullName { get { return $"{FirstName} {LastName}"; } }
+
+  public bool Gender { get; set; }
+
+  public DateOnly? Birthdate { get; set; }
+
+  public bool Active { get; set; }
 }

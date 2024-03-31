@@ -1,0 +1,107 @@
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<ProductModel>
+
+
+@{
+  ViewData["Title"] = "Products";
+  ViewBag.NavActive = "Product";
+}
+
+
+<h3 class="page-title">Products</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/products">Products</a></span>
+</div>
+<div class="content">
+  <div class="actions">
+    <button class="button button-gb create-button">Create</button>
+  </div>
+  <div class="card list-container">
+    <div class="card-header">
+      <span class="card-title">Product List</span>
+    </div>
+    <div class="card-body">
+      <div class="card-body-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th style="min-width: 100px;">Image</th>
+              <th style="min-width: 200px;">Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Discount</th>
+              <th>Price Sale</th>
+              <th>Size</th>
+              <th>Color</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var product in Model)
+            {
+              string[] alts = @product.ProductImages.Split(',');
+
+              <tr>
+                <td>@product.ProductId</td>
+                <td>
+                  <div class='detail-img'>
+                    <img src='~/image/products/@alts[0]' alt='@alts[0]'>
+                  </div>
+                </td>
+                <td>
+                  <span class="product-name">@product.ProductName</span>
+                </td>
+                <td>@product.Price.ToString("N0")</td>
+                <td>@product.Quantity</td>
+                <td>@product.Discount</td>
+                <td>@product.PriceSale.ToString("N0")</td>
+                <td>@product.SizeName</td>
+                <td>
+                  <div class="color-container">
+                    <div class="color-box" style="background: @product.ColorValue;"></div>
+                    <span class="color-name">@product.ColorName</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="table-actions">
+                    <a href="" class="action-item view bg-info text-info">
+                      <i class="fa-regular fa-eye "></i>
+                    </a>
+                    <a href="" class="action-item edit bg-warning  text-warning">
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <a href="" class="action-item delete bg-danger  text-danger">
+                      <i class="fa-solid fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      @Html.PagedListPager(Model, page => Url.Action("Products",
+             new { page }),
+             new PagedListRenderOptions
+      {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        MaximumPageNumbersToDisplay = 5,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always
+      })
+    </div>
+  </div>
+</div>
+
+@section JS {
+  <script>
+  </script>
+}

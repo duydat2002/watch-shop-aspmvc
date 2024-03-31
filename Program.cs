@@ -44,9 +44,9 @@ app.Use(async (context, next) =>
     var isApiPath = context.Request.Path.StartsWithSegments("/api");
     // RoleId = 2 = Customer
     var RoleId = context.Session.GetInt32("RoleId");
-    Console.WriteLine("path: " + path);
-    Console.WriteLine("RoleId: " + RoleId);
-    Console.WriteLine("isAdminPath: " + isAdminPath);
+    // Console.WriteLine("path: " + path);
+    // Console.WriteLine("RoleId: " + RoleId);
+    // Console.WriteLine("isAdminPath: " + isAdminPath);
 
     if (isApiPath)
     {
@@ -56,14 +56,14 @@ app.Use(async (context, next) =>
 
     if (isAdminPath && (RoleId == null || RoleId == 2))
     {
-        Console.WriteLine("noadmin");
+        // Console.WriteLine("noadmin");
         context.Response.Redirect("/");
         return;
     }
 
     if (!isAdminPath && RoleId != null && RoleId != 2)
     {
-        Console.WriteLine("admin");
+        // Console.WriteLine("admin");
         context.Response.Redirect("/admin");
         return;
     }
@@ -77,15 +77,15 @@ app.Use(async (context, next) =>
 
     if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
     {
-        Console.WriteLine("Not found");
+        // Console.WriteLine("Not found");
         if (context.Request.Path.StartsWithSegments("/admin"))
         {
-            Console.WriteLine("Not found admin");
+            // Console.WriteLine("Not found admin");
             context.Response.Redirect("/admin/PageNotFound");
         }
         else
         {
-            Console.WriteLine("Not found normal");
+            // Console.WriteLine("Not found normal");
             context.Response.Redirect("/PageNotFound");
         }
     }

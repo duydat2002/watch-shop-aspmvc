@@ -20,6 +20,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="X.PagedList" Version="9.1.2" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="9.1.2" />
   </ItemGroup>
 
 </Project>

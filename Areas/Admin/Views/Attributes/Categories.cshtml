@@ -1,0 +1,82 @@
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<CategoryWithProductCountModel>
+
+
+@{
+  ViewData["Title"] = "Categories";
+  ViewBag.NavActive = "Category";
+}
+
+
+<h3 class="page-title">Categories</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/attributes/categories">Categories</a></span>
+</div>
+<div class="content">
+  <div class="actions">
+    <button class="button button-gb create-button">Create</button>
+  </div>
+  <div class="card list-container">
+    <div class="card-header">
+      <span class="card-title">Category List</span>
+    </div>
+    <div class="card-body">
+      <div class="card-body-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Products</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var category in Model)
+            {
+              <tr>
+                <td>@category.CategoryId</td>
+                <td>@category.CategoryName</td>
+                <td>@category.ProductCount</td>
+                <td>
+                  <div class="table-actions">
+                    <a href="" class="action-item view bg-info text-info">
+                      <i class="fa-regular fa-eye "></i>
+                    </a>
+                    <a href="" class="action-item edit bg-warning  text-warning">
+                      <i class="fa-solid fa-pen"></i>
+                    </a>
+                    <a href="" class="action-item delete bg-danger  text-danger">
+                      <i class="fa-solid fa-trash"></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      @Html.PagedListPager(Model, page => Url.Action("Categories",
+             new { page }),
+             new PagedListRenderOptions
+      {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        MaximumPageNumbersToDisplay = 5,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always
+      })
+    </div>
+  </div>
+</div>
+
+@section JS {
+  <script>
+  </script>
+}

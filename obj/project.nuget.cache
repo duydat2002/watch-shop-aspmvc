@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "GYK4GhBk45O1VZjyGbJjcY06a9u2UDs1tViPlYk8e8r4KKOvxstOcwyqGhylryn+PkASOY2Jz7Y2OoWqdQImZg==",
+  "dgSpecHash": "4cvJvpvErxzj1Fb7tIk4PD2uwM4n/Z/Ml7UfjWVW48Mfv/Rk9vB/Fs7HUyprkTCcnAoEqvBBjCxzt1Pbhvn6Og==",
   "success": true,
   "projectFilePath": "H:\\ASP_MVC\\WatchShop2\\WatchShop2.csproj",
   "expectedPackageFiles": [
@@ -169,7 +169,9 @@
     "C:\\Users\\DuyDat\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\DuyDat\\.nuget\\packages\\system.threading.tasks.dataflow\\7.0.0\\system.threading.tasks.dataflow.7.0.0.nupkg.sha512",
     "C:\\Users\\DuyDat\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\DuyDat\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
+    "C:\\Users\\DuyDat\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512",
+    "C:\\Users\\DuyDat\\.nuget\\packages\\x.pagedlist\\9.1.2\\x.pagedlist.9.1.2.nupkg.sha512",
+    "C:\\Users\\DuyDat\\.nuget\\packages\\x.pagedlist.mvc.core\\9.1.2\\x.pagedlist.mvc.core.9.1.2.nupkg.sha512"
   ],
   "logs": []
 }

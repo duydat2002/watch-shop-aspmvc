@@ -58,7 +58,7 @@
                     <span>Statistic</span>
                 </div>
                 <div class="navs">
-                    <a href="" class="nav-item @(ViewBag.NavActive == "Statistic" ? "active" : "")">
+                    <a href="admin/statistic" class="nav-item @(ViewBag.NavActive == "Statistic" ? "active" : "")">
                         <i class="fa-solid fa-chart-column icon"></i>
                         <span class="nav-name">Statistic</span>
                     </a>
@@ -153,6 +153,7 @@
         });
     </script>
     @await RenderSectionAsync("JS", required: false)
+    @RenderSection("scripts", required: false) <!-- Ensure to render the "scripts" section -->
 </body>
 
 </html>

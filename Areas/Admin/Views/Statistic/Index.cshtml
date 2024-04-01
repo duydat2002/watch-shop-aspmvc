@@ -1,0 +1,97 @@
+﻿@using Newtonsoft.Json;
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/fontawesome.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+
+
+    <!-- Tải jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <h2>Statistics</h2>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="orderChart" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="productChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(function () {
+            // Lấy dữ liệu thống kê số lượng đơn hàng từ ViewBag
+            var orderCountByStatus = @Html.Raw(JsonConvert.SerializeObject(ViewBag.OrderCountByStatus));
+
+            // Tách dữ liệu thành mảng các trạng thái và mảng số lượng
+            var orderLabels = orderCountByStatus.map(function (item) { return item.Status; });
+            var orderData = orderCountByStatus.map(function (item) { return item.OrderCount; });
+
+            // Tạo biểu đồ đơn hàng
+            var orderCtx = document.getElementById('orderChart').getContext('2d');
+            var orderChart = new Chart(orderCtx, {
+                type: 'bar',
+                data: {
+                    labels: orderLabels,
+                    datasets: [{
+                        label: 'Order Count',
+                        data: orderData,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            // Lấy dữ liệu thống kê số lượng sản phẩm từ ViewBag
+            var productCountByCategory = @Html.Raw(JsonConvert.SerializeObject(ViewBag.ProductCountByCategory));
+
+            // Tách dữ liệu thành mảng các danh mục và mảng số lượng sản phẩm
+            var categories = productCountByCategory.map(function (item) { return item.CategoryName; });
+            var productCounts = productCountByCategory.map(function (item) { return item.ProductCount; });
+
+            // Tạo biểu đồ sản phẩm
+            var productCtx = document.getElementById('productChart').getContext('2d');
+            var productChart = new Chart(productCtx, {
+                type: 'bar',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: 'Product Count',
+                        data: productCounts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+    </script>
+}
+</body>

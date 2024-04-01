@@ -8202,6 +8202,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 8.0.2",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 8.0.2",
+      "Newtonsoft.Json >= 13.0.3",
       "System.Data.SqlClient >= 4.8.6",
       "X.PagedList >= 9.1.2",
       "X.PagedList.Mvc.Core >= 9.1.2"
@@ -8284,6 +8285,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "[8.0.2, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.3, )"
           },
           "System.Data.SqlClient": {
             "target": "Package",

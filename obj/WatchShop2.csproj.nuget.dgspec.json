@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Maniac\\Desktop\\web\\watch-shop-aspmvc\\WatchShop2.csproj": {}
+    "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\WatchShop2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Maniac\\Desktop\\web\\watch-shop-aspmvc\\WatchShop2.csproj": {
+    "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\WatchShop2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Maniac\\Desktop\\web\\watch-shop-aspmvc\\WatchShop2.csproj",
+        "projectUniqueName": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\WatchShop2.csproj",
         "projectName": "WatchShop2",
-        "projectPath": "C:\\Users\\Maniac\\Desktop\\web\\watch-shop-aspmvc\\WatchShop2.csproj",
+        "projectPath": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\WatchShop2.csproj",
         "packagesPath": "C:\\Users\\Maniac\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Maniac\\Desktop\\web\\watch-shop-aspmvc\\obj\\",
+        "outputPath": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

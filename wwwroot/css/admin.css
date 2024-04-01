@@ -333,6 +333,10 @@ button {
   color: #fff;
 }
 
+.nav-item > i {
+  width: 20px;
+}
+
 .nav-name {
   margin-left: 10px;
 }
@@ -412,12 +416,15 @@ button {
   align-items: center;
   font-size: 14px;
   color: #262626;
-  cursor: pointer;
   margin-bottom: 10px;
 }
 
 .breakcrumb-root {
   color: #adb964;
+}
+
+.breakcrumb > span {
+  cursor: pointer;
 }
 
 .breakcrumb > span:hover,
@@ -572,6 +579,45 @@ button {
   color: #fff;
 }
 
+.form {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #c1e4fe;
+}
+
+.form-input:focus {
+  border-color: #4eb7f5;
+}
+
+.form-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-message {
+  text-align: center;
+  margin-top: 10px;
+}
+
 /* === Colors === */
 .color-box {
   width: 50px;
@@ -587,6 +633,128 @@ button {
 
 .color-name {
   margin-left: 5px;
+}
+
+/* === Add Modal === */
+.modal-container {
+  position: relative;
+}
+
+.extend-modal {
+  position: absolute;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  min-width: 350px;
+  max-width: 500px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid #c1e4fe;
+  overflow: hidden;
+}
+
+.search-input {
+  flex: 1 1 auto;
+  padding: 8px 10px;
+}
+
+.search-input:focus {
+  border-color: #4eb7f5;
+}
+
+.modal-button {
+  padding: 8px 8px;
+  font-weight: 600;
+}
+
+.modal-body {
+  margin-top: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  padding: 1px;
+  background-color: #cbd5e1;
+  border-radius: 8px;
+}
+
+.modal-list {
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* === Products Modal === */
+.product-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.product-item:hover {
+  background: #eaf7ff;
+}
+
+.product-image {
+  width: 80px;
+  flex-shrink: 0;
+}
+
+.product-name {
+  flex-grow: 1;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.product-checkbox {
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.product-checkbox .checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.product-checkbox .checkbox-icon {
+  display: none;
+  color: var(--green-color);
+}
+
+.product-checkbox:has(.checkbox:checked) {
+  border-color: var(--green-color);
+}
+
+.product-checkbox .checkbox:checked ~ .checkbox-icon {
+  display: block;
 }
 
 /* === Products === */

@@ -1,28 +1,25 @@
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
 
-@model IPagedList<CategoryWithProductCountModel>
+@model IPagedList<Role>
 
 
 @{
-  ViewData["Title"] = "Categories";
-  ViewBag.NavActive = "Category";
+  ViewData["Title"] = "Roles";
+  ViewBag.NavActive = "Role";
 }
 
 
-<h3 class="page-title">Categories</h3>
+<h3 class="page-title">Roles</h3>
 <div class="breakcrumb">
   <span class="breakcrumb-root">Manage</span>
   <i class="fa-solid fa-angles-right"></i>
-  <span><a href="/admin/attributes/categories">Categories</a></span>
+  <span><a href="/admin/user/roles">Roles</a></span>
 </div>
 <div class="content">
-  <div class="actions">
-    <button class="button button-gb create-button">Create</button>
-  </div>
   <div class="card list-container">
     <div class="card-header">
-      <span class="card-title">Category List</span>
+      <span class="card-title">Role List</span>
     </div>
     <div class="card-body">
       <div class="card-body-scroll">
@@ -30,26 +27,22 @@
           <thead>
             <tr>
               <th>Id</th>
-              <th>Name</th>
-              <th>Products</th>
+              <th>Role Name</th>
+              <th>Users</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            @foreach (var category in Model)
+            @foreach (var role in Model)
             {
               <tr>
-                <td>@category.CategoryId</td>
-                <td>@category.CategoryName</td>
-                <td>@category.ProductCount</td>
+                <td>@role.RoleId</td>
+                <td>@role.RoleName</td>
+                <td>@role.UserCount</td>
                 <td>
                   <div class="table-actions">
-                    <a href="/admin/attributes/categories/@category.CategoryId"
-                      class="action-item view bg-info text-info">
+                    <a href="/admin/user/roles/@role.RoleId" class="action-item view bg-info text-info">
                       <i class="fa-regular fa-eye "></i>
-                    </a>
-                    <a href="" class="action-item delete bg-danger  text-danger">
-                      <i class="fa-solid fa-trash"></i>
                     </a>
                   </div>
                 </td>
@@ -60,7 +53,7 @@
       </div>
     </div>
     <div class="card-footer">
-      @Html.PagedListPager(Model, page => Url.Action("Categories",
+      @Html.PagedListPager(Model, page => Url.Action("Roles",
              new { page }),
              new PagedListRenderOptions
       {

@@ -19,6 +19,21 @@ public class UserController : Controller
     _entityContext = entityContext;
   }
 
+  [Route("roles")]
+  public IActionResult Roles(int page = 1)
+  {
+    int pageSize = 10;
+    var roles = _entityContext.GetRoles().ToPagedList(page, pageSize);
+    return View(roles);
+  }
+
+  [Route("roles/{RoleId}")]
+  public IActionResult RoleDetail(int RoleId)
+  {
+    var role = _entityContext.GetRoleById(RoleId);
+    return View(role);
+  }
+
   [Route("administrators")]
   public IActionResult Administrators(int page = 1)
   {
@@ -33,5 +48,13 @@ public class UserController : Controller
     int pageSize = 10;
     var customers = _entityContext.GetCustomers().ToPagedList(page, pageSize);
     return View(customers);
+  }
+
+  [Route("/admin/api/user/get-users-by-role")]
+  public IActionResult GetCustomers(int roleId, int page = 1)
+  {
+    int pageSize = 10;
+    var administrators = _entityContext.GetUserByRole(roleId).ToPagedList(page, pageSize);
+    return PartialView("_UserListCard", administrators);
   }
 }

@@ -1,0 +1,57 @@
+@model Role
+
+
+@{
+  ViewData["Title"] = "Role Detail";
+  ViewBag.NavActive = "Role";
+}
+
+
+<h3 class="page-title">@Model.RoleName Detail</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/user/roles">Roles</a></span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/user/roles/@Model.RoleId">@Model.RoleName</a></span>
+</div>
+<div class="content">
+  <div class="flex cl-gap">
+    <div class="col-8 pd-gap">
+      <div class="card list-container" id="list-user">
+
+      </div>
+    </div>
+    <div class="col-4 pd-gap">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Role Info</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Role Name</span>
+              <input type="text" name="role_name" class="form-input" value="@Model.RoleName">
+            </div>
+          </div>
+          <button class="button button-gb">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+@section JS {
+  <script>
+    const userList = document.querySelector("#list-user");
+    let page = 1
+
+    function getUser() {
+      AjaxGet(`/admin/api/user/get-users-by-role?roleId=${@Model.RoleId}&page=${page}`, (responseText) => {
+        userList.innerHTML = responseText
+      })
+    }
+    getUser()
+  </script>
+}

@@ -30,6 +30,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDYXRlZ29yaWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/CategoryDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDYXRlZ29yeURldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/Colors.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDb2xvcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -54,12 +58,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_ProductList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_ProductListCard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdENhcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_UserListCard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9Vc2VyTGlzdENhcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [h:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/Administrators.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxBZG1pbmlzdHJhdG9ycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [h:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/Customers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxDdXN0b21lcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/RoleDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxSb2xlRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/Roles.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxSb2xlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [h:/ASP_MVC/WatchShop2/Areas/Admin/Views/_ViewImports.cshtml]

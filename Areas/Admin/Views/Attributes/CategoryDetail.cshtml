@@ -1,0 +1,204 @@
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model Category
+
+@{
+  ViewData["Title"] = "Category Detail";
+  ViewBag.NavActive = "Category";
+
+  IPagedList<ProductModel> products = ViewBag.Products;
+}
+
+
+<h3 class="page-title">@Model.CategoryName Detail</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/attributes/categories">Categories</a></span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/attributes/categories/@Model.CategoryId">@Model.CategoryName</a></span>
+</div>
+<div class="content">
+  <div class="flex cl-gap">
+    <div class="col-8 pd-gap">
+      <div class="card list-container" id="list-product">
+        <div class="card-header flex">
+          <span class="card-title">Category List</span>
+          <div class="modal-container" id="add_product_container">
+            <button class="button button-gb" id="add_product_btn">Add Product</button>
+            <div class="extend-modal add-product-modal hidden" id="add_product_modal">
+              <div class="modal-header">
+                <div class="search-container">
+                  <input type="text" name="search_add_products" class="search-input"
+                    placeholder="Search products by name">
+                  <button class="modal-button search-button">Search</button>
+                </div>
+              </div>
+              <div class="modal-body">
+                <div class="modal-list" id="add_product_list">
+
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button data-categoryid="@Model.CategoryId" class="button button-gb modal-button"
+                  id="add-product-button">Add Products</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-body-scroll" id="product_list_card">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th style="min-width: 100px;">Image</th>
+                  <th style="min-width: 200px;">Name</th>
+                  <th>Size</th>
+                  <th>Color</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (var product in products)
+                {
+                  string[] alts = @product.ProductImages.Split(',');
+
+                  <tr>
+                    <td>@product.ProductId</td>
+                    <td>
+                      <div class='detail-img'>
+                        <img src='~/image/products/@alts[0]' alt='@alts[0]'>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="product-name">@product.ProductName</span>
+                    </td>
+                    <td>@product.SizeName</td>
+                    <td>
+                      <div class="color-container">
+                        <div class="color-box" style="background: @product.ColorValue;"></div>
+                        <span class="color-name">@product.ColorName</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="table-actions">
+                        <a href="" class="action-item view bg-info text-info">
+                          <i class="fa-regular fa-eye "></i>
+                        </a>
+                        <a href="" class="action-item delete bg-danger text-danger">
+                          <i class="fa-solid fa-trash"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          @Html.PagedListPager(products, page => Url.Action("CategoryDetail",
+                 new { page }),
+                 new PagedListRenderOptions
+          {
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" },
+            MaximumPageNumbersToDisplay = 5,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always
+          })
+        </div>
+      </div>
+    </div>
+    <div class="col-4 pd-gap">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Category Info</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Category Name</span>
+              <input type="text" name="category_name" class="form-input" value="@Model.CategoryName">
+            </div>
+          </div>
+          <div class="form-buttons">
+            <button data-categoryid="@Model.CategoryId" class="button button-gb form-button"
+              id="save-button">Save</button>
+          </div>
+          <div class="form-message">
+            <span class="form-error text-danger hidden">Something went wrong!</span>
+            <span class="form-success text-success hidden">Update successfuly!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section JS {
+  <script>
+    const saveButton = document.querySelector("#save-button");
+    const successDOM = document.querySelector(".form-success");
+    const errorDOM = document.querySelector(".form-error");
+
+    saveButton.addEventListener("click", () => {
+      const CategoryId = saveButton.dataset.categoryid;
+      const CategoryName = document.querySelector("input[name='category_name']").value;
+      successDOM.classList.add("hidden")
+      errorDOM.classList.add("hidden")
+
+
+      AjaxPost("/admin/api/attributes/categories/update-category",
+        { CategoryId, CategoryName },
+        (responseText) => {
+          const data = JSON.parse(responseText);
+
+          if (data.success) {
+            successDOM.classList.remove("hidden")
+          } else {
+            errorDOM.classList.remove("hidden")
+          }
+        }
+      )
+    })
+
+    const addProductContainerDOM = document.querySelector("#add_product_container")
+    const addProductModalDOM = document.querySelector("#add_product_modal")
+    const addProductBtnDOM = document.querySelector("#add_product_btn")
+
+    onClickOutside(addProductContainerDOM, () => {
+      addProductModalDOM.classList.add("hidden")
+    })
+
+    addProductBtnDOM.addEventListener("click", () => {
+      addProductModalDOM.classList.remove("hidden")
+      getAddProduct()
+    })
+
+    const productListCardDOM = document.querySelector("#product_list_card");
+    const addProductListDOM = document.querySelector("#add_product_list");
+    const searchAddProductDOM = document.querySelector(".add-product-modal .search-button");
+
+    searchAddProductDOM.addEventListener("click", () => {
+      getAddProduct()
+    })
+
+    function getAddProduct() {
+      const search = document.querySelector("input[name='search_add_products']").value
+      const page = getParam("page") ?? 1
+
+      AjaxGet(`/admin/api/products/get-products-without?CategoryId=@Model.CategoryId&search=${search}`, (responseText) => {
+        addProductListDOM.innerHTML = responseText
+      })
+
+      AjaxGet(`/admin/api/products/get-products?CategoryId=@Model.CategoryId&search=${search}&page=${page}`, (responseText) => {
+        productListCardDOM.innerHTML = responseText
+      })
+    }
+
+
+  </script>
+}

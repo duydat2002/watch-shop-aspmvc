@@ -54,24 +54,6 @@ public partial class WatchShop2Context : DbContext
         ).ToList().SingleOrDefault();
     }
 
-    public List<Size> GetSizes(string ProductName = "", string Categories = "")
-    {
-        var sizes = this.Sizes.FromSqlRaw("EXECUTE pr_GetSizes @ProductName, @Categories",
-            new SqlParameter("@ProductName", ProductName),
-            new SqlParameter("@Categories", Categories)
-        ).ToList();
-        return sizes;
-    }
-
-    public List<Color> GetColors(string ProductName = "", string Categories = "")
-    {
-        var colors = this.Colors.FromSqlRaw("EXECUTE pr_GetColors @ProductName, @Categories",
-            new SqlParameter("@ProductName", ProductName),
-            new SqlParameter("@Categories", Categories)
-        ).ToList();
-        return colors;
-    }
-
     public List<Product> FilterProducts(string ProductName = "", string Categories = "", string Colors = "", string Sizes = "", float PriceStart = 0, float PriceEnd = float.MaxValue, int PageNumber = 1, int PageSize = 10, string sort = "auto")
     {
         var products = this.Products.FromSqlRaw("EXECUTE pr_FilterProducts @ProductName, @Categories, @Colors, @Sizes, @PriceStart, @PriceEnd, @PageNumber, @PageSize, @SortType",
@@ -113,6 +95,7 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    // Account
     public int SignUp(string Email, string Password, string FirstName, string LastName, bool Gender, DateOnly? Birthdate = null)
     {
         return this.Database.ExecuteSqlRaw("EXECUTE pr_SignUp @Email, @Password, @FirstName, @LastName, @Gender, @Birthdate",
@@ -140,6 +123,7 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    //User
     public User? GetUserInfo(int UserId)
     {
         return this.Users.FromSqlRaw("EXECUTE pr_GetUserInfo @UserId",
@@ -201,6 +185,7 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    // Cart
     public List<CartModel> GetCart(int UserId)
     {
         return this.Database.SqlQueryRaw<CartModel>("EXECUTE pr_GetUserCart @UserId",
@@ -232,6 +217,7 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    // Order
     public int AddOrder(AddOrderModel addOrderModel)
     {
         return this.Database.ExecuteSqlRaw("EXECUTE pr_AddOrder @UserId, @Carts, @PhoneNumber, @Address",
@@ -257,24 +243,113 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    //Admin/ Administrators
     public List<UserWithRoleName> GetAdministrators()
     {
         return this.Database.SqlQueryRaw<UserWithRoleName>("EXECUTE pr_GetAdministrators").ToList();
     }
 
+    //Admin/ Customers
     public List<UserWithRoleName> GetCustomers()
     {
         return this.Database.SqlQueryRaw<UserWithRoleName>("EXECUTE pr_GetCustomers").ToList();
     }
 
+    //Admin/ Products
+    public List<ProductModel> GetProducts(int CategoryId = 0, int SizeId = 0, int ColorId = 0)
+    {
+        return this.Database.SqlQueryRaw<ProductModel>("EXECUTE pr_GetProducts @CategoryId, @SizeId, @ColorId",
+            new SqlParameter("@CategoryId", CategoryId),
+            new SqlParameter("@SizeId", SizeId),
+            new SqlParameter("@ColorId", ColorId)
+        ).ToList();
+    }
+
+    public List<ProductModel> GetProductsWithOut(int CategoryId = 0, int SizeId = 0, int ColorId = 0)
+    {
+        return this.Database.SqlQueryRaw<ProductModel>("EXECUTE pr_GetProductsWithOut @CategoryId, @SizeId, @ColorId",
+            new SqlParameter("@CategoryId", CategoryId),
+            new SqlParameter("@SizeId", SizeId),
+            new SqlParameter("@ColorId", ColorId)
+        ).ToList();
+    }
+
+    //Admin/ Categories
     public List<CategoryWithProductCountModel> GetCategories()
     {
         return this.Database.SqlQueryRaw<CategoryWithProductCountModel>("EXECUTE pr_GetCategories").ToList();
     }
 
-    public List<ProductModel> GetProducts()
+    public Category? GetCategoryById(int CategoryId)
     {
-        return this.Database.SqlQueryRaw<ProductModel>("EXECUTE pr_GetProducts").ToList();
+        return this.Categories.FromSqlRaw("EXECUTE pr_GetCategoryById @CategoryId",
+            new SqlParameter("@CategoryId", CategoryId)
+        ).ToList().SingleOrDefault();
+    }
+
+    public int UpdateCategory(Category category)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_UpdateCategory @CategoryId, @CategoryName",
+            new SqlParameter("@CategoryId", category.CategoryId),
+            new SqlParameter("@CategoryName", category.CategoryName)
+        );
+    }
+
+    // public int AddProductCategory(Category category)
+    // {
+    //     return this.Database.ExecuteSqlRaw("EXECUTE pr_AddProductCategory @CategoryId, @CategoryName",
+    //         new SqlParameter("@CategoryId", category.CategoryId),
+    //         new SqlParameter("@CategoryName", category.CategoryName)
+    //     );
+    // }
+
+    // public int DeleteProductCategory(Category category)
+    // {
+    //     return this.Database.ExecuteSqlRaw("EXECUTE pr_DeleteProductCategory @CategoryId, @CategoryName",
+    //         new SqlParameter("@CategoryId", category.CategoryId),
+    //         new SqlParameter("@CategoryName", category.CategoryName)
+    //     );
+    // }
+
+    // Admin/ Sizes
+    public List<Size> GetSizes(string ProductName = "", string Categories = "")
+    {
+        var sizes = this.Sizes.FromSqlRaw("EXECUTE pr_GetSizes @ProductName, @Categories",
+            new SqlParameter("@ProductName", ProductName),
+            new SqlParameter("@Categories", Categories)
+        ).ToList();
+        return sizes;
+    }
+
+    // Admin/ Colors
+    public List<Color> GetColors(string ProductName = "", string Categories = "")
+    {
+        var colors = this.Colors.FromSqlRaw("EXECUTE pr_GetColors @ProductName, @Categories",
+            new SqlParameter("@ProductName", ProductName),
+            new SqlParameter("@Categories", Categories)
+        ).ToList();
+        return colors;
+    }
+
+
+    //Admin/ Roles
+    public List<Role> GetRoles()
+    {
+        return this.Roles.FromSqlRaw("EXECUTE pr_GetRoles").ToList();
+    }
+
+    public Role? GetRoleById(int RoleId)
+    {
+        return this.Roles.FromSqlRaw("EXECUTE pr_GetRoleById @RoleId",
+            new SqlParameter("@RoleId", RoleId)
+        ).ToList().SingleOrDefault();
+    }
+
+    public List<UserWithRoleName> GetUserByRole(int RoleId)
+    {
+        return this.Database.SqlQueryRaw<UserWithRoleName>("EXECUTE pr_GetUserByRole @RoleId",
+            new SqlParameter("@RoleId", RoleId)
+        ).ToList();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

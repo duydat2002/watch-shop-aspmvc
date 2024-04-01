@@ -27,6 +27,10 @@
                     <span>Manage</span>
                 </div>
                 <div class="navs">
+                    <a href="/admin/user/roles" class="nav-item @(ViewBag.NavActive == "Role" ? "active" : "")">
+                        <i class="fa-solid fa-user-shield"></i>
+                        <span class="nav-name">Role</span>
+                    </a>
                     <a href="/admin/user/administrators"
                         class="nav-item @(ViewBag.NavActive == "Administrator" ? "active" : "")">
                         <i class="fa-solid fa-user-tie icon"></i>
@@ -136,6 +140,17 @@
 
             window.history.pushState({}, "", url);
         };
+
+        const onClickOutside = (element, callback) => {
+            document.addEventListener('click', e => {
+                if (!element.contains(e.target)) callback();
+            });
+        };
+
+        function getParam(paramName) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(paramName);
+        }
     </script>
     <script>
         const headerAccountBtn = document.querySelector(".account__link");

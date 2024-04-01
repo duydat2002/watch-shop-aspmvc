@@ -1,0 +1,52 @@
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<ProductModel>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th style="min-width: 100px;">Image</th>
+      <th style="min-width: 200px;">Name</th>
+      <th>Size</th>
+      <th>Color</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var product in Model)
+    {
+      string[] alts = @product.ProductImages.Split(',');
+
+      <tr>
+        <td>@product.ProductId</td>
+        <td>
+          <div class='detail-img'>
+            <img src='~/image/products/@alts[0]' alt='@alts[0]'>
+          </div>
+        </td>
+        <td>
+          <span class="product-name">@product.ProductName</span>
+        </td>
+        <td>@product.SizeName</td>
+        <td>
+          <div class="color-container">
+            <div class="color-box" style="background: @product.ColorValue;"></div>
+            <span class="color-name">@product.ColorName</span>
+          </div>
+        </td>
+        <td>
+          <div class="table-actions">
+            <a href="" class="action-item view bg-info text-info">
+              <i class="fa-regular fa-eye "></i>
+            </a>
+            <a href="" class="action-item delete bg-danger text-danger">
+              <i class="fa-solid fa-trash"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

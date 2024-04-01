@@ -27,6 +27,18 @@ public class AttributesController : Controller
     return View(categories);
   }
 
+  [Route("categories/{CategoryId}")]
+  public IActionResult CategoryDetail(int CategoryId, int page = 1)
+  {
+    int pageSize = 5;
+    var products = _entityContext.GetProducts(CategoryId).ToPagedList(page, pageSize);
+    var category = _entityContext.GetCategoryById(CategoryId);
+
+    ViewBag.Products = products;
+
+    return View(category);
+  }
+
   [Route("colors")]
   public IActionResult Colors(int page = 1)
   {
@@ -41,5 +53,13 @@ public class AttributesController : Controller
     int pageSize = 10;
     var sizes = _entityContext.GetSizes().ToPagedList(page, pageSize);
     return View(sizes);
+  }
+
+  [HttpPost]
+  [Route("/admin/api/attributes/categories/update-category")]
+  public IActionResult UpdateCategory([FromBody] Category category)
+  {
+    int update = _entityContext.UpdateCategory(category);
+    return Json(new { success = update > 0 });
   }
 }

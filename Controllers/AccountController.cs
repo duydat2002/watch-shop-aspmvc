@@ -42,17 +42,19 @@ public class AccountController : Controller
   [Route("signup")]
   public IActionResult SignUp(User user)
   {
+        
     if (ModelState.IsValid)
     {
       try
       {
         string hashPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
         int signUp = _entityContext.SignUp(user.Email, hashPassword, user.FirstName, user.LastName, user.Gender, user.Birthdate);
-
+        //return Json(new {user, signUp, hashPassword });
         return RedirectToAction("SignIn", "Account");
       }
       catch (System.Exception ex)
       {
+               // return Json(new {ex.Message});
         if (ex.Message.IndexOf("UC_User_Email") != -1)
         {
           ModelState.AddModelError("Email", "The email is already used.");

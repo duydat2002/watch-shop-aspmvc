@@ -8,9 +8,11 @@ namespace WatchShop2.Areas.Admin.Controllers;
 
 [Area("admin")]
 [Route("admin")]
+[Route("admin/home")]
 public class HomeController : Controller
 {
-  private WatchShop2Context _entityContext { get; }
+   
+    private WatchShop2Context _entityContext { get; }
 
   private IWebHostEnvironment _environment;
 
@@ -19,7 +21,8 @@ public class HomeController : Controller
     _entityContext = entityContext;
     _environment = environment;
   }
-
+    [Route("")]
+    [Route("index")]
   public IActionResult Index()
   {
     return View();

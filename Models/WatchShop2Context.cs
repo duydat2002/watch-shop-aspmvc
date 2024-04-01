@@ -45,7 +45,7 @@ public partial class WatchShop2Context : DbContext
     public virtual DbSet<UserContact> UserContacts { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DuyDat");
+        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:kd");
 
     public User? GetUserById(int UserId)
     {

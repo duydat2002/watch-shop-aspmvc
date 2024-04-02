@@ -1,3 +1,5 @@
+using X.PagedList;
+
 namespace WatchShop2.Models;
 
 public class PagedListMetaDataModel

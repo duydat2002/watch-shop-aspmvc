@@ -7,7 +7,7 @@
   ViewData["Title"] = "Category Detail";
   ViewBag.NavActive = "Category";
 
-  IPagedList<ProductModel> products = ViewBag.Products;
+  IPagedList<Product> products = ViewBag.Products;
 }
 
 
@@ -24,9 +24,9 @@
     <div class="col-8 pd-gap">
       <div class="card list-container" id="list-product">
         <div class="card-header flex">
-          <span class="card-title">Category List</span>
+          <span class="card-title">Product List</span>
           <div class="modal-container" id="add_product_container">
-            <button class="button button-gb" id="add_product_btn">Add Product</button>
+            <button class="button button-gb" id="add_product_modal_btn">Add Product</button>
             <div class="extend-modal add-product-modal hidden" id="add_product_modal">
               <div class="modal-header">
                 <div class="search-container">
@@ -39,10 +39,6 @@
                 <div class="modal-list" id="add_product_list">
 
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button data-categoryid="@Model.CategoryId" class="button button-gb modal-button"
-                  id="add-product-button">Add Products</button>
               </div>
             </div>
           </div>
@@ -84,12 +80,13 @@
                     </td>
                     <td>
                       <div class="table-actions">
-                        <a href="" class="action-item view bg-info text-info">
+                        <a href="/admin/products/@product.ProductId" class="action-item view bg-info text-info">
                           <i class="fa-regular fa-eye "></i>
                         </a>
-                        <a href="" class="action-item delete bg-danger text-danger">
+                        <div class="action-item delete bg-danger text-danger"
+                          onclick="deleteProductCategory(@product.ProductId)">
                           <i class="fa-solid fa-trash"></i>
-                        </a>
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -125,8 +122,7 @@
             </div>
           </div>
           <div class="form-buttons">
-            <button data-categoryid="@Model.CategoryId" class="button button-gb form-button"
-              id="save-button">Save</button>
+            <button class="button button-gb form-button" id="save-button">Save</button>
           </div>
           <div class="form-message">
             <span class="form-error text-danger hidden">Something went wrong!</span>
@@ -140,12 +136,14 @@
 
 @section JS {
   <script>
+    const CategoryId = @Model.CategoryId;
+
+    // Save name
     const saveButton = document.querySelector("#save-button");
     const successDOM = document.querySelector(".form-success");
     const errorDOM = document.querySelector(".form-error");
 
     saveButton.addEventListener("click", () => {
-      const CategoryId = saveButton.dataset.categoryid;
       const CategoryName = document.querySelector("input[name='category_name']").value;
       successDOM.classList.add("hidden")
       errorDOM.classList.add("hidden")
@@ -165,9 +163,10 @@
       )
     })
 
+    // Modal
     const addProductContainerDOM = document.querySelector("#add_product_container")
     const addProductModalDOM = document.querySelector("#add_product_modal")
-    const addProductBtnDOM = document.querySelector("#add_product_btn")
+    const addProductBtnDOM = document.querySelector("#add_product_modal_btn")
 
     onClickOutside(addProductContainerDOM, () => {
       addProductModalDOM.classList.add("hidden")
@@ -178,6 +177,7 @@
       getAddProduct()
     })
 
+    // Search
     const productListCardDOM = document.querySelector("#product_list_card");
     const addProductListDOM = document.querySelector("#add_product_list");
     const searchAddProductDOM = document.querySelector(".add-product-modal .search-button");
@@ -188,17 +188,62 @@
 
     function getAddProduct() {
       const search = document.querySelector("input[name='search_add_products']").value
-      const page = getParam("page") ?? 1
 
       AjaxGet(`/admin/api/products/get-products-without?CategoryId=@Model.CategoryId&search=${search}`, (responseText) => {
         addProductListDOM.innerHTML = responseText
       })
+    }
 
-      AjaxGet(`/admin/api/products/get-products?CategoryId=@Model.CategoryId&search=${search}&page=${page}`, (responseText) => {
+    function getProductsCard() {
+      const page = getParam("page") ?? 1
+
+      AjaxGet(`/admin/api/products/get-products?CategoryId=@Model.CategoryId&page=${page}`, (responseText) => {
         productListCardDOM.innerHTML = responseText
+
+        const itemsDOM = productListCardDOM.querySelectorAll(".item")
+
+        itemsDOM.forEach(item => {
+          const ProductId = item.dataset.productid;
+          const viewDOM = item.querySelector(".action-item.view")
+          const deleteDOM = item.querySelector(".action-item.delete")
+
+          viewDOM.href = "123";
+          deleteDOM.addEventListener("click", () => { deleteProductCategory(ProductId) })
+        })
       })
     }
 
+    // Add Product Category 
+    function addProductCategory(ProductId) {
+      AjaxPost("/admin/api/attributes/categories/add-product",
+        { ProductId, CategoryId },
+        (responseText) => {
+          const data = JSON.parse(responseText)
+          if (data.success) {
+            getAddProduct();
+            getProductsCard()
+          } else {
+            console.log("fail");
+          }
+        })
+    }
+
+    // Delete Product Category 
+    function deleteProductCategory(ProductId) {
+      if (confirm("Are you sure you want to delete?")) {
+        AjaxPost("/admin/api/attributes/categories/delete-product",
+          { ProductId, CategoryId },
+          (responseText) => {
+            const data = JSON.parse(responseText)
+            if (data.success) {
+              getAddProduct();
+              getProductsCard()
+            } else {
+              console.log("fail");
+            }
+          })
+      }
+    }
 
   </script>
 }

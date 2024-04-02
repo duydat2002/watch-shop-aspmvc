@@ -17,171 +17,183 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WatchShop2
 build_property.RootNamespace = WatchShop2
-build_property.ProjectDir = H:\ASP_MVC\WatchShop2\
+build_property.ProjectDir = h:\ASP_MVC\WatchShop2\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = H:\ASP_MVC\WatchShop2
+build_property.MSBuildProjectDirectory = h:\ASP_MVC\WatchShop2
 build_property._RazorSourceGeneratorDebug = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/Categories.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/Categories.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDYXRlZ29yaWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/CategoryDetail.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/CategoryDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDYXRlZ29yeURldGFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/Colors.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/ColorDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDb2xvckRldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/Colors.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDb2xvcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/Sizes.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/SizeDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xTaXplRGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/Sizes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xTaXplcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Home/Index.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Home/PageNotFound.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Home/PageNotFound.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxQYWdlTm90Rm91bmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Product/Products.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Product/ProductDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxQcm9kdWN0RGV0YWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Product/Products.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxQcm9kdWN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_Layout.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_ProductList.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_ProductList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_ProductListCard.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_ProductListCard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9Qcm9kdWN0TGlzdENhcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_UserListCard.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Shared/_UserListCard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9Vc2VyTGlzdENhcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/Administrators.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/Administrators.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxBZG1pbmlzdHJhdG9ycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/Customers.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/Customers.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxDdXN0b21lcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/RoleDetail.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/RoleDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxSb2xlRGV0YWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/Roles.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/User/Roles.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxSb2xlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/_ViewImports.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Areas/Admin/Views/_ViewStart.cshtml]
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Account/Index.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Account/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Account/SignIn.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Account/SignIn.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTaWduSW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Account/SignUp.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Account/SignUp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTaWduVXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Cart/Index.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Cart/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Cart/PurchaseOrder.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Cart/PurchaseOrder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxQdXJjaGFzZU9yZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Home/Index.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Home/PageNotFound.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Home/PageNotFound.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQYWdlTm90Rm91bmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Home/Privacy.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Home/Upload.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Home/Upload.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVcGxvYWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Product/Detail.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Product/Detail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxEZXRhaWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Product/Products.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Product/Products.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdFxQcm9kdWN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/Error.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/_AccountLayout.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/_AccountLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BY2NvdW50TGF5b3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/_CartItems.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/_CartItems.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DYXJ0SXRlbXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/_HeaderCartItems.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/_HeaderCartItems.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9IZWFkZXJDYXJ0SXRlbXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/_Layout.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/_OrderItems.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/_OrderItems.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9PcmRlckl0ZW1zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/_ProductItems.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/_ProductItems.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0SXRlbXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/_ProductSlides.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/_ProductSlides.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Qcm9kdWN0U2xpZGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/_UserContactItems.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/_UserContactItems.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Vc2VyQ29udGFjdEl0ZW1zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/Shared/_ValidationScriptsPartial.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/_ViewImports.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/ASP_MVC/WatchShop2/Views/_ViewStart.cshtml]
+[h:/ASP_MVC/WatchShop2/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

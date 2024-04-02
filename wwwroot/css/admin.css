@@ -237,15 +237,20 @@ button {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-/* ::-webkit-scrollbar {
+
+.scroll-bar-y::-webkit-scrollbar {
   width: 5px;
 }
 
-::-webkit-scrollbar-thumb {
+.scroll-bar-x::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
   padding: 1px;
   background-color: #cbd5e1;
   border-radius: 8px;
-} */
+}
 
 .sidebar {
   position: fixed;
@@ -450,6 +455,7 @@ button {
   background: #fff;
   border-radius: 8px;
   border: 1px solid #e2e8f0;
+  margin-bottom: 20px;
 }
 
 .card-header {
@@ -547,6 +553,7 @@ button {
 .table-actions {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -558,6 +565,7 @@ button {
   height: 32px;
   border-radius: 50%;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .table-actions .action-item > i {
@@ -596,14 +604,17 @@ button {
   margin-bottom: 8px;
 }
 
-.form-input {
+.form-input,
+.form-area {
   width: 100%;
   padding: 8px 10px;
   border-radius: 6px;
   border: 1px solid #c1e4fe;
+  resize: vertical;
 }
 
-.form-input:focus {
+.form-input:focus,
+.form-area:focus {
   border-color: #4eb7f5;
 }
 
@@ -616,6 +627,15 @@ button {
 .form-message {
   text-align: center;
   margin-top: 10px;
+}
+
+.form-row .form-error {
+  padding: 8px 10px;
+}
+
+.form-error {
+  display: block;
+  padding: 15px;
 }
 
 /* === Colors === */
@@ -648,7 +668,7 @@ button {
   top: 0;
   right: 0;
   padding: 10px;
-  min-width: 350px;
+  min-width: 400px;
   max-width: 500px;
 }
 
@@ -690,15 +710,6 @@ button {
   border-radius: 8px;
 }
 
-.modal-list {
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
 /* === Products Modal === */
 .product-item {
   display: flex;
@@ -721,7 +732,72 @@ button {
   font-weight: 400;
 }
 
-.product-checkbox {
+.product-check {
+  margin-left: 5px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: #dddddd;
+  font-size: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.product-check:hover {
+  background: #c0d06d;
+  color: #fff;
+}
+
+/* === Products === */
+.product-name-image {
+  display: flex;
+  align-items: center;
+}
+
+.image-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.image-box {
+  width: 150px;
+  position: relative;
+  border-radius: 4px;
+  border: 1px solid #c1e4fe;
+  overflow: hidden;
+}
+
+.image-delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background: #b4b4b4;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.image-box:hover .image-delete {
+  display: flex;
+}
+
+.image-delete:hover {
+  background: #ff5a5a;
+  color: #fff;
+}
+
+.item-checkbox {
   z-index: 1;
   width: 20px;
   height: 20px;
@@ -734,7 +810,7 @@ button {
   cursor: pointer;
 }
 
-.product-checkbox .checkbox {
+.item-checkbox .checkbox {
   position: absolute;
   top: 0;
   left: 0;
@@ -744,21 +820,82 @@ button {
   cursor: pointer;
 }
 
-.product-checkbox .checkbox-icon {
+.item-checkbox .checkbox-icon {
   display: none;
   color: var(--green-color);
 }
 
-.product-checkbox:has(.checkbox:checked) {
+.item-checkbox:has(.checkbox:checked) {
   border-color: var(--green-color);
 }
 
-.product-checkbox .checkbox:checked ~ .checkbox-icon {
+.item-checkbox .checkbox:checked ~ .checkbox-icon {
   display: block;
 }
 
-/* === Products === */
-.product-name-image {
+.category-item {
   display: flex;
   align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.category-item:hover {
+  color: var(--green-color);
+}
+
+.category-name {
+  margin-left: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.form-selection {
+  position: relative;
+  border-radius: 6px;
+  border: 1px solid #c1e4fe;
+}
+
+.form-selects {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #c1e4fe;
+  height: 250px;
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.form-select-item {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.form-select-item.active,
+.form-select-item:hover {
+  background: #eaf7ff;
+}
+
+.color-option {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.color-option.active,
+.color-option:hover {
+  background: #eaf7ff;
+}
+
+.color-option-box {
+  width: 40px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #bfc0c1;
+  margin-right: 5px;
 }

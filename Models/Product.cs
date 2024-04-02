@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WatchShop2.Models;
 
@@ -31,7 +32,8 @@ public partial class Product
 
     public string? SizeName { get; set; } = null!;
 
-    public double PriceSale { get; set; }
+    [NotMapped]
+    public double PriceSale { get { return Price * (100 - Discount) / 100; } }
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 

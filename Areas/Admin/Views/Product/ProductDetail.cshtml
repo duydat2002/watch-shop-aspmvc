@@ -1,0 +1,378 @@
+@model Product
+
+@{
+  ViewData["Title"] = "Product Detail";
+  ViewBag.NavActive = "Product";
+
+  var ProductCategories = (List<ProductCategories>)ViewBag.ProductCategories;
+  var Categories = (List<CategoryWithProductCountModel>)ViewBag.Categories;
+  var Colors = (List<Color>)ViewBag.Colors;
+  var Sizes = (List<Size>)ViewBag.Sizes;
+
+  string[] alts = Model.ProductImages.Split(',');
+}
+
+@section CSS {
+  <style>
+    .form {
+      border: none;
+    }
+  </style>
+}
+
+<h3 class="page-title">@Model.ProductName Detail</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/products">Products</a></span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/products/@Model.ProductId">@Model.ProductName</a></span>
+</div>
+<div class="content">
+  <div class="actions">
+    <button class="button button-gb save-update" onclick="updateProduct()">Save</button>
+  </div>
+  <div class="flex cl-gap">
+    <div class="col-8 pd-gap">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Image</span>
+        </div>
+        <div class="card-body">
+          <input type="file" name="images" accept="image/*" multiple class="input-file image-input"
+            onchange="previewImages(this)">
+          <div class="image-list">
+            @for (int i = 0; i < alts.Length; i++)
+            {
+              <div class="image-box image-item" data-name="@alts[i]" data-index="@(i + 1)">
+                <img src="~/image/products/@alts[i]" alt="@alts[i]">
+                <div class="image-delete" onclick="deleteImage(@(i + 1))">
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+        <span class="form-error text-danger product-image-error hidden">There must be at least 2 photos.</span>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Product Info</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Product Name</span>
+              <input type="text" name="product_name" class="form-input" value="@Model.ProductName">
+              <span class="form-error text-danger product-name-error hidden">Please enter product name.</span>
+            </div>
+            <div class="form-row">
+              <span class="form-title">Product Slug</span>
+              <input type="text" name="product_slug" class="form-input" value="@Model.ProductSlug">
+              <span class="form-error text-danger product-slug-error hidden">Please enter product slug.</span>
+            </div>
+            <div class="form-row">
+              <span class="form-title">Product Description</span>
+              <textarea rows="5" name="product_desc" class="form-area">@Model.ProductDesc</textarea>
+              <span class="form-error text-danger product-desc-error hidden">Please enter product desc.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Price</span>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <span class="form-title">Price</span>
+            <input type="number" min="1" name="product_price" class="form-input" value="@Model.Price">
+          </div>
+          <div class="flex cl-gap">
+            <div class="col-6 pd-gap">
+              <div class="form-row">
+                <span class="form-title">Discount (%)</span>
+                <input type="number" min="0" max="100" name="product_discount" class="form-input"
+                  value="@Model.Discount">
+              </div>
+            </div>
+            <div class="col-6 pd-gap">
+              <div class="form-row">
+                <span class="form-title">Price Sale</span>
+                <input type="number" disabled min="0" name="product_price-sale" class="form-input"
+                  value="@Model.PriceSale">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4 pd-gap">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Quantity</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Quantity</span>
+              <input type="number" min="0" name="product_quantity" class="form-input" value="@Model.Quantity">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Category</span>
+        </div>
+        <div class="card-body">
+          <div class="product-categories">
+            @foreach (var category in Categories)
+            {
+              bool existCate = @ProductCategories.Exists(c => c.CategoryId == category.CategoryId);
+
+              <div class="category-item">
+                <div class="item-checkbox">
+                  <input class="checkbox" type="checkbox" name="categories" id="category-@category.CategoryId"
+                    value="@category.CategoryId" @(existCate ? "checked" : "")>
+                  <i class='fas fa-check checkbox-icon'></i>
+                </div>
+                <label for="category-@category.CategoryId" class="category-name">@category.CategoryName</label>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Size</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Size</span>
+              <div class="form-selection size-selection" onclick="openSelects(this)">
+                <div class="form-selected size-selected" data-sizeid="@Model.SizeId">
+                  <div class="form-select-item" value="@Model.SizeId">@Model.SizeName</div>
+                </div>
+                <div class="form-selects scroll-bar scroll-bar-y hidden">
+                  @foreach (var size in Sizes)
+                  {
+                    bool checkedSize = @size.SizeId == @Model.SizeId;
+
+                    <div class="form-select-item size-option @(checkedSize ? "active" : "")" data-sizeid="@size.SizeId">
+                      @size.SizeName
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Color</span>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <span class="form-title">Color</span>
+            <div class="form-selection color-selection" onclick="openSelects(this)">
+              <div class="form-selected color-selected" data-colorid="@Model.ColorId">
+                <div class="color-option" value="@Model.ColorId">
+                  <div class="color-option-box" style="background: @Model.ColorValue;"></div>
+                  <span>@Model.ColorName</span>
+                </div>
+              </div>
+              <div class="form-selects scroll-bar scroll-bar-y hidden">
+                @foreach (var color in Colors)
+                {
+                  bool selectedColor = @color.ColorId == @Model.ColorId;
+
+                  <div class="color-option @(selectedColor ? "active" : "")" data-colorid="@color.ColorId">
+                    <div class="color-option-box" style="background: @color.ColorValue;"></div>
+                    <span>@color.ColorName</span>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section JS {
+  <script>
+    // Validate
+    const imageError = document.querySelector(".product-image-error")
+    const productNameError = document.querySelector(".product-name-error")
+    const productSlugError = document.querySelector(".product-slug-error")
+    const productDescError = document.querySelector(".product-desc-error")
+
+    function validateProduct() {
+      const imageItem = imageList.querySelectorAll(".image-list .image-item").length;
+      const productName = document.querySelector("input[name='product_name']").value
+      const productSlug = document.querySelector("input[name='product_slug']").value
+      const productDesc = document.querySelector("textarea[name='product_desc']").value
+      imageError.classList.add("hidden")
+      productNameError.classList.add("hidden")
+      productSlugError.classList.add("hidden")
+      productDescError.classList.add("hidden")
+
+
+      let check = true;
+
+      if (imageItem < 2) {
+        imageError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (productName.trim().length == 0) {
+        productNameError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (productSlug.trim().length == 0) {
+        productSlugError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (productDesc.trim().length == 0) {
+        productDescError.classList.remove("hidden")
+        check = false;
+      }
+
+      return check;
+    }
+
+    // Update product
+    function updateProduct() {
+      if (validateProduct()) {
+        const categoriesChecked = document.querySelectorAll("input[name='categories']:checked")
+        let Categories = [];
+        categoriesChecked.forEach(item => {
+          Categories.push(item.value)
+        })
+
+        const imageItems = document.querySelectorAll(".image-list .image-item")
+        let ProductImages = []
+        imageItems.forEach(item => {
+          ProductImages.push(item.dataset.name)
+        })
+
+        console.log({
+          ProductId: @Model.ProductId,
+          Categories: Categories.join(","),
+          ColorId: document.querySelector(".color-selected").dataset.colorid,
+          SizeId: document.querySelector(".size-selected").dataset.sizeid,
+          ProductName: document.querySelector("input[name='product_name']").value,
+          ProductSlug: document.querySelector("input[name='product_slug']").value,
+          ProductDesc: document.querySelector("textarea[name='product_desc']").value,
+          Price: document.querySelector("input[name='product_price']").value,
+          Quantity: document.querySelector("input[name='product_quantity']").value,
+          Discount: document.querySelector("input[name='product_discount']").value,
+          ProductImages: ProductImages.join(",")
+        });
+
+        AjaxPost("/admin/api/products/update-product",
+          {
+            ProductId: @Model.ProductId,
+            Categories: Categories.join(","),
+            ColorId: document.querySelector(".color-selected").dataset.colorid,
+            SizeId: document.querySelector(".size-selected").dataset.sizeid,
+            ProductName: document.querySelector("input[name='product_name']").value,
+            ProductSlug: document.querySelector("input[name='product_slug']").value,
+            ProductDesc: document.querySelector("textarea[name='product_desc']").value,
+            Price: document.querySelector("input[name='product_price']").value,
+            Quantity: document.querySelector("input[name='product_quantity']").value,
+            Discount: document.querySelector("input[name='product_discount']").value,
+            ProductImages: ProductImages.join(",")
+          },
+          (responseText) => {
+            const data = JSON.parse(responseText)
+
+            if (data.success) {
+              console.log("object");
+            }
+          }
+        )
+      }
+    }
+
+    // Select Image
+    const imageList = document.querySelector(".image-list")
+
+
+    function previewImages(input) {
+      let imageItem = imageList.querySelectorAll(".image-item");
+      let index = imageItem.length
+
+      var files = input.files;
+      if (files) {
+        let htmls = ""
+        for (let i = 0; i < files.length; i++) {
+          index++;
+          htmls += `
+              <div class="image-box image-item" 
+              data-name="${files[i].name}"
+              data-index="${index}">
+                <img src="${URL.createObjectURL(files[i])}">
+                <div class="image-delete" onclick="deleteImage(${index})">
+                  <i class="fa-solid fa-xmark"></i>
+                </div>
+              </div>
+              `
+        }
+        imageList.innerHTML += htmls;
+      }
+    }
+
+    function deleteImage(index) {
+      const deleted = imageList.querySelector(`.image-item[data-index='${index}']`)
+
+      deleted.remove();
+      setImageIndex()
+    }
+
+    function setImageIndex() {
+      let imageItem = imageList.querySelectorAll(".image-item");
+      let index = 1;
+
+      imageItem.forEach(item => {
+        item.dataset.index = index;
+        index++;
+      })
+    }
+
+    // Select-option
+    function openSelects(element) {
+      const formSelects = element.querySelector(".form-selects")
+
+      formSelects.classList.toggle("hidden");
+    }
+
+    const sizeSelected = document.querySelector(".size-selection .size-selected")
+    const sizeOptions = document.querySelectorAll(".size-selection .form-selects .size-option")
+
+    sizeOptions.forEach(item => {
+      item.addEventListener("click", () => {
+        sizeSelected.innerHTML = item.outerHTML
+        sizeSelected.dataset.sizeid = item.dataset.sizeid
+      })
+    })
+
+    const colorSelected = document.querySelector(".color-selection .color-selected")
+    const colorOptions = document.querySelectorAll(".color-selection .form-selects .color-option")
+
+    colorOptions.forEach(item => {
+      item.addEventListener("click", () => {
+        colorSelected.innerHTML = item.outerHTML
+        colorSelected.dataset.colorid = item.dataset.colorid
+      })
+    })
+
+  </script>
+}

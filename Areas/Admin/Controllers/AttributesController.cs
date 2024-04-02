@@ -47,6 +47,18 @@ public class AttributesController : Controller
     return View(colors);
   }
 
+  [Route("colors/{ColorId}")]
+  public IActionResult ColorDetail(int ColorId, int page = 1)
+  {
+    int pageSize = 5;
+    var products = _entityContext.GetProducts(ColorId: ColorId).ToPagedList(page, pageSize);
+    var color = _entityContext.GetColorById(ColorId);
+
+    ViewBag.Products = products;
+
+    return View(color);
+  }
+
   [Route("sizes")]
   public IActionResult Sizes(int page = 1)
   {
@@ -55,11 +67,39 @@ public class AttributesController : Controller
     return View(sizes);
   }
 
+  [Route("Sizes/{SizeId}")]
+  public IActionResult SizeDetail(int SizeId, int page = 1)
+  {
+    int pageSize = 5;
+    var products = _entityContext.GetProducts(SizeId: SizeId).ToPagedList(page, pageSize);
+    var size = _entityContext.GetSizeById(SizeId);
+
+    ViewBag.Products = products;
+
+    return View(size);
+  }
+
   [HttpPost]
   [Route("/admin/api/attributes/categories/update-category")]
   public IActionResult UpdateCategory([FromBody] Category category)
   {
     int update = _entityContext.UpdateCategory(category);
     return Json(new { success = update > 0 });
+  }
+
+  [HttpPost]
+  [Route("/admin/api/attributes/categories/add-product")]
+  public IActionResult AddProductCategory([FromBody] ProductCategory productCategory)
+  {
+    int add = _entityContext.AddProductCategory(productCategory);
+    return Json(new { success = add > 0 });
+  }
+
+  [HttpPost]
+  [Route("/admin/api/attributes/categories/delete-product")]
+  public IActionResult DeleteProductCategory([FromBody] ProductCategory productCategory)
+  {
+    int delete = _entityContext.DeleteProductCategory(productCategory);
+    return Json(new { success = delete > 0 });
   }
 }

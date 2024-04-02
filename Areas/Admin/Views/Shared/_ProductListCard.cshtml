@@ -1,7 +1,7 @@
 @using X.PagedList;
 @using X.PagedList.Mvc.Core;
 
-@model IPagedList<ProductModel>
+@model IPagedList<Product>
 
 <table class="table">
   <thead>
@@ -19,7 +19,7 @@
     {
       string[] alts = @product.ProductImages.Split(',');
 
-      <tr>
+      <tr class="item" data-productid="@product.ProductId">
         <td>@product.ProductId</td>
         <td>
           <div class='detail-img'>
@@ -38,12 +38,12 @@
         </td>
         <td>
           <div class="table-actions">
-            <a href="" class="action-item view bg-info text-info">
+            <a href="/admin/products/@product.ProductId" class="action-item view bg-info text-info">
               <i class="fa-regular fa-eye "></i>
             </a>
-            <a href="" class="action-item delete bg-danger text-danger">
+            <div class="action-item delete bg-danger text-danger">
               <i class="fa-solid fa-trash"></i>
-            </a>
+            </div>
           </div>
         </td>
       </tr>

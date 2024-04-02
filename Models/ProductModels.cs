@@ -1,34 +1,8 @@
 namespace WatchShop2.Models;
 
-public class ProductModel
+public class ProductCategories
 {
-  public int ProductId { get; set; }
-
-  public int ColorId { get; set; }
-
-  public int SizeId { get; set; }
-
-  public string ProductName { get; set; } = null!;
-
-  public string ProductSlug { get; set; } = null!;
-
-  public string ProductDesc { get; set; } = null!;
-
-  public double Price { get; set; }
-
-  public int Quantity { get; set; }
-
-  public double PriceSale { get { return Price * (100 - Discount) / 100; ; } }
-
-  public int Discount { get; set; }
-
-  public string ProductImages { get; set; } = null!;
-
-  public string SizeName { get; set; } = null!;
-
-  public string ColorName { get; set; } = null!;
-
-  public string ColorValue { get; set; } = null!;
+  public int CategoryId { get; set; }
 }
 
 public class AddProductModel
@@ -54,4 +28,11 @@ public class AddProductModel
   public string ProductImages { get; set; } = null!;
 
   public string Categories { get; set; } = null!;
+}
+
+public class ProductCategory
+{
+  public int ProductId { get; set; }
+
+  public int CategoryId { get; set; }
 }

@@ -1,0 +1,114 @@
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model Size
+
+
+@{
+  ViewData["Title"] = "Size Detail";
+  ViewBag.NavActive = "Size";
+
+  IPagedList<Product> products = ViewBag.Products;
+}
+
+<h3 class="page-title">@Model.SizeName Detail</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/attributes/sizes">Sizes</a></span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/attributes/sizes/@Model.SizeId">@Model.SizeName</a></span>
+</div>
+<div class="content">
+  <div class="flex cl-gap">
+    <div class="col-8 pd-gap">
+      <div class="card list-container" id="list-product">
+        <div class="card-header flex">
+          <span class="card-title">Product List</span>
+        </div>
+        <div class="card-body">
+          <div class="card-body-scroll" id="product_list_card">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th style="min-width: 100px;">Image</th>
+                  <th style="min-width: 200px;">Name</th>
+                  <th>Size</th>
+                  <th>Color</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (var product in products)
+                {
+                  string[] alts = @product.ProductImages.Split(',');
+
+                  <tr>
+                    <td>@product.ProductId</td>
+                    <td>
+                      <div class='detail-img'>
+                        <img src='~/image/products/@alts[0]' alt='@alts[0]'>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="product-name">@product.ProductName</span>
+                    </td>
+                    <td>@product.SizeName</td>
+                    <td>
+                      <div class="color-container">
+                        <div class="color-box" style="background: @product.ColorValue;"></div>
+                        <span class="color-name">@product.ColorName</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="table-actions">
+                        <a href="/admin/products/@product.ProductId" class="action-item view bg-info text-info">
+                          <i class="fa-regular fa-eye "></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          @Html.PagedListPager(products, page => Url.Action("SizeDetail",
+                 new { page }),
+                 new PagedListRenderOptions
+          {
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" },
+            MaximumPageNumbersToDisplay = 5,
+            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+            DisplayLinkToNextPage = PagedListDisplayMode.Always
+          })
+        </div>
+      </div>
+    </div>
+    <div class="col-4 pd-gap">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Size Info</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Size</span>
+              <input type="text" name="size_name" class="form-input" value="@Model.SizeName">
+            </div>
+          </div>
+          <div class="form-buttons">
+            <button class="button button-gb form-button" id="save-button">Save</button>
+          </div>
+          <div class="form-message">
+            <span class="form-error text-danger hidden">Something went wrong!</span>
+            <span class="form-success text-success hidden">Update successfuly!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

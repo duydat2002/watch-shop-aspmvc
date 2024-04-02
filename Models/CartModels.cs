@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WatchShop2.Models;
 
@@ -32,7 +33,8 @@ public class CartModel
 
   public string SizeName { get; set; } = null!;
 
-  public double PriceSale { get; set; }
+  [NotMapped]
+  public double PriceSale { get { return Price * (100 - Discount) / 100; } }
 }
 
 public class OrderDetailModel

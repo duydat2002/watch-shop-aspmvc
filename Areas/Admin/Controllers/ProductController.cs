@@ -13,9 +13,12 @@ public class ProductController : Controller
 {
   private WatchShop2Context _entityContext { get; }
 
+  private IWebHostEnvironment _environment;
 
-  public ProductController(WatchShop2Context entityContext)
+
+  public ProductController(WatchShop2Context entityContext, IWebHostEnvironment environment)
   {
+    _environment = environment;
     _entityContext = entityContext;
   }
 
@@ -67,10 +70,17 @@ public class ProductController : Controller
 
   [HttpPost]
   [Route("/admin/api/products/update-product")]
-  public IActionResult GetProductsWithOut(IFormFile[] images, [FromBody] AddProductModel product)
+  public async Task<IActionResult> UpdateProductAsync(IFormFile[] images, AddProductModel product)
   {
-
-    // var update = _entityContext.UpdateProduct(product);
-    return Json(new { images, product });
+    try
+    {
+      List<string> newImages = await UploadHelper.UploadMulti(_environment, images, null, "products");
+      var update = _entityContext.UpdateProduct(product);
+      return Json(new { success = update > 0 });
+    }
+    catch (System.Exception)
+    {
+      return Json(new { success = false });
+    }
   }
 }

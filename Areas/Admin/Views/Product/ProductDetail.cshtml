@@ -39,14 +39,14 @@
           <span class="card-title">Image</span>
         </div>
         <div class="card-body">
-          <input type="file" name="images" accept="image/*" multiple class="input-file image-input"
-            onchange="previewImages(this)">
+          <input asp-for="ProductImages" type="file" name="images" accept="image/*" multiple
+            class="input-file image-input" onchange="previewImages(this)">
           <div class="image-list">
-            @for (int i = 0; i < alts.Length; i++)
+            @foreach (var alt in alts)
             {
-              <div class="image-box image-item" data-name="@alts[i]" data-index="@(i + 1)">
-                <img src="~/image/products/@alts[i]" alt="@alts[i]">
-                <div class="image-delete" onclick="deleteImage(@(i + 1))">
+              <div class="image-box image-item" data-name="@alt">
+                <img src="~/image/products/@alt" alt="@alt">
+                <div class="image-delete" onclick="deleteImage(event)">
                   <i class="fa-solid fa-xmark"></i>
                 </div>
               </div>
@@ -63,17 +63,17 @@
           <div class="form">
             <div class="form-row">
               <span class="form-title">Product Name</span>
-              <input type="text" name="product_name" class="form-input" value="@Model.ProductName">
+              <input type="text" asp-for="ProductName" class="form-input" value="@Model.ProductName">
               <span class="form-error text-danger product-name-error hidden">Please enter product name.</span>
             </div>
             <div class="form-row">
               <span class="form-title">Product Slug</span>
-              <input type="text" name="product_slug" class="form-input" value="@Model.ProductSlug">
+              <input type="text" asp-for="ProductSlug" class="form-input" value="@Model.ProductSlug">
               <span class="form-error text-danger product-slug-error hidden">Please enter product slug.</span>
             </div>
             <div class="form-row">
               <span class="form-title">Product Description</span>
-              <textarea rows="5" name="product_desc" class="form-area">@Model.ProductDesc</textarea>
+              <textarea rows="5" asp-for="ProductDesc" class="form-area">@Model.ProductDesc</textarea>
               <span class="form-error text-danger product-desc-error hidden">Please enter product desc.</span>
             </div>
           </div>
@@ -86,14 +86,13 @@
         <div class="card-body">
           <div class="form-row">
             <span class="form-title">Price</span>
-            <input type="number" min="1" name="product_price" class="form-input" value="@Model.Price">
+            <input type="number" min="1" asp-for="Price" class="form-input" value="@Model.Price">
           </div>
           <div class="flex cl-gap">
             <div class="col-6 pd-gap">
               <div class="form-row">
                 <span class="form-title">Discount (%)</span>
-                <input type="number" min="0" max="100" name="product_discount" class="form-input"
-                  value="@Model.Discount">
+                <input type="number" min="0" max="100" asp-for="Discount" class="form-input" value="@Model.Discount">
               </div>
             </div>
             <div class="col-6 pd-gap">
@@ -117,7 +116,7 @@
           <div class="form">
             <div class="form-row">
               <span class="form-title">Quantity</span>
-              <input type="number" min="0" name="product_quantity" class="form-input" value="@Model.Quantity">
+              <input type="number" min="0" asp-for="Quantity" class="form-input" value="@Model.Quantity">
             </div>
           </div>
         </div>
@@ -214,9 +213,9 @@
 
     function validateProduct() {
       const imageItem = imageList.querySelectorAll(".image-list .image-item").length;
-      const productName = document.querySelector("input[name='product_name']").value
-      const productSlug = document.querySelector("input[name='product_slug']").value
-      const productDesc = document.querySelector("textarea[name='product_desc']").value
+      const productName = document.querySelector("input[name='ProductName']").value
+      const productSlug = document.querySelector("input[name='ProductSlug']").value
+      const productDesc = document.querySelector("textarea[name='ProductDesc']").value
       imageError.classList.add("hidden")
       productNameError.classList.add("hidden")
       productSlugError.classList.add("hidden")
@@ -257,40 +256,42 @@
           Categories.push(item.value)
         })
 
+        const inputFile = document.querySelector("input[name='images']")
         const imageItems = document.querySelectorAll(".image-list .image-item")
         let ProductImages = []
         imageItems.forEach(item => {
           ProductImages.push(item.dataset.name)
         })
 
-        console.log({
+        const product = {
           ProductId: @Model.ProductId,
           Categories: Categories.join(","),
           ColorId: document.querySelector(".color-selected").dataset.colorid,
           SizeId: document.querySelector(".size-selected").dataset.sizeid,
-          ProductName: document.querySelector("input[name='product_name']").value,
-          ProductSlug: document.querySelector("input[name='product_slug']").value,
-          ProductDesc: document.querySelector("textarea[name='product_desc']").value,
-          Price: document.querySelector("input[name='product_price']").value,
-          Quantity: document.querySelector("input[name='product_quantity']").value,
-          Discount: document.querySelector("input[name='product_discount']").value,
+          ProductName: document.querySelector("input[name='ProductName']").value,
+          ProductSlug: document.querySelector("input[name='ProductSlug']").value,
+          ProductDesc: document.querySelector("textarea[name='ProductDesc']").value,
+          Price: document.querySelector("input[name='Price']").value,
+          Quantity: document.querySelector("input[name='Quantity']").value,
+          Discount: document.querySelector("input[name='Discount']").value,
           ProductImages: ProductImages.join(",")
-        });
+        }
 
-        AjaxPost("/admin/api/products/update-product",
-          {
-            ProductId: @Model.ProductId,
-            Categories: Categories.join(","),
-            ColorId: document.querySelector(".color-selected").dataset.colorid,
-            SizeId: document.querySelector(".size-selected").dataset.sizeid,
-            ProductName: document.querySelector("input[name='product_name']").value,
-            ProductSlug: document.querySelector("input[name='product_slug']").value,
-            ProductDesc: document.querySelector("textarea[name='product_desc']").value,
-            Price: document.querySelector("input[name='product_price']").value,
-            Quantity: document.querySelector("input[name='product_quantity']").value,
-            Discount: document.querySelector("input[name='product_discount']").value,
-            ProductImages: ProductImages.join(",")
-          },
+        const formData = new FormData()
+        const files = inputFile.files
+
+        for (let i = 0; i < files.length; i++) {
+          formData.append('images', files[i])
+        }
+        for (var key in product) {
+          if (product.hasOwnProperty(key)) {
+            formData.append(key, product[key]);
+          }
+        }
+
+        AjaxPostNotJson("/admin/api/products/update-product",
+          formData
+          ,
           (responseText) => {
             const data = JSON.parse(responseText)
 
@@ -308,43 +309,29 @@
 
     function previewImages(input) {
       let imageItem = imageList.querySelectorAll(".image-item");
-      let index = imageItem.length
 
       var files = input.files;
       if (files) {
         let htmls = ""
         for (let i = 0; i < files.length; i++) {
-          index++;
           htmls += `
-              <div class="image-box image-item" 
-              data-name="${files[i].name}"
-              data-index="${index}">
-                <img src="${URL.createObjectURL(files[i])}">
-                <div class="image-delete" onclick="deleteImage(${index})">
-                  <i class="fa-solid fa-xmark"></i>
-                </div>
-              </div>
-              `
+                                  <div class="image-box image-item" 
+                                  data-name="${files[i].name}">
+                                    <img src="${URL.createObjectURL(files[i])}">
+                                    <div class="image-delete" onclick="deleteImage(this)">
+                                      <i class="fa-solid fa-xmark"></i>
+                                    </div>
+                                  </div>
+                                  `
         }
         imageList.innerHTML += htmls;
       }
     }
 
-    function deleteImage(index) {
-      const deleted = imageList.querySelector(`.image-item[data-index='${index}']`)
+    function deleteImage(e) {
+      const deleted = e.target.closest(`.image-item`)
 
       deleted.remove();
-      setImageIndex()
-    }
-
-    function setImageIndex() {
-      let imageItem = imageList.querySelectorAll(".image-item");
-      let index = 1;
-
-      imageItem.forEach(item => {
-        item.dataset.index = index;
-        index++;
-      })
     }
 
     // Select-option

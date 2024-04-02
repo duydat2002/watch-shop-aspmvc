@@ -28,7 +28,7 @@ public static class UploadHelper
     return "";
   }
 
-  public static async Task<List<string>> UploadMulti(IWebHostEnvironment environment, IFormFile[] files, string? fileName, string subDirectory = "")
+  public static async Task<List<string>> UploadMulti(IWebHostEnvironment environment, IFormFile[] files, string? fileName, string? subDirectory = "")
   {
     List<string> names = new List<string>();
 

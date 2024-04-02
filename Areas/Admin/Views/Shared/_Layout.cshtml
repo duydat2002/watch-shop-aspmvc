@@ -129,6 +129,18 @@
             xhr.send(JSON.stringify(obj));
         };
 
+        const AjaxPostNotJson = (url, obj, callback) => {
+            const xhr = new XMLHttpRequest();
+
+            xhr.open("POST", url, true);
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    callback(xhr.responseText);
+                }
+            };
+            xhr.send(obj);
+        };
+
         const changeUrl = (params) => {
             var url = new URL(window.location.href);
 

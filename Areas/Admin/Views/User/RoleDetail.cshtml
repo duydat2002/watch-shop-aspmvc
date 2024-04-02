@@ -7,7 +7,7 @@
 }
 
 
-<h3 class="page-title">@Model.RoleName Detail</h3>
+<h3 class="page-title">@Model.RoleName</h3>
 <div class="breakcrumb">
   <span class="breakcrumb-root">Manage</span>
   <i class="fa-solid fa-angles-right"></i>
@@ -31,10 +31,9 @@
           <div class="form">
             <div class="form-row">
               <span class="form-title">Role Name</span>
-              <input type="text" name="role_name" class="form-input" value="@Model.RoleName">
+              <input type="text" name="role_name" class="form-input" disabled value="@Model.RoleName">
             </div>
           </div>
-          <button class="button button-gb">Save</button>
         </div>
       </div>
     </div>

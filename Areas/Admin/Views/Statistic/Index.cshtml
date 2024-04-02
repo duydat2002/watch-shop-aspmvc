@@ -1,17 +1,24 @@
 ﻿@using Newtonsoft.Json;
 
+@{
+    ViewData["Title"] = "Statistics";
+    ViewBag.NavActive = "Statistic";
+}
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="~/css/fontawesome.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
-
-
-    <!-- Tải jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <h2>Statistics</h2>
 </head>
+<h3 class="page-title">Statistics</h3>
+<div class="breakcrumb">
+    <span class="breakcrumb-root">Statistic</span>
+    <i class="fa-solid fa-angles-right"></i>
+    <span><a href="/admin/statistic">Statistics</a></span>
+</div>
+
 <body>
 <div class="container">
     <div class="row">
@@ -28,14 +35,14 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         $(function () {
-            // Lấy dữ liệu thống kê số lượng đơn hàng từ ViewBag
+            
             var orderCountByStatus = @Html.Raw(JsonConvert.SerializeObject(ViewBag.OrderCountByStatus));
 
-            // Tách dữ liệu thành mảng các trạng thái và mảng số lượng
+         
             var orderLabels = orderCountByStatus.map(function (item) { return item.Status; });
             var orderData = orderCountByStatus.map(function (item) { return item.OrderCount; });
 
-            // Tạo biểu đồ đơn hàng
+        
             var orderCtx = document.getElementById('orderChart').getContext('2d');
             var orderChart = new Chart(orderCtx, {
                 type: 'bar',
@@ -60,14 +67,13 @@
                 }
             });
 
-            // Lấy dữ liệu thống kê số lượng sản phẩm từ ViewBag
             var productCountByCategory = @Html.Raw(JsonConvert.SerializeObject(ViewBag.ProductCountByCategory));
 
-            // Tách dữ liệu thành mảng các danh mục và mảng số lượng sản phẩm
+    
             var categories = productCountByCategory.map(function (item) { return item.CategoryName; });
             var productCounts = productCountByCategory.map(function (item) { return item.ProductCount; });
 
-            // Tạo biểu đồ sản phẩm
+  
             var productCtx = document.getElementById('productChart').getContext('2d');
             var productChart = new Chart(productCtx, {
                 type: 'bar',

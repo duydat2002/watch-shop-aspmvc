@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|c:\\users\\maniac\\desktop\\w\\watch-shop-aspmvc\\areas\\admin\\views\\statistic\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|solutionrelative:areas\\admin\\views\\statistic\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|c:\\users\\maniac\\desktop\\w\\watch-shop-aspmvc\\areas\\admin\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|solutionrelative:areas\\admin\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|c:\\users\\maniac\\desktop\\w\\watch-shop-aspmvc\\areas\\admin\\controllers\\statisticcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|solutionrelative:areas\\admin\\controllers\\statisticcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|c:\\users\\maniac\\desktop\\w\\watch-shop-aspmvc\\areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|solutionrelative:areas\\admin\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|c:\\users\\maniac\\desktop\\w\\watch-shop-aspmvc\\areas\\admin\\controllers\\statisticcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|solutionrelative:areas\\admin\\controllers\\statisticcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|c:\\users\\maniac\\desktop\\w\\watch-shop-aspmvc\\areas\\admin\\views\\statistic\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{4350054F-758B-4327-BA1C-C0750FD5AD31}|WatchShop2.csproj|solutionrelative:areas\\admin\\views\\statistic\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,43 +26,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Home\\Index.cshtml",
+              "ViewState": "AQIAACQAAAAAAAAAAAAAADQAAABUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-02T04:20:39.142Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml*",
-              "RelativeToolTip": "Areas\\Admin\\Views\\Shared\\_Layout.cshtml*",
-              "ViewState": "AQIAAH4AAAAAAAAAAAAwwJoAAAAEAAAA",
+              "ToolTip": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAADwAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-04-01T15:32:03.353Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "StatisticController.cs",
               "DocumentMoniker": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Controllers\\StatisticController.cs",
               "RelativeDocumentMoniker": "Areas\\Admin\\Controllers\\StatisticController.cs",
               "ToolTip": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Controllers\\StatisticController.cs",
               "RelativeToolTip": "Areas\\Admin\\Controllers\\StatisticController.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAowCcAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAALAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-01T14:06:01.868Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Views\\Statistic\\Index.cshtml",
               "RelativeDocumentMoniker": "Areas\\Admin\\Views\\Statistic\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Views\\Statistic\\Index.cshtml*",
-              "RelativeToolTip": "Areas\\Admin\\Views\\Statistic\\Index.cshtml*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "ToolTip": "C:\\Users\\Maniac\\Desktop\\w\\watch-shop-aspmvc\\Areas\\Admin\\Views\\Statistic\\Index.cshtml",
+              "RelativeToolTip": "Areas\\Admin\\Views\\Statistic\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEsAAAACAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-04-01T14:06:30.18Z",
               "EditorCaption": ""

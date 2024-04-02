@@ -17,14 +17,14 @@ namespace WatchShop2.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            // Thống kê số lượng sản phẩm trong từng danh mục
+            
             var productCountByCategory = _entityContext.Categories
                 .Select(c => new { CategoryName = c.CategoryName, ProductCount = c.Products.Count })
                 .ToList();
 
             ViewBag.ProductCountByCategory = productCountByCategory;
 
-            // Thống kê số lượng đơn hàng theo trạng thái
+           
             var orderCountByStatus = _entityContext.Orders
                 .GroupBy(o => o.Status)
                 .Select(g => new { Status = g.Key, OrderCount = g.Count() })

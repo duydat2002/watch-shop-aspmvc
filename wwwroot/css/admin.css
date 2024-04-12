@@ -571,6 +571,11 @@ button {
   padding: 12px 12px;
 }
 
+.table a {
+  color: #3b8ad4;
+  font-weight: 600;
+}
+
 .table-actions {
   display: flex;
   align-items: center;

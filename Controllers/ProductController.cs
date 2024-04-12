@@ -27,7 +27,7 @@ public class ProductController : Controller
         categoryName = "Women Watches";
         break;
       case "sport-watches":
-        categoryName = "Sports Watches";
+        categoryName = "Sport Watches";
         break;
       case "luxury-watches":
         categoryName = "Luxury Watches";

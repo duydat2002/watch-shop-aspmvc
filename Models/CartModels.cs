@@ -124,3 +124,8 @@ public class OrderWithFullname
   public string Email { get; set; } = null!;
 
 }
+
+public class OrderIdModel
+{
+  public int OrderId { get; set; }
+}

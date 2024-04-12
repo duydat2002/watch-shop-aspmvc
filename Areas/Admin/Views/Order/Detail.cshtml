@@ -33,15 +33,15 @@
     <div class="order-infos">
       <div>
         <span class="order-info">Order @Model.OrderId</span>
-        <span class="badge @statusClass">@Model.Status</span>
+        <span class="order-badge badge @statusClass">@Model.Status</span>
       </div>
       <div class="orderdate">Ordered on @Model.OrderDate</div>
     </div>
     <div class="order-actions">
       @if (@Model.Status == "Pending")
       {
-        <div class="button button-rw">Cancel</div>
-        <div class="button button-gb">Confirm</div>
+        <div class="button button-rw" onclick="cancelOrder()">Cancel</div>
+        <div class="button button-gb" onclick="confirmOrder()">Confirm</div>
       }
     </div>
   </div>
@@ -81,7 +81,7 @@
                       </div>
                     </td>
                     <td>
-                      <span class="product-name">@detail.ProductName</span>
+                      <a href="/admin/products/@detail.ProductId" class="product-name">@detail.ProductName</a>
                     </td>
                     <td>@detail.SizeName</td>
                     <td>
@@ -122,6 +122,50 @@
     </div>
   </div>
 </div>
+
+@section JS {
+  <script>
+    const OrderId = @Model.OrderId;
+    const badgeDOM = document.querySelector(".order-badge");
+    const actionsDOM = document.querySelector(".order-actions")
+
+    function confirmOrder() {
+      if (confirm("Are you sure you want to confirm this order?")) {
+        AjaxPost("/admin/api/orders/confirm-order",
+          { OrderId },
+          (responseText) => {
+            const data = JSON.parse(responseText)
+            if (data.success) {
+              badgeDOM.className = "order-badge badge badge-success";
+              badgeDOM.innerHTML = "Completed"
+
+              actionsDOM.remove();
+            } else {
+              console.log("fail");
+            }
+          })
+      }
+    }
+
+    function cancelOrder() {
+      if (confirm("Are you sure you want to cancel this order?")) {
+        AjaxPost("/admin/api/orders/cancel-order",
+          { OrderId },
+          (responseText) => {
+            const data = JSON.parse(responseText)
+            if (data.success) {
+              badgeDOM.className = "order-badge badge badge-danger";
+              badgeDOM.innerHTML = "Cancelled"
+
+              actionsDOM.remove();
+            } else {
+              console.log("fail");
+            }
+          })
+      }
+    }
+  </script>
+}
 
 @section CSS {
   <style>

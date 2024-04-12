@@ -251,6 +251,13 @@ public partial class WatchShop2Context : DbContext
         ).ToList();
     }
 
+    public int ConfirmOrder(int OrderId)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_ConfirmOrder @OrderId",
+            new SqlParameter("@OrderId", OrderId)
+        );
+    }
+
     public int CancelOrder(int OrderId)
     {
         return this.Database.ExecuteSqlRaw("EXECUTE pr_CancelOrder @OrderId",

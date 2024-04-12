@@ -42,4 +42,19 @@ public class OrderController : Controller
     }
   }
 
+  [HttpPost]
+  [Route("/admin/api/orders/confirm-order")]
+  public IActionResult ConfirmOrder([FromBody] OrderIdModel order)
+  {
+    var confirm = _entityContext.ConfirmOrder(order.OrderId);
+    return Json(new { success = confirm > 0 });
+  }
+
+  [HttpPost]
+  [Route("/admin/api/orders/cancel-order")]
+  public IActionResult CancelOrder([FromBody] OrderIdModel order)
+  {
+    var cancel = _entityContext.CancelOrder(order.OrderId);
+    return Json(new { success = cancel > 0 });
+  }
 }

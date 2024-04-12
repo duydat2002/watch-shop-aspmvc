@@ -21,7 +21,25 @@ public class OrderController : Controller
   [Route("")]
   public IActionResult Index(int page = 1)
   {
-    return View();
+    int pageSize = 10;
+    var orders = _entityContext.GetOrders().ToPagedList(page, pageSize);
+    return View(orders);
+  }
+
+  [Route("{OrderId}")]
+  public IActionResult Detail(int OrderId)
+  {
+    var order = _entityContext.GetOrderById(OrderId);
+
+    if (order != null)
+    {
+      ViewBag.OrderDetail = _entityContext.GetOrderDetail(OrderId);
+      return View(order);
+    }
+    else
+    {
+      return RedirectToAction("PageNotFound", "Home");
+    }
   }
 
 }

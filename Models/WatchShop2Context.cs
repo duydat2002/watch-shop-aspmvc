@@ -224,6 +224,25 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    public List<OrderWithTotal> GetOrders()
+    {
+        return this.Database.SqlQueryRaw<OrderWithTotal>("EXECUTE pr_GetOrders").ToList();
+    }
+
+    public OrderWithFullname? GetOrderById(int OrderId)
+    {
+        return this.Database.SqlQueryRaw<OrderWithFullname>("EXECUTE pr_GetOrderById @OrderId",
+            new SqlParameter("@OrderId", OrderId)
+        ).ToList().SingleOrDefault();
+    }
+
+    public List<OrderDetailModel> GetOrderDetail(int OrderId)
+    {
+        return this.Database.SqlQueryRaw<OrderDetailModel>("EXECUTE pr_GetOrderDetail @OrderId",
+            new SqlParameter("@OrderId", OrderId)
+        ).ToList();
+    }
+
     public List<Order> GetOrder(int UserId, string ProductName)
     {
         return this.Orders.FromSqlRaw("EXECUTE pr_GetOrder @UserId, @ProductName",

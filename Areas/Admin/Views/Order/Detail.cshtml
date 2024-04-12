@@ -1,0 +1,154 @@
+@model OrderWithFullname
+
+@{
+  ViewData["Title"] = "Order Detail";
+  ViewBag.NavActive = "Order";
+
+  List<OrderDetailModel> OrderDetail = ViewBag.OrderDetail;
+
+  int index = 0;
+  string statusClass = @Model.Status == "Completed" ? "badge-success" : @Model.Status == "Pending" ? "badge-warning" :
+  "badge-danger";
+
+  int totalItem = 0;
+  double totalPrice = 0;
+
+  foreach (var detail in OrderDetail)
+  {
+    totalItem += detail.Quantity;
+    totalPrice += detail.TotalPrice;
+  }
+}
+
+<h3 class="page-title">Orders</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/orders">Orders</a></span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span>Order @Model.OrderId</span>
+</div>
+<div class="content">
+  <div class="order-header">
+    <div class="order-infos">
+      <div>
+        <span class="order-info">Order @Model.OrderId</span>
+        <span class="badge @statusClass">@Model.Status</span>
+      </div>
+      <div class="orderdate">Ordered on @Model.OrderDate</div>
+    </div>
+    <div class="order-actions">
+      @if (@Model.Status == "Pending")
+      {
+        <div class="button button-rw">Cancel</div>
+        <div class="button button-gb">Confirm</div>
+      }
+    </div>
+  </div>
+  <div class="flex cl-gap">
+    <div class="col-8 pd-gap">
+      <div class="card">
+        <div class="card-header flex">
+          <span class="card-title">Items (@totalItem)</span>
+          <span class="order-total">Total: @totalPrice.ToString("N0")</span>
+        </div>
+        <div class="card-body">
+          <div class="card-body-scroll" id="product_list_card">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th style="min-width: 100px;">Image</th>
+                  <th style="min-width: 200px;">Name</th>
+                  <th>Size</th>
+                  <th>Color</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach (var detail in OrderDetail)
+                {
+                  string[] alts = @detail.ProductImages.Split(',');
+                  index++;
+
+                  <tr class="item" data-productid="@detail.ProductId">
+                    <td>@index</td>
+                    <td>
+                      <div class='detail-img' style="max-width: 100px;">
+                        <img src='~/image/products/@alts[0]' alt='@alts[0]'>
+                      </div>
+                    </td>
+                    <td>
+                      <span class="product-name">@detail.ProductName</span>
+                    </td>
+                    <td>@detail.SizeName</td>
+                    <td>
+                      <div class="color-container">
+                        <div class="color-box" style="background: @detail.ColorValue;"></div>
+                        <span class="color-name">@detail.ColorName</span>
+                      </div>
+                    </td>
+                    <td>@detail.PriceSale.ToString("N0")</td>
+                    <td>@detail.Quantity</td>
+                    <td>@detail.TotalPrice.ToString("N0")</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 pd-gap">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Order Info</span>
+        </div>
+        <div class="card-body">
+          <div class="info-row">
+            <span class="info-title">Customer Info</span>
+            <a href="/admin/user/customers/@Model.UserId" class="info-item info-link">@Model.FullName</a>
+            <span class="info-item">@Model.Email</span>
+          </div>
+          <div class="info-row">
+            <span class="info-title">Shipping address</span>
+            <span class="info-item">@Model.Address</span>
+            <span class="info-item">@Model.PhoneNumber</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section CSS {
+  <style>
+    .order-header {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 12px;
+      background: #fff;
+      border-radius: 8px;
+    }
+
+    .order-info {
+      font-size: 20px;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+
+    .orderdate {
+      margin-top: 10px;
+      color: #94a3b8;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 15px;
+    }
+  </style>
+}

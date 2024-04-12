@@ -1066,6 +1066,46 @@ EXEC dbo.pr_AddOrder @UserId=0, -- int
     @PhoneNumber='', -- varchar(15)
     @Address=N'' -- nvarchar(255)
 
+--ORDER/ GetOrders
+GO
+CREATE OR ALTER PROCEDURE pr_GetOrders
+AS
+BEGIN
+    SELECT Orders.*, FirstName, LastName, Email,
+		(
+			SELECT SUM(Price * (100 - Discount)/100 * Quantity) 
+			FROM dbo.OrderDetails
+			WHERE OrderId = Orders.OrderId
+			GROUP BY OrderId
+		) AS Total
+	FROM dbo.Orders
+	INNER JOIN dbo.Users ON Users.UserId = Orders.UserId
+END
+
+--ORDER/ GetOrderById
+GO
+CREATE OR ALTER PROCEDURE pr_GetOrderById(@OrderId INT)
+AS
+BEGIN
+    SELECT Orders.*, FirstName, LastName, Email
+	FROM dbo.Orders
+	INNER JOIN dbo.Users ON Users.UserId = Orders.UserId
+	WHERE OrderId = @OrderId
+END
+
+--ORDER/ GetOrderDetail
+GO
+CREATE OR ALTER PROCEDURE pr_GetOrderDetail(@OrderId INT)
+AS
+BEGIN
+    SELECT OrderDetails.*, ProductName, ProductSlug, ProductDesc, ProductImages, SizeName, ColorName, ColorValue 
+	FROM dbo.OrderDetails 
+	INNER JOIN dbo.Products ON Products.ProductId = OrderDetails.ProductId
+	INNER JOIN dbo.Colors ON Colors.ColorId = Products.ColorId
+	INNER JOIN dbo.Sizes ON Sizes.SizeId = Products.SizeId
+	WHERE OrderId = @OrderId
+END
+
 --ORDER/ GetOrder
 GO
 CREATE OR ALTER PROCEDURE pr_GetOrder(@UserId INT, @ProductName NVARCHAR(255) = '')
@@ -1099,13 +1139,58 @@ END
 EXEC dbo.pr_GetOrder @UserId=2, @ProductName=N'suu'
 EXEC dbo.pr_GetOrder @UserId=2, @ProductName=N'ti'
 
---ORDER/ CancelOrder
+
+--ADMIN/ORDER/ Confirm Order
+GO
+CREATE OR ALTER PROCEDURE pr_ConfirmOrder(@OrderId INT)
+AS
+BEGIN
+    BEGIN TRY
+		BEGIN TRANSACTION;
+
+		IF EXISTS (SELECT OrderId FROM dbo.Orders WHERE OrderId = @OrderId AND Status = 'Pending')
+		BEGIN
+		    UPDATE dbo.Products
+			SET Quantity -= OrderDetails.Quantity
+			FROM dbo.Products
+			INNER JOIN dbo.OrderDetails ON OrderDetails.ProductId = Products.ProductId
+			WHERE OrderId = @OrderId
+
+			UPDATE dbo.Orders
+			SET Status = 'Completed'
+			FROM dbo.Orders
+	
+			COMMIT TRANSACTION;
+		END
+		ELSE
+		BEGIN
+			ROLLBACK TRANSACTION;
+		END
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		THROW
+	END CATCH
+END
+
+EXEC dbo.pr_ConfirmOrder @OrderId=1 -- int
+
+--ADMIN/ORDER/ Cancel Order
 GO
 CREATE OR ALTER PROCEDURE pr_CancelOrder(@OrderId INT)
 AS
 BEGIN
     UPDATE dbo.Orders
     SET Status = N'Cancelled'
-    WHERE OrderId = @OrderId
+    WHERE OrderId = @OrderId AND Status = N'Pending'
 END
 
+EXEC dbo.pr_CancelOrder @OrderId=1 -- int
+
+
+SELECT * FROM dbo.Orders WHERE OrderId = 1
+SELECT * FROM dbo.OrderDetails WHERE OrderId = 1
+
+SELECT Products.ProductId, Products.Quantity FROM dbo.Products
+INNER JOIN dbo.OrderDetails ON OrderDetails.ProductId = Products.ProductId
+WHERE OrderId = 1

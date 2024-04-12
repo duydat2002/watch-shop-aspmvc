@@ -93,3 +93,34 @@ public class CancelOrderModel
 {
   public int OrderId { get; set; }
 }
+
+public class OrderWithTotal : OrderWithFullname
+{
+  public double Total { get; set; }
+
+}
+
+public class OrderWithFullname
+{
+  public int OrderId { get; set; }
+
+  public int UserId { get; set; }
+
+  public DateTime OrderDate { get; set; }
+
+  public string Address { get; set; } = null!;
+
+  public string PhoneNumber { get; set; } = null!;
+
+  public string Status { get; set; } = null!;
+
+  public string FirstName { get; set; } = null!;
+
+  public string LastName { get; set; } = null!;
+
+  [NotMapped]
+  public string? FullName { get { return $"{FirstName} {LastName}"; } }
+
+  public string Email { get; set; } = null!;
+
+}

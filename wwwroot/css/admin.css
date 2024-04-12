@@ -538,6 +538,23 @@ button {
   border-collapse: collapse;
 }
 
+.table tr {
+  transition: 0.3s;
+}
+
+.table tr:hover {
+  background: #eaf7ff;
+}
+
+.table-item > a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+}
+
 .table th,
 .table td {
   border: 1px solid #e2e8f0;
@@ -677,6 +694,24 @@ button {
 
 .form-password-btn:hover {
   color: var(--green-color);
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.info-title {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.info-link {
+  color: #3b8ad4;
+  font-weight: 600;
 }
 
 /* === Colors === */

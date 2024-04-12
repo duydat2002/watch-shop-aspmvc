@@ -1,3 +1,8 @@
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<OrderWithTotal>
+
 @{
   ViewData["Title"] = "Orders";
   ViewBag.NavActive = "Order";
@@ -8,4 +13,64 @@
   <span class="breakcrumb-root">Manage</span>
   <i class="fa-solid fa-angles-right"></i>
   <span><a href="/admin/orders">Orders</a></span>
+</div>
+<div class="content">
+  <div class="card list-container">
+    <div class="card-header">
+      <span class="card-title">Order List</span>
+    </div>
+    <div class="card-body">
+      <div class="card-body-scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Order Date</th>
+              <th>Customer</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (var order in Model)
+            {
+              string statusClass = @order.Status == "Completed" ? "badge-success" : @order.Status == "Pending" ?
+              "badge-warning" :
+              "badge-danger";
+
+              <tr>
+                <td>@order.OrderId</td>
+                <td>@order.OrderDate</td>
+                <td>@order.FullName</td>
+                <td>@order.Total.ToString("N0")</td>
+                <td>
+                  <span class="badge @statusClass">@order.Status</span>
+                </td>
+                <td>
+                  <div class="table-actions">
+                    <a href="/admin/orders/@order.OrderId" class="action-item view bg-info text-info">
+                      <i class="fa-regular fa-eye "></i>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card-footer">
+      @Html.PagedListPager(Model, page => Url.Action("Index",
+             new { page }),
+             new PagedListRenderOptions
+      {
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" },
+        MaximumPageNumbersToDisplay = 5,
+        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+        DisplayLinkToNextPage = PagedListDisplayMode.Always
+      })
+    </div>
+  </div>
 </div>

@@ -11,5 +11,7 @@ public partial class Size
 
     public int? Quantity { get; set; }
 
+    public bool Active { get; set; }
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

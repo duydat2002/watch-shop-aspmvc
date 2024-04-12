@@ -110,6 +110,28 @@
     <div class="col-4 pd-gap">
       <div class="card">
         <div class="card-header">
+          <span class="card-title">Active</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Active</span>
+              <div class="form-radios">
+                <div class="form-radio-row">
+                  <input type="radio" asp-for="Active" id="active" class="form-input" value="true">
+                  <label for="active" class="text-success">Active</label>
+                </div>
+                <div class="form-radio-row">
+                  <input type="radio" asp-for="Active" id="unactive" class="form-input" value="false">
+                  <label for="unactive" class="text-danger">Unactive</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
           <span class="card-title">Quantity</span>
         </div>
         <div class="card-body">
@@ -142,6 +164,7 @@
             }
           </div>
         </div>
+        <span class="form-error text-danger product-category-error hidden">Please choose at least 1 category.</span>
       </div>
       <div class="card">
         <div class="card-header">
@@ -210,16 +233,19 @@
     const productNameError = document.querySelector(".product-name-error")
     const productSlugError = document.querySelector(".product-slug-error")
     const productDescError = document.querySelector(".product-desc-error")
+    const productCateError = document.querySelector(".product-category-error")
 
     function validateProduct() {
       const imageItem = imageList.querySelectorAll(".image-list .image-item").length;
       const productName = document.querySelector("input[name='ProductName']").value
       const productSlug = document.querySelector("input[name='ProductSlug']").value
       const productDesc = document.querySelector("textarea[name='ProductDesc']").value
+      const categoriesChecked = document.querySelectorAll("input[name='categories']:checked").length
       imageError.classList.add("hidden")
       productNameError.classList.add("hidden")
       productSlugError.classList.add("hidden")
       productDescError.classList.add("hidden")
+      productCateError.classList.add("hidden")
 
 
       let check = true;
@@ -241,6 +267,11 @@
 
       if (productDesc.trim().length == 0) {
         productDescError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (categoriesChecked == 0) {
+        productCateError.classList.remove("hidden")
         check = false;
       }
 
@@ -274,7 +305,8 @@
           Price: document.querySelector("input[name='Price']").value,
           Quantity: document.querySelector("input[name='Quantity']").value,
           Discount: document.querySelector("input[name='Discount']").value,
-          ProductImages: ProductImages.join(",")
+          ProductImages: ProductImages.join(","),
+          Active: document.querySelector("input[name='Active']:checked").value
         }
 
         const formData = new FormData()
@@ -315,14 +347,14 @@
         let htmls = ""
         for (let i = 0; i < files.length; i++) {
           htmls += `
-                                  <div class="image-box image-item" 
-                                  data-name="${files[i].name}">
-                                    <img src="${URL.createObjectURL(files[i])}">
-                                    <div class="image-delete" onclick="deleteImage(this)">
-                                      <i class="fa-solid fa-xmark"></i>
-                                    </div>
-                                  </div>
-                                  `
+                                            <div class="image-box image-item" 
+                                            data-name="${files[i].name}">
+                                              <img src="${URL.createObjectURL(files[i])}">
+                                              <div class="image-delete" onclick="deleteImage(this)">
+                                                <i class="fa-solid fa-xmark"></i>
+                                              </div>
+                                            </div>
+                                            `
         }
         imageList.innerHTML += htmls;
       }

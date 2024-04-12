@@ -32,10 +32,6 @@ public partial class WatchShop2Context : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<Rating> Ratings { get; set; }
-
-    public virtual DbSet<Reply> Replies { get; set; }
-
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<Size> Sizes { get; set; }
@@ -249,6 +245,18 @@ public partial class WatchShop2Context : DbContext
         return this.Database.SqlQueryRaw<UserWithRoleName>("EXECUTE pr_GetAdministrators").ToList();
     }
 
+    public int AddAdmin(User user)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_AddAdmin @Email, @Password, @FirstName, @LastName, @Gender, @Birthdate",
+            new SqlParameter("@Email", user.Email),
+            new SqlParameter("@Password", user.Password),
+            new SqlParameter("@FirstName", user.FirstName),
+            new SqlParameter("@LastName", user.LastName),
+            new SqlParameter("@Gender", user.Gender),
+            new SqlParameter("@Birthdate", user.Birthdate == null ? DBNull.Value : user.Birthdate)
+        );
+    }
+
     //Admin/ Customers
     public List<UserWithRoleName> GetCustomers()
     {
@@ -290,9 +298,9 @@ public partial class WatchShop2Context : DbContext
 
     public int UpdateProduct(AddProductModel product)
     {
-        return this.Database.ExecuteSqlRaw("EXECUTE pr_UpdateProduct @ProductId, @Categories, @ColorId, @SizeId, @ProductName, @ProductSlug, @ProductDesc, @Price, @Quantity, @Discount, @ProductImages",
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_UpdateProduct @ProductId, @Categories, @ColorId, @SizeId, @ProductName, @ProductSlug, @ProductDesc, @Price, @Quantity, @Discount, @ProductImages, @Active",
             new SqlParameter("@ProductId", product.ProductId),
-            new SqlParameter("@Categories", product.Categories),
+            new SqlParameter("@Categories", product.Categories ?? ""),
             new SqlParameter("@ColorId", product.ColorId),
             new SqlParameter("@SizeId", product.SizeId),
             new SqlParameter("@ProductName", product.ProductName),
@@ -301,7 +309,32 @@ public partial class WatchShop2Context : DbContext
             new SqlParameter("@Price", product.Price),
             new SqlParameter("@Quantity", product.Quantity),
             new SqlParameter("@Discount", product.Discount),
-            new SqlParameter("@ProductImages", product.ProductImages)
+            new SqlParameter("@ProductImages", product.ProductImages),
+            new SqlParameter("@Active", product.Active)
+        );
+    }
+
+    public int AddProduct(AddProductModel product)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_AddProduct @Categories, @ColorId, @SizeId, @ProductName, @ProductSlug, @ProductDesc, @Price, @Quantity, @Discount, @ProductImages, @Active",
+            new SqlParameter("@Categories", product.Categories ?? ""),
+            new SqlParameter("@ColorId", product.ColorId),
+            new SqlParameter("@SizeId", product.SizeId),
+            new SqlParameter("@ProductName", product.ProductName),
+            new SqlParameter("@ProductSlug", product.ProductSlug),
+            new SqlParameter("@ProductDesc", product.ProductDesc),
+            new SqlParameter("@Price", product.Price),
+            new SqlParameter("@Quantity", product.Quantity),
+            new SqlParameter("@Discount", product.Discount),
+            new SqlParameter("@ProductImages", product.ProductImages),
+            new SqlParameter("@Active", product.Active)
+        );
+    }
+
+    public int DeleteProduct(int ProductId)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_DeleteProduct @ProductId",
+            new SqlParameter("@ProductId", ProductId)
         );
     }
 
@@ -396,11 +429,34 @@ public partial class WatchShop2Context : DbContext
         ).ToList();
     }
 
+    public List<UserWithRoleName> GetUserByRoleWithOut(int RoleId)
+    {
+        return this.Database.SqlQueryRaw<UserWithRoleName>("EXECUTE pr_GetUserByRoleWithOut @RoleId",
+            new SqlParameter("@RoleId", RoleId)
+        ).ToList();
+    }
+
+    public int ChangeUserRole(int UserId, int RoleId)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_ChangeUserRole @UserId, @RoleId",
+            new SqlParameter("@UserId", UserId),
+            new SqlParameter("@RoleId", RoleId)
+        );
+    }
+
+    public int BanOrUnbanUser(int UserId, bool Active)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_BanOrUnbanUser @UserId, @Active",
+            new SqlParameter("@UserId", UserId),
+            new SqlParameter("@Active", Active)
+        );
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>
         {
-            entity.HasKey(e => e.CartId).HasName("PK__Carts__51BCD7B7FD16B235");
+            entity.HasKey(e => e.CartId).HasName("PK__Carts__51BCD7B71EF2E2F1");
 
             entity.HasOne(d => d.Product).WithMany(p => p.Carts)
                 .HasForeignKey(d => d.ProductId)
@@ -415,19 +471,21 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Category>(entity =>
         {
-            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B002DAFF9");
+            entity.HasKey(e => e.CategoryId).HasName("PK__Categori__19093A0B4CA98CA8");
 
+            entity.Property(e => e.Active).HasDefaultValue(true);
             entity.Property(e => e.CategoryName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<Color>(entity =>
         {
-            entity.HasKey(e => e.ColorId).HasName("PK__Colors__8DA7674D32B442E3");
+            entity.HasKey(e => e.ColorId).HasName("PK__Colors__8DA7674DDBCDCB2B");
 
             entity.HasIndex(e => e.ColorName, "UC_Color_ColorName").IsUnique();
 
             entity.HasIndex(e => e.ColorValue, "UC_Color_ColorValue").IsUnique();
 
+            entity.Property(e => e.Active).HasDefaultValue(true);
             entity.Property(e => e.ColorName).HasMaxLength(255);
             entity.Property(e => e.ColorValue)
                 .HasMaxLength(255)
@@ -436,7 +494,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF8396E71F");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF8E6DABB1");
 
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.OrderDate).HasColumnType("datetime");
@@ -455,7 +513,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36CEB0F9DC1");
+            entity.HasKey(e => e.OrderDetailId).HasName("PK__OrderDet__D3B9D36C0E17AE4B");
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
@@ -470,7 +528,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Payment>(entity =>
         {
-            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A38BD04BDC0");
+            entity.HasKey(e => e.PaymentId).HasName("PK__Payments__9B556A3826586296");
 
             entity.Property(e => e.BankName).HasMaxLength(255);
             entity.Property(e => e.CardNumber)
@@ -486,10 +544,11 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Products__B40CC6CDDD4B3C2A");
+            entity.HasKey(e => e.ProductId).HasName("PK__Products__B40CC6CDDC6971B3");
 
             entity.HasIndex(e => e.ProductSlug, "UC_Product_ProductSlug").IsUnique();
 
+            entity.Property(e => e.Active).HasDefaultValue(true);
             entity.Property(e => e.ProductName).HasMaxLength(255);
             entity.Property(e => e.ProductSlug)
                 .HasMaxLength(255)
@@ -523,45 +582,9 @@ public partial class WatchShop2Context : DbContext
                     });
         });
 
-        modelBuilder.Entity<Rating>(entity =>
-        {
-            entity.HasKey(e => e.RatingId).HasName("PK__Ratings__FCCDF87CC9006BF0");
-
-            entity.Property(e => e.Comment)
-                .HasMaxLength(255)
-                .HasDefaultValue("");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.Ratings)
-                .HasForeignKey(d => d.ProductId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Rating_Product");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Ratings)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Rating_User");
-        });
-
-        modelBuilder.Entity<Reply>(entity =>
-        {
-            entity.HasKey(e => e.ReplyId).HasName("PK__Replies__C25E4609086C57BE");
-
-            entity.Property(e => e.Comment).HasDefaultValue("");
-
-            entity.HasOne(d => d.Rating).WithMany(p => p.Replies)
-                .HasForeignKey(d => d.RatingId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Reply_Rate");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Replies)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Reply_User");
-        });
-
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE1AB92DEEBE");
+            entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE1AE395327B");
 
             entity.HasIndex(e => e.RoleName, "UC_Role_RoleName").IsUnique();
 
@@ -570,16 +593,17 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<Size>(entity =>
         {
-            entity.HasKey(e => e.SizeId).HasName("PK__Sizes__83BD097A7329952C");
+            entity.HasKey(e => e.SizeId).HasName("PK__Sizes__83BD097A6A5965BF");
 
             entity.HasIndex(e => e.SizeName, "UC_Size_SizeName").IsUnique();
 
+            entity.Property(e => e.Active).HasDefaultValue(true);
             entity.Property(e => e.SizeName).HasMaxLength(255);
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C14C96383");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CDACF9624");
 
             entity.HasIndex(e => e.Email, "UC_User_Email").IsUnique();
 
@@ -601,7 +625,7 @@ public partial class WatchShop2Context : DbContext
 
         modelBuilder.Entity<UserContact>(entity =>
         {
-            entity.HasKey(e => e.UserContactId).HasName("PK__UserCont__3911BAA54AB838D5");
+            entity.HasKey(e => e.UserContactId).HasName("PK__UserCont__3911BAA5D0CE0D58");
 
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.IsDefault).HasDefaultValue(false);

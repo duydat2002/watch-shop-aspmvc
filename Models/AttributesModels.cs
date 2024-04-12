@@ -6,5 +6,7 @@ public class CategoryWithProductCountModel
 
   public string CategoryName { get; set; } = null!;
 
+  public bool Active { get; set; }
+
   public int ProductCount { get; set; }
 }

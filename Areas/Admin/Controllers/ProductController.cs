@@ -30,6 +30,19 @@ public class ProductController : Controller
     return View(products);
   }
 
+  [Route("create")]
+  public IActionResult ProductCreate()
+  {
+    var categories = _entityContext.GetCategories();
+    var colors = _entityContext.GetColors();
+    var sizes = _entityContext.GetSizes();
+
+    ViewBag.Categories = categories;
+    ViewBag.Colors = colors;
+    ViewBag.Sizes = sizes;
+    return View();
+  }
+
   [Route("{ProductId}")]
   public IActionResult ProductDetail(int ProductId)
   {
@@ -69,6 +82,22 @@ public class ProductController : Controller
   }
 
   [HttpPost]
+  [Route("/admin/api/products/add-product")]
+  public async Task<IActionResult> AddProductAsync(IFormFile[] images, AddProductModel product)
+  {
+    try
+    {
+      List<string> newImages = await UploadHelper.UploadMulti(_environment, images, null, "products");
+      var add = _entityContext.AddProduct(product);
+      return Json(new { success = add > 0 });
+    }
+    catch (System.Exception)
+    {
+      return Json(new { success = false });
+    }
+  }
+
+  [HttpPost]
   [Route("/admin/api/products/update-product")]
   public async Task<IActionResult> UpdateProductAsync(IFormFile[] images, AddProductModel product)
   {
@@ -82,5 +111,13 @@ public class ProductController : Controller
     {
       return Json(new { success = false });
     }
+  }
+
+  [HttpPost]
+  [Route("/admin/api/products/delete-product")]
+  public IActionResult DeleteProduct([FromBody] Product product)
+  {
+    var delete = _entityContext.DeleteProduct(product.ProductId);
+    return Json(new { success = delete > 0 });
   }
 }

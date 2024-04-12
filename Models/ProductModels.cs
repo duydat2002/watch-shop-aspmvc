@@ -28,6 +28,8 @@ public class AddProductModel
   public string ProductImages { get; set; } = null!;
 
   public string Categories { get; set; } = null!;
+
+  public bool Active { get; set; }
 }
 
 public class ProductCategory
@@ -36,3 +38,5 @@ public class ProductCategory
 
   public int CategoryId { get; set; }
 }
+
+

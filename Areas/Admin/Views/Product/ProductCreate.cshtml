@@ -1,0 +1,396 @@
+@model Product
+
+@{
+  ViewData["Title"] = "Create Product";
+  ViewBag.NavActive = "Product";
+
+  var Categories = (List<CategoryWithProductCountModel>)ViewBag.Categories;
+  var Colors = (List<Color>)ViewBag.Colors;
+  var Sizes = (List<Size>)ViewBag.Sizes;
+}
+
+@section CSS {
+  <style>
+    .form {
+      border: none;
+    }
+  </style>
+}
+
+<h3 class="page-title">Create Product</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/products">Products</a></span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span>Create</span>
+</div>
+<div class="content">
+  <div class="actions">
+    <button class="button button-gb save-create" onclick="addProduct()">Save</button>
+  </div>
+  <div class="flex cl-gap">
+    <div class="col-8 pd-gap">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Image</span>
+        </div>
+        <div class="card-body">
+          <input asp-for="ProductImages" type="file" name="images" accept="image/*" multiple
+            class="input-file image-input" onchange="previewImages(this)">
+          <div class="image-list">
+
+          </div>
+        </div>
+        <span class="form-error text-danger product-image-error hidden">There must be at least 2 photos.</span>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Product Info</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Product Name</span>
+              <input type="text" asp-for="ProductName" class="form-input">
+              <span class="form-error text-danger product-name-error hidden">Please enter product name.</span>
+            </div>
+            <div class="form-row">
+              <span class="form-title">Product Slug</span>
+              <input type="text" asp-for="ProductSlug" class="form-input">
+              <span class="form-error text-danger product-slug-error hidden">Please enter product slug.</span>
+            </div>
+            <div class="form-row">
+              <span class="form-title">Product Description</span>
+              <textarea rows="5" asp-for="ProductDesc" class="form-area"></textarea>
+              <span class="form-error text-danger product-desc-error hidden">Please enter product desc.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Price</span>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <span class="form-title">Price</span>
+            <input type="number" min="1" value="1" asp-for="Price" class="form-input">
+          </div>
+          <div class="flex cl-gap">
+            <div class="col-6 pd-gap">
+              <div class="form-row">
+                <span class="form-title">Discount (%)</span>
+                <input type="number" min="0" max="100" value="0" asp-for="Discount" class="form-input">
+              </div>
+            </div>
+            <div class="col-6 pd-gap">
+              <div class="form-row">
+                <span class="form-title">Price Sale</span>
+                <input type="number" disabled min="0" value="1" name="product_price-sale" class="form-input">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4 pd-gap">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Active</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Active</span>
+              <div class="form-radios">
+                <div class="form-radio-row">
+                  <input type="radio" asp-for="Active" id="active" class="form-input" value="true" checked>
+                  <label for="active" class="text-success">Active</label>
+                </div>
+                <div class="form-radio-row">
+                  <input type="radio" asp-for="Active" id="unactive" class="form-input" value="false">
+                  <label for="unactive" class="text-danger">Unactive</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Quantity</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Quantity</span>
+              <input type="number" min="0" asp-for="Quantity" class="form-input" value="0">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Category</span>
+        </div>
+        <div class="card-body">
+          <div class="product-categories">
+            @foreach (var category in Categories)
+            {
+
+              <div class="category-item">
+                <div class="item-checkbox">
+                  <input class="checkbox" type="checkbox" name="categories" id="category-@category.CategoryId"
+                    value="@category.CategoryId">
+                  <i class='fas fa-check checkbox-icon'></i>
+                </div>
+                <label for="category-@category.CategoryId" class="category-name">@category.CategoryName</label>
+              </div>
+            }
+          </div>
+        </div>
+        <span class="form-error text-danger product-category-error hidden">Please choose at least 1 category.</span>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Size</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Size</span>
+              <div class="form-selection size-selection" onclick="openSelects(this)">
+                <div class="form-selected size-selected">
+
+                </div>
+                <div class="form-selects scroll-bar scroll-bar-y hidden">
+                  @foreach (var size in Sizes)
+                  {
+                    <div class="form-select-item size-option" data-sizeid="@size.SizeId">
+                      @size.SizeName
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="form-error text-danger product-size-error hidden">Please choose product size.</span>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Color</span>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <span class="form-title">Color</span>
+            <div class="form-selection color-selection" onclick="openSelects(this)">
+              <div class="form-selected color-selected">
+
+              </div>
+              <div class="form-selects scroll-bar scroll-bar-y hidden">
+                @foreach (var color in Colors)
+                {
+                  <div class="color-option" data-colorid="@color.ColorId">
+                    <div class="color-option-box" style="background: @color.ColorValue;"></div>
+                    <span>@color.ColorName</span>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <span class="form-error text-danger product-color-error hidden">Please choose product color.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section JS {
+  <script>
+    // Validate
+    const imageError = document.querySelector(".product-image-error")
+    const productNameError = document.querySelector(".product-name-error")
+    const productSlugError = document.querySelector(".product-slug-error")
+    const productDescError = document.querySelector(".product-desc-error")
+    const productSizeError = document.querySelector(".product-size-error")
+    const productColorError = document.querySelector(".product-color-error")
+    const productCateError = document.querySelector(".product-category-error")
+
+    function validateProduct() {
+      const imageItem = imageList.querySelectorAll(".image-list .image-item").length;
+      const productName = document.querySelector("input[name='ProductName']").value
+      const productSlug = document.querySelector("input[name='ProductSlug']").value
+      const productDesc = document.querySelector("textarea[name='ProductDesc']").value
+      const productColor = document.querySelector(".color-selected").dataset.colorid
+      const productSize = document.querySelector(".size-selected").dataset.sizeid
+      const categoriesChecked = document.querySelectorAll("input[name='categories']:checked").length
+      imageError.classList.add("hidden")
+      productNameError.classList.add("hidden")
+      productSlugError.classList.add("hidden")
+      productDescError.classList.add("hidden")
+      productSizeError.classList.add("hidden")
+      productColorError.classList.add("hidden")
+      productCateError.classList.add("hidden")
+
+
+      let check = true;
+
+      if (imageItem < 2) {
+        imageError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (productName.trim().length == 0) {
+        productNameError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (productSlug.trim().length == 0) {
+        productSlugError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (productDesc.trim().length == 0) {
+        productDescError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (categoriesChecked == 0) {
+        productCateError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (!productColor) {
+        productColorError.classList.remove("hidden")
+        check = false;
+      }
+
+      if (!productSize) {
+        productSizeError.classList.remove("hidden")
+        check = false;
+      }
+
+      return check;
+    }
+
+    // Add product
+    function addProduct() {
+      if (validateProduct()) {
+        const categoriesChecked = document.querySelectorAll("input[name='categories']:checked")
+        let Categories = [];
+        categoriesChecked.forEach(item => {
+          Categories.push(item.value)
+        })
+
+        const inputFile = document.querySelector("input[name='images']")
+        const imageItems = document.querySelectorAll(".image-list .image-item")
+        let ProductImages = []
+        imageItems.forEach(item => {
+          ProductImages.push(item.dataset.name)
+        })
+
+        const product = {
+          Categories: Categories.join(","),
+          ColorId: document.querySelector(".color-selected").dataset.colorid,
+          SizeId: document.querySelector(".size-selected").dataset.sizeid,
+          ProductName: document.querySelector("input[name='ProductName']").value,
+          ProductSlug: document.querySelector("input[name='ProductSlug']").value,
+          ProductDesc: document.querySelector("textarea[name='ProductDesc']").value,
+          Price: document.querySelector("input[name='Price']").value,
+          Quantity: document.querySelector("input[name='Quantity']").value,
+          Discount: document.querySelector("input[name='Discount']").value,
+          ProductImages: ProductImages.join(","),
+          Active: document.querySelector("input[name='Active']:checked").value
+        }
+
+        console.log(product);
+
+        const formData = new FormData()
+        const files = inputFile.files
+
+        for (let i = 0; i < files.length; i++) {
+          formData.append('images', files[i])
+        }
+        for (var key in product) {
+          if (product.hasOwnProperty(key)) {
+            formData.append(key, product[key]);
+          }
+        }
+
+        AjaxPostNotJson("/admin/api/products/add-product",
+          formData
+          ,
+          (responseText) => {
+            const data = JSON.parse(responseText)
+
+            if (data.success) {
+              console.log("object");
+            }
+          }
+        )
+      }
+    }
+
+    // Select Image
+    const imageList = document.querySelector(".image-list")
+
+
+    function previewImages(input) {
+      let imageItem = imageList.querySelectorAll(".image-item");
+
+      var files = input.files;
+      if (files) {
+        let htmls = ""
+        for (let i = 0; i < files.length; i++) {
+          htmls += `
+                                                                            <div class="image-box image-item" 
+                                                                            data-name="${files[i].name}">
+                                                                              <img src="${URL.createObjectURL(files[i])}">
+                                                                              <div class="image-delete" onclick="deleteImage(this)">
+                                                                                <i class="fa-solid fa-xmark"></i>
+                                                                              </div>
+                                                                            </div>
+                                                                            `
+        }
+        imageList.innerHTML += htmls;
+      }
+    }
+
+    function deleteImage(e) {
+      const deleted = e.target.closest(`.image-item`)
+
+      deleted.remove();
+    }
+
+    // Select-option
+    function openSelects(element) {
+      const formSelects = element.querySelector(".form-selects")
+
+      formSelects.classList.toggle("hidden");
+    }
+
+    const sizeSelected = document.querySelector(".size-selection .size-selected")
+    const sizeOptions = document.querySelectorAll(".size-selection .form-selects .size-option")
+
+    sizeOptions.forEach(item => {
+      item.addEventListener("click", () => {
+        sizeSelected.innerHTML = item.outerHTML
+        sizeSelected.dataset.sizeid = item.dataset.sizeid
+      })
+    })
+
+    const colorSelected = document.querySelector(".color-selection .color-selected")
+    const colorOptions = document.querySelectorAll(".color-selection .form-selects .color-option")
+
+    colorOptions.forEach(item => {
+      item.addEventListener("click", () => {
+        colorSelected.innerHTML = item.outerHTML
+        colorSelected.dataset.colorid = item.dataset.colorid
+      })
+    })
+
+  </script>
+}

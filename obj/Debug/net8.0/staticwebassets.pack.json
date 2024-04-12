@@ -129,6 +129,10 @@
       "PackagePath": "staticwebassets\\image\\master_card.png"
     },
     {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\123.PNG",
+      "PackagePath": "staticwebassets\\image\\products\\123.PNG"
+    },
+    {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\55-home_default.png",
       "PackagePath": "staticwebassets\\image\\products\\55-home_default.png"
     },

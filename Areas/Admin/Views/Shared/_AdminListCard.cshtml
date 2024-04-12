@@ -1,0 +1,52 @@
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model IPagedList<UserWithRoleName>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>Email</th>
+      <th>Gender</th>
+      <th>Birthdate</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var user in Model)
+    {
+      <tr class="item" data-productid="@user.UserId">
+        <td>@user.UserId</td>
+        <td>@user.FirstName</td>
+        <td>@user.LastName</td>
+        <td>@user.Email</td>
+        <td>@(user.Gender ? "Male" : "Female")</td>
+        <td>@user.Birthdate</td>
+        <td>
+          @if (user.Active)
+          {
+            <span class="badge badge-success">Active</span>
+          }
+          else
+          {
+            <span class="badge badge-danger">Unactive</span>
+          }
+        </td>
+        <td>
+          <div class="table-actions">
+            <a href="" class="action-item view bg-info text-info">
+              <i class="fa-regular fa-eye "></i>
+            </a>
+            <div class="action-item delete bg-danger text-danger">
+              <i class="fa-solid fa-trash"></i>
+            </div>
+          </div>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

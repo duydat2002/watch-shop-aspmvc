@@ -19,27 +19,73 @@ public class UserController : Controller
     _entityContext = entityContext;
   }
 
-  [Route("roles")]
-  public IActionResult Roles(int page = 1)
-  {
-    int pageSize = 10;
-    var roles = _entityContext.GetRoles().ToPagedList(page, pageSize);
-    return View(roles);
-  }
-
-  [Route("roles/{RoleId}")]
-  public IActionResult RoleDetail(int RoleId)
-  {
-    var role = _entityContext.GetRoleById(RoleId);
-    return View(role);
-  }
-
   [Route("administrators")]
   public IActionResult Administrators(int page = 1)
   {
     int pageSize = 10;
     var administrators = _entityContext.GetAdministrators().ToPagedList(page, pageSize);
     return View(administrators);
+  }
+
+  [Route("administrators/create")]
+  public IActionResult CreateAdmin()
+  {
+    return View();
+  }
+
+  [HttpPost]
+  [Route("administrators/create")]
+  public IActionResult CreateAdmin(User user)
+  {
+    if (ModelState.IsValid)
+    {
+      try
+      {
+        string hashPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
+        int addAdmin = _entityContext.AddAdmin(user);
+
+        if (addAdmin > 0)
+        {
+          return Redirect("/admin/user/administrators");
+        }
+        else
+        {
+          ViewBag.ErrorMessage = "An error has occurred.";
+          return View(user);
+        }
+      }
+      catch (System.Exception ex)
+      {
+        if (ex.Message.IndexOf("UC_User_Email") != -1)
+        {
+          ModelState.AddModelError("Email", "The email is already used.");
+        }
+        else
+        {
+          ViewBag.ErrorMessage = "An error has occurred.";
+        }
+        return View(user);
+      }
+    }
+    else
+    {
+      return View(user);
+    }
+  }
+
+  [Route("administrators/{UserId}")]
+  public IActionResult AdminDetail(int UserId)
+  {
+    var user = _entityContext.GetUserInfo(UserId);
+    // return Json(new { user });
+    if (user != null && user.RoleId == 1)
+    {
+      return View(user);
+    }
+    else
+    {
+      return RedirectToAction("PageNotFound", "Home");
+    }
   }
 
   [Route("customers")]
@@ -50,11 +96,62 @@ public class UserController : Controller
     return View(customers);
   }
 
-  [Route("/admin/api/user/get-users-by-role")]
-  public IActionResult GetCustomers(int roleId, int page = 1)
+  [Route("customers/{UserId}")]
+  public IActionResult CustomerDetail(int UserId)
+  {
+    var user = _entityContext.GetUserInfo(UserId);
+    // return Json(new { user });
+    if (user != null && user.RoleId == 2)
+    {
+      ViewBag.Contacts = _entityContext.GetUserContact(user.UserId);
+      return View(user);
+    }
+    else
+    {
+      return RedirectToAction("PageNotFound", "Home");
+    }
+  }
+
+  [Route("/admin/api/user/get-administrators")]
+  public IActionResult GetAdministrators(int page = 1)
   {
     int pageSize = 10;
-    var administrators = _entityContext.GetUserByRole(roleId).ToPagedList(page, pageSize);
-    return PartialView("_UserListCard", administrators);
+    var users = _entityContext.GetAdministrators().ToPagedList(page, pageSize);
+    return PartialView("_AdminListCard", users);
+  }
+
+  [Route("/admin/api/user/get-customers")]
+  public IActionResult GetCustomers(int page = 1)
+  {
+    int pageSize = 10;
+    var users = _entityContext.GetCustomers().ToPagedList(page, pageSize);
+    return PartialView("_CustomerListCard", users);
+  }
+
+  [Route("/admin/api/user/get-users-by-role-without")]
+  public IActionResult GetUserByRoleWithOut(int RoleId, string search = "")
+  {
+    search = search.Trim().ToLower();
+    var users = _entityContext
+      .GetUserByRoleWithOut(RoleId)
+      .Where(u => u.FullName.ToLower().Contains(search) || u.Email.ToLower().Contains(search))
+      .ToList();
+    return PartialView("_UserList", users);
+  }
+
+  [HttpPost]
+  [Route("/admin/api/user/change-user-role")]
+  public IActionResult ChangeUserRole([FromBody] ChangeUserRoleModel role)
+  {
+    var update = _entityContext.ChangeUserRole(role.UserId, role.RoleId);
+    return Json(new { success = update > 0 });
+  }
+
+  [HttpPost]
+  [Route("/admin/api/user/ban-unban")]
+  public IActionResult BanOrUnbanUser([FromBody] User user)
+  {
+    var update = _entityContext.BanOrUnbanUser(user.UserId, user.Active);
+    return Json(new { success = update > 0 });
   }
 }

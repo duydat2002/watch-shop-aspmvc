@@ -33,6 +33,7 @@
               <th>Name</th>
               <th>Color Value</th>
               <th>Products</th>
+              <th>Active</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -46,6 +47,16 @@
                   <div class="color-box" style="background: @color.ColorValue;"></div>
                 </td>
                 <td>@color.Quantity</td>
+                <td>
+                  @if (color.Active)
+                  {
+                    <span class="badge badge-success">Active</span>
+                  }
+                  else
+                  {
+                    <span class="badge badge-danger">Unactive</span>
+                  }
+                </td>
                 <td>
                   <div class="table-actions">
                     <a href="/admin/attributes/colors/@color.ColorId" class="action-item view bg-info text-info">

@@ -37,15 +37,11 @@ public partial class User
     [ValidateBirthdate]
     public DateOnly? Birthdate { get; set; }
 
-    public bool? Active { get; set; }
+    public bool Active { get; set; }
 
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-
-    public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
-
-    public virtual ICollection<Reply> Replies { get; set; } = new List<Reply>();
 
     public virtual Role? Role { get; set; } = null!;
 

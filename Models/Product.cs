@@ -26,6 +26,8 @@ public partial class Product
 
     public string ProductImages { get; set; } = null!;
 
+    public bool Active { get; set; }
+
     public string? ColorName { get; set; } = null!;
 
     public string? ColorValue { get; set; } = null!;
@@ -40,8 +42,6 @@ public partial class Product
     public virtual Color Color { get; set; } = null!;
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
-
-    public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 
     public virtual Size Size { get; set; } = null!;
 

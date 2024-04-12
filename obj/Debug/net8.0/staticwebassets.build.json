@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7Rbot37iS6EokA94zo1+yi2V9adiWnm0ZTmKQa3EC4c=",
+  "Hash": "6OkrQkQ7S3oFfgKJax2D0VrtlUkGcFhTKCWG7Dps0eo=",
   "Source": "WatchShop2",
   "BasePath": "_content/WatchShop2",
   "Mode": "Default",
@@ -566,6 +566,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\image\\master_card.png"
+    },
+    {
+      "Identity": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\123.PNG",
+      "SourceId": "WatchShop2",
+      "SourceType": "Discovered",
+      "ContentRoot": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\",
+      "BasePath": "_content/WatchShop2",
+      "RelativePath": "image/products/123.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\image\\products\\123.PNG"
     },
     {
       "Identity": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\products\\55-home_default.png",

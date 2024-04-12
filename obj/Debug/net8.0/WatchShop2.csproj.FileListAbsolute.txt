@@ -255,7 +255,6 @@ H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\WatchShop2.pdb
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\WatchShop2.genruntimeconfig.cache
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\ref\WatchShop2.dll
 H:\ASP_MVC\WatchShop2\obj\Debug\net8.0\WatchShop2.sourcelink.json
-H:\ASP_MVC\WatchShop2\bin\Debug\net8.0\Product.json
 H:\ASP_MVC\WatchShop2\bin\Debug\net8.0\BCrypt.Net-Next.dll
 H:\ASP_MVC\WatchShop2\bin\Debug\net8.0\X.PagedList.dll
 H:\ASP_MVC\WatchShop2\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll

@@ -32,6 +32,7 @@
               <th>Id</th>
               <th>Name</th>
               <th>Products</th>
+              <th>Active</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -42,6 +43,16 @@
                 <td>@size.SizeId</td>
                 <td>@size.SizeName</td>
                 <td>@size.Quantity</td>
+                <td>
+                  @if (size.Active)
+                  {
+                    <span class="badge badge-success">Active</span>
+                  }
+                  else
+                  {
+                    <span class="badge badge-danger">Unactive</span>
+                  }
+                </td>
                 <td>
                   <div class="table-actions">
                     <a href="/admin/attributes/sizes/@size.SizeId" class="action-item view bg-info text-info">

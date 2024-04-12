@@ -1,0 +1,140 @@
+@model User
+
+@{
+  ViewData["Title"] = "Create Admin";
+  ViewBag.NavActive = "Administrator";
+}
+
+@section CSS {
+  <style>
+    .form {
+      border: none;
+    }
+
+    .form-error {
+      padding: 0 !important;
+    }
+  </style>
+}
+
+<h3 class="page-title">Administrators</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/user/administrators">Administrators</a></span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span>Create New Admin</span>
+</div>
+<div class="content">
+  <form method="post">
+    <div class="actions">
+      <button type="submit" class="button button-gb save-update">Save</button>
+      <span class="form-error server-error">@ViewBag.ErrorMessage</span>
+    </div>
+    <div class="flex cl-gap">
+      <div class="col-8 pd-gap">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">User Info</span>
+          </div>
+          <div class="card-body">
+            <div class="form">
+              <div class="flex cl-gap">
+                <div class="col-6 pd-gap">
+                  <div class="form-row">
+                    <span class="form-title">First Name</span>
+                    <input type="text" asp-for="FirstName" class="form-input">
+                    <span asp-validation-for="FirstName" class="form-error text-danger"></span>
+                  </div>
+                </div>
+                <div class="col-6 pd-gap">
+                  <div class="form-row">
+                    <span class="form-title">Last Name</span>
+                    <input type="text" asp-for="LastName" class="form-input">
+                    <span asp-validation-for="LastName" class="form-error text-danger"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <span class="form-title">Email</span>
+                <input type="text" asp-for="Email" class="form-input">
+                <span asp-validation-for="Email" class="form-error text-danger"></span>
+              </div>
+              <div class="form-row">
+                <span class="form-title">Birthdate</span>
+                <input type="date" asp-for="Birthdate" class="form-input">
+                <span asp-validation-for="Birthdate" class="form-error text-danger"></span>
+              </div>
+              <div class="form-row">
+                <span class="form-title">Gender</span>
+                <div class="form-radios">
+                  <div class="form-radio-row">
+                    <input type="radio" asp-for="Gender" id="male" class="form-input" value="true" checked>
+                    <label for="male" class="">Male</label>
+                  </div>
+                  <div class="form-radio-row">
+                    <input type="radio" asp-for="Gender" id="female" class="form-input" value="false">
+                    <label for="female" class="">Femail</label>
+                  </div>
+                </div>
+                <span asp-validation-for="Gender" class="form-error text-danger"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 pd-gap">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">User Password</span>
+          </div>
+          <div class="card-body">
+            <div class="form">
+              <div class="form-row">
+                <span class="form-title">Password</span>
+                <div class="form-password">
+                  <input type="password" autocomplete="new-password" asp-for="Password" class="form-input">
+                  <span class="form-password-btn">
+                    <i class="fas fa-eye"></i>
+                  </span>
+                </div>
+                <span asp-validation-for="Password" class="form-error text-danger"></span>
+              </div>
+              <div class="form-row">
+                <span class="form-title">Confirm Password</span>
+                <div class="form-password">
+                  <input type="password" asp-for="ConfirmPassword" class="form-input">
+                  <span class="form-password-btn">
+                    <i class="fas fa-eye"></i>
+                  </span>
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="form-error text-danger"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+@section JS {
+  <script>
+    const formPasswords = document.querySelectorAll(".form-password");
+
+    formPasswords.forEach((item) => {
+      const input = item.querySelector("input");
+      const btnShow = item.querySelector(".form-password-btn");
+
+      btnShow.addEventListener("click", () => {
+        if (input.type == "password") {
+          input.type = "text";
+          btnShow.innerHTML = `<i class="fas fa-eye-slash"></i>`;
+        } else {
+          input.type = "password";
+          btnShow.innerHTML = `<i class="fas fa-eye"></i>`;
+        }
+      });
+    });
+  </script>
+}

@@ -7,6 +7,8 @@
 @{
   ViewData["Title"] = "Administrators";
   ViewBag.NavActive = "Administrator";
+
+  int UserId = Context.Session.GetInt32("UserId") ?? 0;
 }
 
 
@@ -18,14 +20,14 @@
 </div>
 <div class="content">
   <div class="actions">
-    <button class="button button-gb create-button">Create</button>
+    <a href="/admin/user/administrators/create" class="button button-gb create-button">Create Admin</a>
   </div>
   <div class="card list-container">
     <div class="card-header">
       <span class="card-title">Administrator List</span>
     </div>
     <div class="card-body">
-      <div class="card-body-scroll">
+      <div class="card-body-scroll" id="user_list_card">
         <table class="table">
           <thead>
             <tr>
@@ -35,8 +37,7 @@
               <th>Email</th>
               <th>Gender</th>
               <th>Birthdate</th>
-              <th>RoleName</th>
-              <th>Status</th>
+              <th>Active</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -48,9 +49,8 @@
                 <td>@user.FirstName</td>
                 <td>@user.LastName</td>
                 <td>@user.Email</td>
-                <td>@(user.Gender ? "Man" : "Woman")</td>
+                <td>@(user.Gender ? "Male" : "Female")</td>
                 <td>@user.Birthdate</td>
-                <td>@user.RoleName</td>
                 <td>
                   @if (user.Active)
                   {
@@ -63,14 +63,8 @@
                 </td>
                 <td>
                   <div class="table-actions">
-                    <a href="" class="action-item view bg-info text-info">
+                    <a href="/admin/user/administrators/@user.UserId" class="action-item view bg-info text-info">
                       <i class="fa-regular fa-eye "></i>
-                    </a>
-                    <a href="" class="action-item edit bg-warning  text-warning">
-                      <i class="fa-solid fa-pen"></i>
-                    </a>
-                    <a href="" class="action-item delete bg-danger  text-danger">
-                      <i class="fa-solid fa-trash"></i>
                     </a>
                   </div>
                 </td>
@@ -94,8 +88,3 @@
     </div>
   </div>
 </div>
-
-@section JS {
-  <script>
-  </script>
-}

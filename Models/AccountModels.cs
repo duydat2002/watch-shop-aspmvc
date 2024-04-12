@@ -50,3 +50,17 @@ public class UserWithRoleName
 
   public bool Active { get; set; }
 }
+
+public class ChangeUserRoleModel
+{
+  public int UserId { get; set; }
+
+  public int RoleId { get; set; }
+}
+
+public class BanOrUnbanUserModel
+{
+  public int UserId { get; set; }
+
+  public bool Active { get; set; }
+}

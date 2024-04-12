@@ -31,8 +31,12 @@ public class AttributesController : Controller
   public IActionResult CategoryDetail(int CategoryId, int page = 1)
   {
     int pageSize = 5;
-    var products = _entityContext.GetProducts(CategoryId).ToPagedList(page, pageSize);
     var category = _entityContext.GetCategoryById(CategoryId);
+
+    if (category == null)
+      return RedirectToAction("PageNotFound", "Home");
+
+    var products = _entityContext.GetProducts(CategoryId).ToPagedList(page, pageSize);
 
     ViewBag.Products = products;
 

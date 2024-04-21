@@ -1,4 +1,4 @@
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WatchShop2.Helpers;
@@ -27,6 +27,12 @@ public class AttributesController : Controller
     return View(categories);
   }
 
+  [Route("categories/create")]
+  public IActionResult CategoryCreate()
+  {
+    return View();
+  }
+
   [Route("categories/{CategoryId}")]
   public IActionResult CategoryDetail(int CategoryId, int page = 1)
   {
@@ -51,6 +57,12 @@ public class AttributesController : Controller
     return View(colors);
   }
 
+  [Route("colors/create")]
+  public IActionResult ColorCreate()
+  {
+    return View();
+  }
+
   [Route("colors/{ColorId}")]
   public IActionResult ColorDetail(int ColorId, int page = 1)
   {
@@ -71,7 +83,7 @@ public class AttributesController : Controller
     return View(sizes);
   }
 
-  [Route("Sizes/{SizeId}")]
+  [Route("sizes/{SizeId}")]
   public IActionResult SizeDetail(int SizeId, int page = 1)
   {
     int pageSize = 5;
@@ -82,6 +94,37 @@ public class AttributesController : Controller
 
     return View(size);
   }
+
+  [HttpPost]
+  [Route("/admin/api/attributes/colors/create-color")]
+  public IActionResult CreateColor([FromBody] Color color)
+  {
+    try
+    {
+      int create = _entityContext.CreateColor(color);
+      return Json(new { success = true, id = create });
+    }
+    catch (SqlException e)
+    {
+      return Json(new { success = false, message = e.Message });
+    }
+  }
+
+  [HttpPost]
+  [Route("/admin/api/attributes/categories/create-category")]
+  public IActionResult CreateCategory([FromBody] Category category)
+  {
+    try
+    {
+      int create = _entityContext.CreateCategory(category);
+      return Json(new { success = true, id = create });
+    }
+    catch (SqlException e)
+    {
+      return Json(new { success = false, message = e.Message });
+    }
+  }
+
 
   [HttpPost]
   [Route("/admin/api/attributes/categories/update-category")]

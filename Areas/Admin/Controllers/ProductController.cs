@@ -60,9 +60,8 @@ public class ProductController : Controller
   }
 
   [Route("/admin/api/products/get-products")]
-  public IActionResult GetProducts(int CategoryId = 0, int SizeId = 0, int ColorId = 0, string search = "", int page = 1)
+  public IActionResult GetProducts(int CategoryId = 0, int SizeId = 0, int ColorId = 0, string search = "", int page = 1, int pageSize = 5)
   {
-    int pageSize = 5;
     var products = _entityContext
       .GetProducts(CategoryId, SizeId, ColorId)
       .Where(p => p.ProductName.ToLower().Contains(search.ToLower()))
@@ -110,6 +109,21 @@ public class ProductController : Controller
     catch (System.Exception)
     {
       return Json(new { success = false });
+    }
+  }
+
+  [HttpPost]
+  [Route("/admin/api/products/change-product-color-size")]
+  public IActionResult ChangeProductColorSize([FromBody] Product product)
+  {
+    try
+    {
+      var change = _entityContext.ChangeProductColorSize(product);
+      return Json(new { success = change > 0 });
+    }
+    catch (System.Exception e)
+    {
+      return Json(new { success = false, message = e.Message });
     }
   }
 

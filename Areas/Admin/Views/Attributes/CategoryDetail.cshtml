@@ -204,10 +204,8 @@
 
         itemsDOM.forEach(item => {
           const ProductId = item.dataset.productid;
-          const viewDOM = item.querySelector(".action-item.view")
           const deleteDOM = item.querySelector(".action-item.delete")
 
-          viewDOM.href = "123";
           deleteDOM.addEventListener("click", () => { deleteProductCategory(ProductId) })
         })
       })

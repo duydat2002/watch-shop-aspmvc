@@ -20,6 +20,9 @@
             <a href="/admin" class="header-logo">
                 <img src="~/image/Logo.png" alt="Logo">
             </a>
+            <a href="/admin" class="header-logo-icon">
+                <i class="fa-solid fa-house"></i>
+            </a>
         </div>
         <div class="sidebar-scroll">
             <div class="sidebar-navs">
@@ -29,32 +32,47 @@
                 <div class="navs">
                     <a href="/admin/user/administrators"
                         class="nav-item @(ViewBag.NavActive == "Administrator" ? "active" : "")">
-                        <i class="fa-solid fa-user-tie icon"></i>
+                        <abbr title="Administrator">
+                            <i class="fa-solid fa-user-tie icon"></i>
+                        </abbr>
                         <span class="nav-name">Administrator</span>
                     </a>
                     <a href="/admin/user/customers" class="nav-item @(ViewBag.NavActive == "Customer" ? "active" : "")">
-                        <i class="fa-solid fa-users-line icon"></i>
+                        <abbr title="Customer">
+                            <i class="fa-solid fa-users-line icon"></i>
+                        </abbr>
                         <span class="nav-name">Customer</span>
                     </a>
                     <a href="/admin/attributes/categories"
                         class="nav-item @(ViewBag.NavActive == "Category" ? "active" : "")">
-                        <i class="fa-solid fa-layer-group icon"></i>
+                        <abbr title="Category">
+                            <i class="fa-solid fa-layer-group icon"></i>
+                        </abbr>
                         <span class="nav-name">Category</span>
                     </a>
                     <a href="/admin/attributes/colors" class="nav-item @(ViewBag.NavActive == "Color" ? "active" : "")">
-                        <i class="fa-solid fa-palette icon"></i>
+                        <abbr title="Color">
+                            <i class="fa-solid fa-palette icon"></i>
+                        </abbr>
                         <span class="nav-name">Color</span>
                     </a>
                     <a href="/admin/attributes/sizes" class="nav-item @(ViewBag.NavActive == "Size" ? "active" : "")">
-                        <i class="fa-solid fa-ruler-horizontal icon"></i>
+                        <abbr title="Size">
+                            <i class="fa-solid fa-ruler-horizontal icon"></i>
+                        </abbr>
                         <span class="nav-name">Size</span>
                     </a>
                     <a href="/admin/products" class="nav-item @(ViewBag.NavActive == "Product" ? "active" : "")">
-                        <i class="fa-solid fa-cube icon"></i>
+                        <abbr title="Product">
+                            <i class="fa-solid fa-cube icon"></i>
+
+                        </abbr>
                         <span class="nav-name">Product</span>
                     </a>
                     <a href="/admin/orders" class="nav-item @(ViewBag.NavActive == "Order" ? "active" : "")">
-                        <i class="fa-solid fa-clipboard-list icon"></i>
+                        <abbr title="Order">
+                            <i class="fa-solid fa-clipboard-list icon"></i>
+                        </abbr>
                         <span class="nav-name">Order</span>
                     </a>
                 </div>
@@ -63,7 +81,9 @@
                 </div>
                 <div class="navs">
                     <a href="" class="nav-item @(ViewBag.NavActive == "Statistic" ? "active" : "")">
-                        <i class="fa-solid fa-chart-column icon"></i>
+                        <abbr title="Statistic">
+                            <i class="fa-solid fa-chart-column icon"></i>
+                        </abbr>
                         <span class="nav-name">Statistic</span>
                     </a>
                 </div>
@@ -179,6 +199,8 @@
             }
         });
     </script>
+    <script src="~/js/chart.js" asp-append-version="true"></script>
+    <script src="~/js/chartjs-plugin-datalabels.js" asp-append-version="true"></script>
     @await RenderSectionAsync("JS", required: false)
 </body>
 

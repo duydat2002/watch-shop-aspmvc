@@ -364,6 +364,15 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    public int ChangeProductColorSize(Product product)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_ChangeProductColorSize @ProductId, @ColorId, @SizeId",
+            new SqlParameter("@ProductId", product.ProductId),
+            new SqlParameter("@ColorId", product.ColorId),
+            new SqlParameter("@SizeId", product.SizeId)
+        );
+    }
+
     //Admin/ Categories
     public List<CategoryWithProductCountModel> GetCategories()
     {
@@ -375,6 +384,13 @@ public partial class WatchShop2Context : DbContext
         return this.Categories.FromSqlRaw("EXECUTE pr_GetCategoryById @CategoryId",
             new SqlParameter("@CategoryId", CategoryId)
         ).ToList().SingleOrDefault();
+    }
+
+    public int CreateCategory(Category category)
+    {
+        return this.Database.SqlQueryRaw<int>("EXECUTE pr_AddCategory @CategoryName",
+            new SqlParameter("@CategoryName", category.CategoryName)
+        ).AsEnumerable().FirstOrDefault();
     }
 
     public int UpdateCategory(Category category)
@@ -433,6 +449,23 @@ public partial class WatchShop2Context : DbContext
         return this.Colors.FromSqlRaw("EXECUTE pr_GetColorById @ColorId",
             new SqlParameter("@ColorId", ColorId)
         ).ToList().SingleOrDefault();
+    }
+
+    public int CreateColor(Color color)
+    {
+        return this.Database.SqlQueryRaw<int>("EXECUTE pr_CreateColor @ColorName, @ColorValue",
+            new SqlParameter("@ColorName", color.ColorName),
+            new SqlParameter("@ColorValue", color.ColorValue)
+        ).AsEnumerable().FirstOrDefault();
+    }
+
+    public int UpdateColor(Color color)
+    {
+        return this.Database.ExecuteSqlRaw("EXECUTE pr_UpdateColor @ColorId, @ColorName, @ColorValue",
+            new SqlParameter("@ColorId", color.ColorId),
+            new SqlParameter("@ColorName", color.ColorName),
+            new SqlParameter("@ColorValue", color.ColorValue)
+        );
     }
 
     //Admin/ Roles

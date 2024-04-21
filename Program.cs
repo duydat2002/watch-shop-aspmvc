@@ -71,20 +71,20 @@ app.Use(async (context, next) =>
 {
     await next();
 
-    // if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
-    // {
-    //     // Console.WriteLine("Not found");
-    //     if (context.Request.Path.StartsWithSegments("/admin"))
-    //     {
-    //         // Console.WriteLine("Not found admin");
-    //         context.Response.Redirect("/admin/PageNotFound");
-    //     }
-    //     else
-    //     {
-    //         // Console.WriteLine("Not found normal");
-    //         context.Response.Redirect("/PageNotFound");
-    //     }
-    // }
+    if (context.Response.StatusCode == 404 && !context.Response.HasStarted)
+    {
+        // Console.WriteLine("Not found");
+        if (context.Request.Path.StartsWithSegments("/admin"))
+        {
+            // Console.WriteLine("Not found admin");
+            context.Response.Redirect("/admin/PageNotFound");
+        }
+        else
+        {
+            // Console.WriteLine("Not found normal");
+            context.Response.Redirect("/PageNotFound");
+        }
+    }
 });
 
 app.MapControllerRoute(

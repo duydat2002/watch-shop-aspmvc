@@ -3,7 +3,123 @@
 }
 
 
-<h3 class="title"></h3>
+<h3 class="page-title">Dashboard</h3>
 <div class="breakcrumb">
-
+  <span class="breakcrumb-root">Dashboard</span>
 </div>
+<div class="actions">
+  <a href="/admin/attributes/colors/create" class="button button-gb create-button">Create</a>
+</div>
+<div class="content dashboard">
+  <div class="flex cl-gap">
+    <div class="col-8 pd-gap">
+      <div class="items">
+        <div class="card ">
+          <div class="card-header">
+            <span class="card-title">Sales</span>
+          </div>
+          <div class="card-body">
+            <span class="">300.000.000</span>
+          </div>
+        </div>
+        <div class="card ">
+          <div class="card-header">
+            <span class="card-title">Orders</span>
+          </div>
+          <div class="card-body">
+            <span class="">300</span>
+          </div>
+        </div>
+        <div class="card ">
+          <div class="card-header">
+            <span class="card-title">New customers</span>
+          </div>
+          <div class="card-body">
+            <span class="">30</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Total Sales</span>
+        </div>
+        <div class="card-body">
+          <canvas id="total-sales"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 pd-gap">
+      <div class="card ">
+        <div class="card-header">
+          <span class="card-title">Order status</span>
+        </div>
+        <div class="card-body">
+          <canvas id="order-status"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section JS {
+  <script>
+    Chart.register(ChartDataLabels);
+
+    const totalSalesData = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      datasets: [{
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    };
+
+    const totalSalesChart = new Chart("total-sales", {
+      type: 'line',
+      data: totalSalesData,
+    })
+
+    const orderStatusData = {
+      labels: [
+        'Cancelled',
+        'Pending',
+        'Completed'
+      ],
+      datasets: [{
+        data: [300, 50, 100],
+        backgroundColor: [
+          '#f43f5e',
+          '#eab308',
+          '#22c55e'
+        ],
+        hoverOffset: 4
+      }]
+    }
+
+    const orderStatusChart = new Chart("order-status", {
+      type: 'doughnut',
+      data: orderStatusData,
+      plugins: [ChartDataLabels],
+      options: {
+        plugins: {
+          legend: {
+            position: 'bottom'
+          },
+          datalabels: {
+            color: '#fff',
+            formatter: (value, ctx) => {
+              let sum = 0;
+              let dataArr = ctx.chart.data.datasets[0].data;
+              dataArr.map(data => {
+                sum += data;
+              });
+              let percentage = (value * 100 / sum).toFixed(0) + "%";
+              return percentage;
+            },
+          },
+        }
+      }
+    })
+  </script>
+}

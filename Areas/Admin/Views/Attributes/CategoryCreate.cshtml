@@ -1,0 +1,189 @@
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+
+@model Category
+
+@{
+  ViewData["Title"] = "Create Category";
+  ViewBag.NavActive = "Category";
+}
+
+
+<h3 class="page-title">Create Category</h3>
+<div class="breakcrumb">
+  <span class="breakcrumb-root">Manage</span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span><a href="/admin/attributes/categories">Categories</a></span>
+  <i class="fa-solid fa-angles-right"></i>
+  <span>Create</span>
+</div>
+<div class="content">
+  <div class="flex cl-gap">
+    <div class="col-8 pd-gap">
+      <div class="card list-container" id="list-product">
+        <div class="card-header flex">
+          <span class="card-title">Product List</span>
+          <div class="modal-container" id="add_product_container">
+            <button class="button button-gb hidden" id="add_product_modal_btn">Add Product</button>
+            <div class="extend-modal add-product-modal hidden" id="add_product_modal">
+              <div class="modal-header">
+                <div class="search-container">
+                  <input type="text" name="search_add_products" class="search-input"
+                    placeholder="Search products by name">
+                  <button class="modal-button search-button">Search</button>
+                </div>
+              </div>
+              <div class="modal-body">
+                <div class="modal-list" id="add_product_list">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-body-scroll" id="product_list_card">
+            <span class="">Empty</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 pd-gap">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Category Info</span>
+        </div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-row">
+              <span class="form-title">Category Name</span>
+              <input type="text" asp-for="CategoryName" class="form-input" id="input-category-name">
+              <span class="form-error text-danger category-name-error hidden">Please enter category name.</span>
+            </div>
+          </div>
+          <div class="form-buttons">
+            <button class="button button-gb form-button" id="save-button">Create</button>
+          </div>
+          <div class="form-message">
+            <span class="form-error text-danger hidden">Something went wrong!</span>
+            <span class="form-success text-success hidden">Create successfuly!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section JS {
+  <script>
+    // Save name
+    const saveButton = document.querySelector("#save-button");
+    const successDOM = document.querySelector(".form-message .form-success");
+    const errorDOM = document.querySelector(".form-message .form-error");
+    let CategoryId;
+
+    saveButton.addEventListener("click", () => {
+      const CategoryName = document.querySelector("#input-category-name").value;
+      successDOM.classList.add("hidden")
+      errorDOM.classList.add("hidden")
+
+
+      AjaxPost("/admin/api/attributes/categories/create-category",
+        { CategoryName },
+        (responseText) => {
+          const data = JSON.parse(responseText);
+
+          if (data.success) {
+            successDOM.classList.remove("hidden")
+            addProductBtnDOM.classList.remove("hidden")
+            CategoryId = data.id
+          } else {
+            errorDOM.innerHTML = data.message ?? "Something went wrong."
+            errorDOM.classList.remove("hidden")
+          }
+        }
+      )
+    })
+
+    // Modal
+    const addProductContainerDOM = document.querySelector("#add_product_container")
+    const addProductModalDOM = document.querySelector("#add_product_modal")
+    const addProductBtnDOM = document.querySelector("#add_product_modal_btn")
+
+    onClickOutside(addProductContainerDOM, () => {
+      addProductModalDOM.classList.add("hidden")
+    })
+
+    addProductBtnDOM.addEventListener("click", () => {
+      addProductModalDOM.classList.remove("hidden")
+      getAddProduct()
+    })
+
+    // Search
+    const productListCardDOM = document.querySelector("#product_list_card");
+    const addProductListDOM = document.querySelector("#add_product_list");
+    const searchAddProductDOM = document.querySelector(".add-product-modal .search-button");
+
+    searchAddProductDOM.addEventListener("click", () => {
+      getAddProduct()
+    })
+
+    function getAddProduct() {
+      const search = document.querySelector("input[name='search_add_products']").value
+
+      AjaxGet(`/admin/api/products/get-products-without?CategoryId=${CategoryId}&search=${search}`, (responseText) => {
+        addProductListDOM.innerHTML = responseText
+      })
+    }
+
+    function getProductsCard() {
+      const page = getParam("page") ?? 1
+
+      AjaxGet(`/admin/api/products/get-products?CategoryId=${CategoryId}&page=${page}`, (responseText) => {
+        productListCardDOM.innerHTML = responseText
+
+        const itemsDOM = productListCardDOM.querySelectorAll(".item")
+
+        itemsDOM.forEach(item => {
+          const ProductId = item.dataset.productid;
+          const deleteDOM = item.querySelector(".action-item.delete")
+
+          deleteDOM.addEventListener("click", () => { deleteProductCategory(ProductId) })
+        })
+      })
+    }
+
+    // Add Product Category 
+    function addProductCategory(ProductId) {
+      AjaxPost("/admin/api/attributes/categories/add-product",
+        { ProductId, CategoryId },
+        (responseText) => {
+          const data = JSON.parse(responseText)
+          if (data.success) {
+            getAddProduct();
+            getProductsCard()
+          } else {
+            console.log("fail");
+          }
+        })
+    }
+
+    // Delete Product Category 
+    function deleteProductCategory(ProductId) {
+      if (confirm("Are you sure you want to delete?")) {
+        AjaxPost("/admin/api/attributes/categories/delete-product",
+          { ProductId, CategoryId },
+          (responseText) => {
+            const data = JSON.parse(responseText)
+            if (data.success) {
+              getAddProduct();
+              getProductsCard()
+            } else {
+              console.log("fail");
+            }
+          })
+      }
+    }
+
+  </script>
+}

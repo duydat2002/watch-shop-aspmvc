@@ -45,6 +45,10 @@ a {
   color: #000;
 }
 
+abbr {
+  text-decoration: none;
+}
+
 img {
   max-width: 100%;
   width: 100%;
@@ -263,6 +267,7 @@ button {
   width: 250px;
   z-index: 101;
   box-shadow: 0px 0px 15px hsl(0deg 0% 1% / 70%);
+  transition: all 0.3s;
 }
 
 .header {
@@ -271,7 +276,6 @@ button {
   left: 0;
   right: 0;
   height: 70px;
-  margin-left: 250px;
   background: #fff;
   border-bottom: 1px solid #e2e9f0;
   z-index: 100;
@@ -298,6 +302,12 @@ button {
 
 .header-logo {
   width: 120px;
+}
+
+.header-logo-icon {
+  display: none;
+  font-size: 18px;
+  color: #fff;
 }
 
 .sidebar-scroll {
@@ -338,8 +348,11 @@ button {
   color: #fff;
 }
 
-.nav-item > i {
+.nav-item i {
   width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-name {
@@ -719,6 +732,27 @@ button {
   font-weight: 600;
 }
 
+/* === Not found === */
+.notfound-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 490px;
+  width: 100%;
+  background: #fff;
+  padding: 40px 0;
+}
+
+.notfound-text {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.notfound-img {
+  width: 60%;
+}
+
 /* === Colors === */
 .color-box {
   width: 50px;
@@ -751,6 +785,7 @@ button {
   padding: 10px;
   min-width: 400px;
   max-width: 500px;
+  z-index: 1;
 }
 
 .search-container {
@@ -831,6 +866,41 @@ button {
 .product-check:hover {
   background: #c0d06d;
   color: #fff;
+}
+
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-attributes {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 4px;
+}
+
+.attribute-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: normal;
+}
+
+.attribute-title {
+  font-size: 13px;
+}
+
+.attribute-value {
+  font-size: 12px;
+  border: 1px solid #ccc;
+  padding: 2px 8px;
+}
+
+.attribute-row.color-item .attribute-value {
+  width: 24px;
+  height: 24px;
 }
 
 /* === Products === */
@@ -1033,4 +1103,55 @@ button {
 
 .contact-desc {
   flex: 1 1 auto;
+}
+
+/* === DASHBOARD === */
+.dashboard {
+}
+
+.dashboard .items {
+  display: flex;
+  gap: 20px;
+}
+
+.dashboard .items .card {
+  flex: 1;
+}
+
+@media screen and (max-width: 1024px) {
+  .header-logo {
+    display: none;
+  }
+
+  .header-logo-icon {
+    display: block;
+  }
+
+  .sidebar {
+    width: auto;
+  }
+
+  .navs {
+    margin: 0;
+  }
+
+  .nav-item {
+    margin-bottom: 10px;
+  }
+
+  .nav-item i {
+    font-size: 18px;
+  }
+
+  .nav-category {
+    display: none;
+  }
+
+  .nav-name {
+    display: none;
+  }
+
+  .main {
+    margin-left: 60px;
+  }
 }

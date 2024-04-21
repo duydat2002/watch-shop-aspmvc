@@ -11,12 +11,25 @@
 {
   string[] alts = @product.ProductImages.Split(',');
 
-  <div class="product-item">
+  <div class="product-item" data-productid="@product.ProductId" data-sizeid="@product.SizeId"
+    data-colorid="@product.ColorId">
     <div class='product-image'>
       <img src='~/image/products/@alts[0]' alt='@alts[0]'>
     </div>
-    <div class="product-name text-overflow">@product.ProductName</div>
-    <div class="product-check add-product" onclick=addProductCategory(@product.ProductId)>
+    <div class="product-info">
+      <span class="product-name text-overflow">@product.ProductName</span>
+      <div class="product-attributes">
+        <div class="attribute-row size-item">
+          <span class="attribute-title">Size</span>
+          <span class="attribute-value">@product.SizeName</span>
+        </div>
+        <div class="attribute-row color-item">
+          <span class="attribute-title">Color</span>
+          <div class="attribute-value" style="background: @product.ColorValue;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="product-check add-product" onclick="handleAddProduct(this.closest('.product-item'))">
       <i class="fa-solid fa-plus"></i>
     </div>
   </div>

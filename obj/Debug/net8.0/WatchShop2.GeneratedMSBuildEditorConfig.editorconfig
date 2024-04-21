@@ -30,8 +30,16 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDYXRlZ29yaWVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/CategoryCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDYXRlZ29yeUNyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/CategoryDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDYXRlZ29yeURldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/ColorCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXR0cmlidXRlc1xDb2xvckNyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [h:/ASP_MVC/WatchShop2/Areas/Admin/Views/Attributes/ColorDetail.cshtml]

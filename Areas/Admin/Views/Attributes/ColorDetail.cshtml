@@ -25,6 +25,23 @@
       <div class="card list-container" id="list-product">
         <div class="card-header flex">
           <span class="card-title">Product List</span>
+          <div class="modal-container" id="add_product_container">
+            <button class="button button-gb" id="add_product_modal_btn">Add Product</button>
+            <div class="extend-modal add-product-modal hidden" id="add_product_modal">
+              <div class="modal-header">
+                <div class="search-container">
+                  <input type="text" name="search_add_products" class="search-input"
+                    placeholder="Search products by name">
+                  <button class="modal-button search-button">Search</button>
+                </div>
+              </div>
+              <div class="modal-body">
+                <div class="modal-list" id="add_product_list">
+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div class="card-body-scroll" id="product_list_card">
@@ -97,11 +114,13 @@
           <div class="form">
             <div class="form-row">
               <span class="form-title">Color Name</span>
-              <input type="text" name="color_name" class="form-input" value="@Model.ColorName">
+              <input type="text" id="input-category-name" name="color_name" class="form-input" value="@Model.ColorName">
+              <span class="form-error text-danger color-name-error hidden">Please enter color name.</span>
             </div>
             <div class="form-row">
               <span class="form-title">Color Value</span>
-              <input type="color" name="color_value" class="form-input" value="@Model.ColorValue" style="height: 40px;">
+              <input type="color" id="input-category-value" name="color_value" class="form-input"
+                value="@Model.ColorValue" style="height: 40px;">
             </div>
           </div>
           <div class="form-buttons">
@@ -116,3 +135,119 @@
     </div>
   </div>
 </div>
+
+@section JS {
+  <script>
+    let ColorId = @Model.ColorId;
+
+    // Save name
+    const colorName = document.querySelector("#input-color-name");
+    const colorValue = document.querySelector("#input-color-value");
+    const colorNameErr = document.querySelector(".color-name-error")
+
+    const saveButton = document.querySelector("#save-button");
+    const successDOM = document.querySelector(".form-message .form-success");
+    const errorDOM = document.querySelector(".form-message .form-error");
+
+    saveButton.addEventListener("click", () => {
+      successDOM.classList.add("hidden")
+      errorDOM.classList.add("hidden")
+
+      if (validate()) {
+        AjaxPost("/admin/api/attributes/colors/create-color",
+          { ColorName: colorName.value.trim(), ColorValue: colorValue.value.trim() },
+          (responseText) => {
+            const data = JSON.parse(responseText);
+
+            if (data.success) {
+              successDOM.classList.remove("hidden")
+              addProductBtnDOM.classList.remove("hidden")
+            } else {
+              errorDOM.innerHTML = data.message ?? "Something went wrong."
+              errorDOM.classList.remove("hidden")
+            }
+          }
+        )
+      }
+
+    })
+
+    // Validate
+    const validate = () => {
+      let check = true;
+      colorNameErr.classList.add("hidden")
+
+      if (colorName.value.trim() == "") {
+        colorNameErr.classList.remove("hidden")
+        check = false
+      }
+
+      return check
+    }
+
+    // Modal
+    const addProductContainerDOM = document.querySelector("#add_product_container")
+    const addProductModalDOM = document.querySelector("#add_product_modal")
+    const addProductBtnDOM = document.querySelector("#add_product_modal_btn")
+
+    onClickOutside(addProductContainerDOM, () => {
+      addProductModalDOM.classList.add("hidden")
+    })
+
+    addProductBtnDOM.addEventListener("click", () => {
+      addProductModalDOM.classList.remove("hidden")
+      getAddProduct()
+    })
+
+    // Search
+    const productListCardDOM = document.querySelector("#product_list_card");
+    const addProductListDOM = document.querySelector("#add_product_list");
+    const searchAddProductDOM = document.querySelector(".add-product-modal .search-button");
+
+    searchAddProductDOM.addEventListener("click", () => {
+      getAddProduct()
+    })
+
+    function getAddProduct() {
+      const search = document.querySelector("input[name='search_add_products']").value
+
+      AjaxGet(`/admin/api/products/get-products-without?ColorId=${ColorId}&search=${search}`, (responseText) => {
+        addProductListDOM.innerHTML = responseText
+      })
+    }
+
+    function getProductsCard() {
+      const page = getParam("page") ?? 1
+
+      AjaxGet(`/admin/api/products/get-products?ColorId=${ColorId}&page=${page}`, (responseText) => {
+        productListCardDOM.innerHTML = responseText
+
+        const itemsDOM = productListCardDOM.querySelectorAll(".item")
+
+        itemsDOM.forEach(item => {
+          const deleteDOM = item.querySelector(".action-item.delete")
+
+          deleteDOM.remove();
+        })
+      })
+    }
+
+    // Add Product 
+    function handleAddProduct(product) {
+      const ProductId = product.dataset.productid
+      const SizeId = product.dataset.sizeid
+
+      AjaxPost("/admin/api/products/change-product-color-size",
+        { ProductId, ColorId, SizeId },
+        (responseText) => {
+          const data = JSON.parse(responseText)
+          if (data.success) {
+            getAddProduct();
+            getProductsCard()
+          } else {
+            console.log("fail");
+          }
+        })
+    }
+  </script>
+}

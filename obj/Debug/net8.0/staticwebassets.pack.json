@@ -33,6 +33,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\404.png",
+      "PackagePath": "staticwebassets\\image\\404.png"
+    },
+    {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\image\\Banner-1.png",
       "PackagePath": "staticwebassets\\image\\Banner-1.png"
     },
@@ -467,6 +471,14 @@
     {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\js\\cart.js",
       "PackagePath": "staticwebassets\\js\\cart.js"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\js\\chart.js",
+      "PackagePath": "staticwebassets\\js\\chart.js"
+    },
+    {
+      "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\js\\chartjs-plugin-datalabels.js",
+      "PackagePath": "staticwebassets\\js\\chartjs-plugin-datalabels.js"
     },
     {
       "Id": "H:\\ASP_MVC\\WatchShop2\\wwwroot\\js\\detailProduct.js",

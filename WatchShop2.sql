@@ -515,7 +515,7 @@ BEGIN
 		EXCEPT
 		SELECT ProductId
 		FROM dbo.ProductCategory
-		WHERE (@CategoryId = 0 OR CategoryId = @CategoryId)
+		WHERE CategoryId = @CategoryId
 	) c ON c.ProductId = Products.ProductId
 	WHERE (@SizeId = 0 OR Products.SizeId <> @SizeId) AND
 		  (@ColorId = 0 OR Products.ColorId <> @ColorId) 
@@ -546,9 +546,22 @@ GO
 CREATE OR ALTER PROCEDURE pr_AddCategory(@CategoryName NVARCHAR(255))
 AS
 BEGIN
-    INSERT INTO dbo.Categories(CategoryName) 
-	VALUES(@CategoryName)
+	IF NOT EXISTS (SELECT CategoryId FROM dbo.Categories WHERE LOWER(CategoryName) LIKE LOWER(TRIM(@CategoryName)))
+	BEGIN
+		INSERT INTO dbo.Categories(CategoryName) 
+		VALUES(TRIM(@CategoryName))
+
+		SELECT CONVERT(INT, SCOPE_IDENTITY())
+	END
+	ELSE
+	BEGIN
+	    RAISERROR(N'This Category already exists!',16,10);
+	    RETURN
+	END
 END
+
+EXEC dbo.pr_AddCategory @CategoryName=N'ehe' -- nvarchar(255)
+
 
 GO
 CREATE OR ALTER PROCEDURE pr_UpdateCategory(
@@ -1194,3 +1207,34 @@ SELECT * FROM dbo.OrderDetails WHERE OrderId = 1
 SELECT Products.ProductId, Products.Quantity FROM dbo.Products
 INNER JOIN dbo.OrderDetails ON OrderDetails.ProductId = Products.ProductId
 WHERE OrderId = 1
+
+--ADMIN/COLOR
+GO
+CREATE OR ALTER PROCEDURE pr_CreateColor(@ColorName NVARCHAR(255), @ColorValue VARCHAR(255))
+AS
+BEGIN
+    INSERT INTO dbo.Colors(ColorName, ColorValue, Active)
+    VALUES(@ColorName, @ColorValue, 1)
+
+	SELECT CONVERT(INT, SCOPE_IDENTITY())
+END
+
+GO
+CREATE OR ALTER PROCEDURE pr_UpdateColor(@ColorId INT, @ColorName NVARCHAR(255), @ColorValue VARCHAR(255))
+AS
+BEGIN
+    UPDATE dbo.Colors
+    SET ColorName = @ColorName,
+		ColorValue = @ColorValue
+    WHERE ColorId = @ColorId
+END
+
+GO
+CREATE OR ALTER PROCEDURE pr_ChangeProductColorSize(@ProductId INT, @ColorId INT = 0, @SizeId INT = 0)
+AS
+BEGIN
+    UPDATE dbo.Products
+    SET ColorId = @ColorId,
+		SizeId = @SizeId
+    WHERE ProductId = @ProductId
+END

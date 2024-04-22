@@ -55,7 +55,7 @@
         </div>
         <div class="card-body">
           <div class="form">
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Category Name</span>
               <input type="text" asp-for="CategoryName" class="form-input" id="input-category-name">
               <span class="form-error text-danger category-name-error hidden">Please enter category name.</span>
@@ -154,7 +154,9 @@
     }
 
     // Add Product Category 
-    function addProductCategory(ProductId) {
+    function handleAddProduct(product) {
+      const ProductId = product.dataset.productid
+
       AjaxPost("/admin/api/attributes/categories/add-product",
         { ProductId, CategoryId },
         (responseText) => {

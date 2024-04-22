@@ -83,5 +83,18 @@
 </main>
 
 @section JS {
-  @* <script src="~/js/account.js" asp-append-version="true"></script> *@
+  <script>
+    const input = document.querySelector(".form-control-password");
+    const btnShow = document.querySelector(".form-password-btn");
+
+    btnShow.addEventListener("click", () => {
+      if (input.type == "password") {
+        input.type = "text";
+        btnShow.innerHTML = `<i class="fas fa-eye-slash"></i>`;
+      } else {
+        input.type = "password";
+        btnShow.innerHTML = `<i class="fas fa-eye"></i>`;
+      }
+    });
+  </script>
 }

@@ -38,31 +38,31 @@
           <div class="form">
             <div class="flex cl-gap">
               <div class="col-6 pd-gap">
-                <div class="form-row">
+                <div class="form-col">
                   <span class="form-title">First Name</span>
                   <input type="text" asp-for="FirstName" class="form-input" disabled>
                   <span asp-validation-for="FirstName" class="form-error text-danger"></span>
                 </div>
               </div>
               <div class="col-6 pd-gap">
-                <div class="form-row">
+                <div class="form-col">
                   <span class="form-title">Last Name</span>
                   <input type="text" asp-for="LastName" class="form-input" disabled>
                   <span asp-validation-for="LastName" class="form-error text-danger"></span>
                 </div>
               </div>
             </div>
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Email</span>
               <input type="text" asp-for="Email" class="form-input" disabled>
               <span asp-validation-for="Email" class="form-error text-danger"></span>
             </div>
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Birthdate</span>
               <input type="date" asp-for="Birthdate" class="form-input" disabled>
               <span asp-validation-for="Birthdate" class="form-error text-danger"></span>
             </div>
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Gender</span>
               <div class="form-radios">
                 <div class="form-radio-row">
@@ -116,7 +116,7 @@
           <span class="card-title">Status</span>
         </div>
         <div class="card-body">
-          <div class="form-row">
+          <div class="form-col">
             <div class="form-radios">
               <div class="form-radio-row">
                 <input type="radio" asp-for="Active" id="active" class="form-input" value="true" disabled />

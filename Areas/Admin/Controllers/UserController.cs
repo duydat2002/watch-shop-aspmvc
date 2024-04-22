@@ -19,6 +19,12 @@ public class UserController : Controller
     _entityContext = entityContext;
   }
 
+  [Route("change-password")]
+  public IActionResult ChangePassword()
+  {
+    return View();
+  }
+
   [Route("administrators")]
   public IActionResult Administrators(int page = 1)
   {
@@ -152,6 +158,26 @@ public class UserController : Controller
   public IActionResult BanOrUnbanUser([FromBody] User user)
   {
     var update = _entityContext.BanOrUnbanUser(user.UserId, user.Active);
+    return Json(new { success = update > 0 });
+  }
+
+  [HttpPost]
+  [Route("/admin/api/user/change-password")]
+  public IActionResult ChangePassword([FromBody] UpdateUserPasswordModel userPasswordModel)
+  {
+    User userInfo = _entityContext.GetUserById(userPasswordModel.UserId);
+    if (userInfo == null)
+    {
+      return Json(new { success = false });
+    }
+
+    if (!BCrypt.Net.BCrypt.Verify(userPasswordModel.OldPassword, userInfo.Password))
+    {
+      return Json(new { success = false, message = "Wrong password." });
+    }
+
+    string NewPassword = BCrypt.Net.BCrypt.HashPassword(userPasswordModel.NewPassword);
+    int update = _entityContext.UpdateUserPassword(userPasswordModel.UserId, NewPassword);
     return Json(new { success = update > 0 });
   }
 }

@@ -91,6 +91,7 @@ CREATE TABLE Users (
 	Gender BIT NOT NULL, --1: Nam, 0: Nu
 	Birthdate DATE,
 	Active BIT DEFAULT 1,
+	CreateAt DATETIME DEFAULT GETDATE(),
 	CONSTRAINT FK_User_Role FOREIGN KEY(RoleId)
 	REFERENCES dbo.Roles(RoleId),
 	CONSTRAINT UC_User_Email UNIQUE (Email),
@@ -811,7 +812,7 @@ GO
 CREATE OR ALTER PROCEDURE pr_GetUserInfo(@UserId INT)
 AS
 BEGIN
-    SELECT UserId, RoleId, Email, '' AS Password , FirstName, LastName, Gender, Birthdate, Active 
+    SELECT UserId, RoleId, Email, '' AS Password , FirstName, LastName, Gender, Birthdate, Active, CreateAt 
 	FROM dbo.Users 
 	WHERE UserId = @UserId
 END
@@ -1237,4 +1238,73 @@ BEGIN
     SET ColorId = @ColorId,
 		SizeId = @SizeId
     WHERE ProductId = @ProductId
+END
+
+--ADMIN/ DASHBOARD
+GO
+CREATE OR ALTER PROCEDURE pr_GetDashboardInfo(@Month INT, @Year INT)
+AS
+BEGIN
+	DECLARE @NewCustomers INT = 0
+	DECLARE @Orders INT = 0
+	DECLARE @Sales FLOAT = 0
+
+    SELECT @Orders = COUNT(DISTINCT Orders.OrderId), @Sales = SUM(Price * (100 - Discount)/100 * Quantity)  
+	FROM dbo.Orders
+	LEFT JOIN dbo.OrderDetails ON OrderDetails.OrderId = Orders.OrderId
+	WHERE MONTH(OrderDate) = @Month AND YEAR(OrderDate) = @Year
+
+	SELECT @NewCustomers = COUNT(UserId)  
+	FROM dbo.Users 
+	WHERE MONTH(CreateAt) = @Month AND YEAR(CreateAt) = @Year AND RoleId = 2
+
+	SELECT @NewCustomers AS NewCustomers, @Orders AS Orders, @Sales AS Sales
+END
+
+EXEC dbo.pr_GetDashboardInfo @Month=4, @Year=2024 
+
+GO
+CREATE OR ALTER PROCEDURE pr_SalesStatitic(@Month INT , @Year INT)
+AS
+BEGIN
+    SELECT DAY(OrderDate) AS OrderDay,
+		SUM(CASE WHEN Status = N'Completed' THEN (Price * (100 - Discount)/100 * Quantity) ELSE 0 END) AS CompletedSales,
+		SUM(CASE WHEN Status = N'Pending' THEN (Price * (100 - Discount)/100 * Quantity) ELSE 0 END) AS PendingSales
+	FROM dbo.Orders
+	INNER JOIN dbo.OrderDetails ON OrderDetails.OrderId = Orders.OrderId
+	WHERE MONTH(OrderDate) = @Month AND YEAR(OrderDate) = @Year
+	GROUP BY DAY(OrderDate)
+END
+
+EXEC dbo.pr_SalesStatitic @Month=4, -- int
+    @Year=2024 -- int
+
+
+GO
+CREATE OR ALTER PROCEDURE pr_GetOrderStatus(@Month INT = NULL, @Year INT)
+AS
+BEGIN
+    SELECT SUM(CASE WHEN status = 'Cancelled' THEN 1 ELSE 0 END) AS CancelledOrders,
+			SUM(CASE WHEN status = 'Completed' THEN 1 ELSE 0 END) AS CompletedOrders,
+			SUM(CASE WHEN status = 'Pending' THEN 1 ELSE 0 END) AS PendingOrders
+	FROM dbo.Orders
+	WHERE MONTH(OrderDate) = @Month AND YEAR(OrderDate) = @Year
+END
+
+EXEC sp_describe_first_result_set N'pr_GetOrderStatus';
+
+GO
+CREATE OR ALTER PROCEDURE pr_GetRecentOrders
+AS
+BEGIN
+    SELECT TOP 5 Orders.*, FirstName, LastName, Email,
+		(
+			SELECT SUM(Price * (100 - Discount)/100 * Quantity) 
+			FROM dbo.OrderDetails
+			WHERE OrderId = Orders.OrderId
+			GROUP BY OrderId
+		) AS Total
+	FROM dbo.Orders
+	INNER JOIN dbo.Users ON Users.UserId = Orders.UserId
+	ORDER BY OrderDate DESC
 END

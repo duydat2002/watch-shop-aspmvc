@@ -250,19 +250,9 @@ function getUserContact() {
             <span class="address">${defaultContact.address}</span>
           </div>
           <div class="address__button">
-            <button class="change-address-button button button-gb">Change</button>
+            <button class="change-address-button button button-gb" onclick="handleClickChangeAddress()">Change</button>
           </div>
         `;
-
-        const changeAddressModal = document.querySelector(
-          ".change-address-modal"
-        );
-        const changeAddressButton = document.querySelector(
-          ".change-address-button"
-        );
-        changeAddressButton?.addEventListener("click", () => {
-          changeAddressModal.classList.remove("hidden");
-        });
       } else {
         addressBody.innerHTML = `
           <span class="no-address">To order, please add a delivery address</span>
@@ -274,6 +264,11 @@ function getUserContact() {
 }
 getUserContact();
 
+const handleClickChangeAddress = () => {
+  const changeAddressModal = document.querySelector(".change-address-modal");
+  changeAddressModal.classList.remove("hidden");
+};
+
 function changeAddress() {
   const selectedAddress = document.querySelector(
     ".address-modal__item:has(input[name='address']:checked)"
@@ -283,6 +278,15 @@ function changeAddress() {
   const address = selectedAddress.dataset.address;
 
   orderContact = { phoneNumber, address };
+  addressBody.innerHTML = `
+    <div class="address__desc">
+      <span>${phoneNumber}</span>
+      <span class="address">${address}</span>
+    </div>
+    <div class="address__button">
+      <button class="change-address-button button button-gb" onclick="handleClickChangeAddress()">Change</button>
+    </div>
+  `;
 
   changeAddressModal.classList.add("hidden");
 }

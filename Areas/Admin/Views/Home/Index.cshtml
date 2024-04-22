@@ -1,14 +1,39 @@
 @{
   ViewData["Title"] = "Admin Page";
+
+  string maxDate = DateTime.Now.ToString("yyyy-MM");
 }
 
+@section CSS {
+  <style>
+    .actions {
+      justify-content: space-between;
+    }
+
+    .date-inputs .form-title {
+      margin-right: 10px;
+      margin-bottom: 0;
+    }
+
+    .info-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #76c6e2;
+    }
+  </style>
+}
 
 <h3 class="page-title">Dashboard</h3>
 <div class="breakcrumb">
   <span class="breakcrumb-root">Dashboard</span>
 </div>
 <div class="actions">
-  <a href="/admin/attributes/colors/create" class="button button-gb create-button">Create</a>
+  <div class="date-inputs">
+    <div class="form-row">
+      <span class="form-title text-nowrap">Statitic</span>
+      <input type="month" value="@maxDate" max="@maxDate" name="search-date" class="form-input">
+    </div>
+  </div>
 </div>
 <div class="content dashboard">
   <div class="flex cl-gap">
@@ -19,7 +44,7 @@
             <span class="card-title">Sales</span>
           </div>
           <div class="card-body">
-            <span class="">300.000.000</span>
+            <span class="info-value sales-value">0</span>
           </div>
         </div>
         <div class="card ">
@@ -27,7 +52,7 @@
             <span class="card-title">Orders</span>
           </div>
           <div class="card-body">
-            <span class="">300</span>
+            <span class="info-value orders-value">0</span>
           </div>
         </div>
         <div class="card ">
@@ -35,7 +60,7 @@
             <span class="card-title">New customers</span>
           </div>
           <div class="card-body">
-            <span class="">30</span>
+            <span class="info-value new-customer-value">0</span>
           </div>
         </div>
       </div>
@@ -59,35 +84,34 @@
       </div>
     </div>
   </div>
+  <div class="card ">
+    <div class="card-header">
+      <span class="card-title">Recent Orders</span>
+    </div>
+    <div class="card-body" id="recent-order-list">
+    </div>
+  </div>
 </div>
 
 @section JS {
   <script>
-    Chart.register(ChartDataLabels);
 
-    const totalSalesData = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-      datasets: [{
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
-    };
+    const recentOrderList = document.querySelector("#recent-order-list")
+    const searchDateInput = document.querySelector("input[name='search-date']")
+    const salesValueDOM = document.querySelector(".sales-value")
+    const ordersValueDOM = document.querySelector(".orders-value")
+    const newCustomerValueDOM = document.querySelector(".new-customer-value")
 
-    const totalSalesChart = new Chart("total-sales", {
-      type: 'line',
-      data: totalSalesData,
-    })
+    let daysOfMonth
 
-    const orderStatusData = {
+    const orderStatusDataset = {
       labels: [
         'Cancelled',
         'Pending',
         'Completed'
       ],
       datasets: [{
-        data: [300, 50, 100],
+        data: [0, 0, 0],
         backgroundColor: [
           '#f43f5e',
           '#eab308',
@@ -99,7 +123,7 @@
 
     const orderStatusChart = new Chart("order-status", {
       type: 'doughnut',
-      data: orderStatusData,
+      data: orderStatusDataset,
       plugins: [ChartDataLabels],
       options: {
         plugins: {
@@ -114,12 +138,100 @@
               dataArr.map(data => {
                 sum += data;
               });
-              let percentage = (value * 100 / sum).toFixed(0) + "%";
-              return percentage;
+              let percentage = (value * 100 / sum).toFixed(0);
+              return isNaN(percentage) ? "0" : `${percentage}%`;
             },
           },
         }
       }
     })
+
+    const totalSalesChart = new Chart("total-sales", {
+      type: 'line',
+      data: {},
+    })
+
+    searchDateInput.addEventListener("change", () => {
+      searchDashBoard()
+    })
+
+    const searchDashBoard = () => {
+      const [year, month] = searchDateInput.value.split("-")
+      daysOfMonth = getDaysOfMonth(year, month)
+
+      AjaxGet(`/admin/api/statitics/get-dashboard-info?month=${month}&year=${year}`, (responseText) => {
+        const dashBoardInfo = JSON.parse(responseText).dashBoardInfo
+        salesValueDOM.innerHTML = `${dashBoardInfo.sales.toLocaleString("en-US")}₫`
+        ordersValueDOM.innerHTML = dashBoardInfo.orders
+        newCustomerValueDOM.innerHTML = dashBoardInfo.newCustomers
+      })
+
+      AjaxGet(`/admin/api/statitics/get-order-status?month=${month}&year=${year}`, (responseText) => {
+        const orderStatus = JSON.parse(responseText).orderStatus
+        const newData = [orderStatus.cancelledOrders, orderStatus.pendingOrders, orderStatus.completedOrders]
+        orderStatusChart.data.datasets[0].data = newData
+        orderStatusChart.update()
+      })
+
+      AjaxGet(`/admin/api/statitics/get-sales-statitic?month=${month}&year=${year}`, (responseText) => {
+        const salesStatitic = JSON.parse(responseText).salesStatitic
+
+        const [completedSales, pendingSales] = convertToSalesData(salesStatitic)
+
+        const saleDatasets = [
+          {
+            label: 'Completed',
+            data: completedSales,
+            borderColor: '#22c55e',
+            backgroundColor: '#22c55e',
+          },
+          {
+            label: 'Pending',
+            data: pendingSales,
+            borderColor: '#eab308',
+            backgroundColor: '#eab308',
+          }
+        ]
+
+        totalSalesChart.data.labels = daysOfMonth
+        totalSalesChart.data.datasets = saleDatasets
+        totalSalesChart.update()
+      })
+    }
+
+    searchDashBoard()
+
+    const getRecentCustomers = () => {
+      AjaxGet(`/admin/api/statitics/get-recent-orders`, (responseText) => {
+        recentOrderList.innerHTML = responseText
+      })
+    }
+    getRecentCustomers()
+
+    function convertToSalesData(saleData) {
+      const completedSalesArr = []
+      const pendingSalesArr = []
+
+      daysOfMonth.forEach(day => {
+        const foundData = saleData.find(data => data.orderDay == day)
+
+        completedSalesArr.push(foundData && foundData.completedSales ? foundData.completedSales : 0)
+        pendingSalesArr.push(foundData && foundData.pendingSales ? foundData.pendingSales : 0)
+      })
+
+      return [completedSalesArr, pendingSalesArr]
+    }
+
+    function getDaysOfMonth(year, month) {
+      var totalDays = new Date(year, month, 0).getDate();
+      var daysOfMonth = [];
+
+      for (var i = 1; i <= totalDays; i++) {
+        daysOfMonth.push(i);
+      }
+
+      return daysOfMonth;
+    }
+
   </script>
 }

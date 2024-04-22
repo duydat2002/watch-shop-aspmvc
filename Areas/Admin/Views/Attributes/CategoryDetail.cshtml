@@ -116,7 +116,7 @@
         </div>
         <div class="card-body">
           <div class="form">
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Category Name</span>
               <input type="text" name="category_name" class="form-input" value="@Model.CategoryName">
             </div>
@@ -212,7 +212,9 @@
     }
 
     // Add Product Category 
-    function addProductCategory(ProductId) {
+    function handleAddProduct(product) {
+      const ProductId = product.dataset.productid
+
       AjaxPost("/admin/api/attributes/categories/add-product",
         { ProductId, CategoryId },
         (responseText) => {

@@ -455,8 +455,13 @@ button {
   margin: 0 8px;
 }
 
+.text-nowrap {
+  text-wrap: nowrap;
+}
+
 .actions {
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   margin-bottom: 20px;
   padding: 12px;
@@ -631,10 +636,16 @@ button {
   border-bottom: 1px solid #e2e8f0;
 }
 
-.form-row {
+.form-col {
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .form-title {
@@ -671,7 +682,7 @@ button {
   margin-top: 10px;
 }
 
-.form-row .form-error {
+.form-col .form-error {
   padding: 8px 10px;
 }
 

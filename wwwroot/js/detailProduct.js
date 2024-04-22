@@ -63,6 +63,8 @@ function productpageAction() {
   const quantityDown = document.querySelector(
     ".productpage__quantity .quantity-down"
   );
+  const quantityMin = parseInt(quantityInput.min);
+  const quantityMax = parseInt(quantityInput.max);
 
   quantityUp.addEventListener("click", () => {
     quantityInput.stepUp();
@@ -73,7 +75,15 @@ function productpageAction() {
   });
 
   quantityInput.addEventListener("change", (e) => {
-    if (e.target.value <= 0) quantityInput.value = 1;
+    const value = parseInt(e.target.value);
+    if (value < quantityMin) quantityInput.value = 1;
+    else if (value > quantityMax) quantityInput.value = quantityMax;
+  });
+
+  quantityInput.addEventListener("blur", (e) => {
+    const value = parseInt(e.target.value);
+    if (value < quantityMin) quantityInput.value = 1;
+    else if (value > quantityMax) quantityInput.value = quantityMax;
   });
 
   const productpageImg = document.querySelector(".productpage__mainimg > img");

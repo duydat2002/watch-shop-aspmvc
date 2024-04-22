@@ -50,17 +50,17 @@
         </div>
         <div class="card-body">
           <div class="form">
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Product Name</span>
               <input type="text" asp-for="ProductName" class="form-input">
               <span class="form-error text-danger product-name-error hidden">Please enter product name.</span>
             </div>
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Product Slug</span>
               <input type="text" asp-for="ProductSlug" class="form-input">
               <span class="form-error text-danger product-slug-error hidden">Please enter product slug.</span>
             </div>
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Product Description</span>
               <textarea rows="5" asp-for="ProductDesc" class="form-area"></textarea>
               <span class="form-error text-danger product-desc-error hidden">Please enter product desc.</span>
@@ -73,19 +73,19 @@
           <span class="card-title">Price</span>
         </div>
         <div class="card-body">
-          <div class="form-row">
+          <div class="form-col">
             <span class="form-title">Price</span>
             <input type="number" min="1" value="1" asp-for="Price" class="form-input">
           </div>
           <div class="flex cl-gap">
             <div class="col-6 pd-gap">
-              <div class="form-row">
+              <div class="form-col">
                 <span class="form-title">Discount (%)</span>
                 <input type="number" min="0" max="100" value="0" asp-for="Discount" class="form-input">
               </div>
             </div>
             <div class="col-6 pd-gap">
-              <div class="form-row">
+              <div class="form-col">
                 <span class="form-title">Price Sale</span>
                 <input type="number" disabled min="0" value="1" name="product_price-sale" class="form-input">
               </div>
@@ -102,7 +102,7 @@
         </div>
         <div class="card-body">
           <div class="form">
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Active</span>
               <div class="form-radios">
                 <div class="form-radio-row">
@@ -124,7 +124,7 @@
         </div>
         <div class="card-body">
           <div class="form">
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Quantity</span>
               <input type="number" min="0" asp-for="Quantity" class="form-input" value="0">
             </div>
@@ -159,7 +159,7 @@
         </div>
         <div class="card-body">
           <div class="form">
-            <div class="form-row">
+            <div class="form-col">
               <span class="form-title">Size</span>
               <div class="form-selection size-selection" onclick="openSelects(this)">
                 <div class="form-selected size-selected">
@@ -184,7 +184,7 @@
           <span class="card-title">Color</span>
         </div>
         <div class="card-body">
-          <div class="form-row">
+          <div class="form-col">
             <span class="form-title">Color</span>
             <div class="form-selection color-selection" onclick="openSelects(this)">
               <div class="form-selected color-selected">

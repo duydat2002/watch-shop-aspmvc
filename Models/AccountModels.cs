@@ -49,6 +49,8 @@ public class UserWithRoleName
   public DateOnly? Birthdate { get; set; }
 
   public bool Active { get; set; }
+
+  public DateTime CreateAt { get; set; }
 }
 
 public class ChangeUserRoleModel

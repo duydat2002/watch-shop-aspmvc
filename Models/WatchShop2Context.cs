@@ -511,6 +511,36 @@ public partial class WatchShop2Context : DbContext
         );
     }
 
+    // ADMIN/ STATITICS
+    public DashBoardInfoModel GetDashboardInfo(int Month, int Year)
+    {
+        return this.Database.SqlQueryRaw<DashBoardInfoModel>("EXECUTE pr_GetDashboardInfo @Month, @Year",
+            new SqlParameter("@Month", Month),
+            new SqlParameter("@Year", Year)
+        ).ToList().SingleOrDefault();
+    }
+
+    public List<SalesStatiticModel> SalesStatitic(int Month, int Year)
+    {
+        return this.Database.SqlQueryRaw<SalesStatiticModel>("EXECUTE pr_SalesStatitic @Month, @Year",
+            new SqlParameter("@Month", Month),
+            new SqlParameter("@Year", Year)
+        ).ToList();
+    }
+
+    public DashBoardOrderStatusModel GetOrderStatus(int Month, int Year)
+    {
+        return this.Database.SqlQueryRaw<DashBoardOrderStatusModel>("EXECUTE pr_GetOrderStatus @Month, @Year",
+            new SqlParameter("@Month", Month),
+            new SqlParameter("@Year", Year)
+        ).ToList().SingleOrDefault();
+    }
+
+    public List<OrderWithTotal> GetRecentOrders()
+    {
+        return this.Database.SqlQueryRaw<OrderWithTotal>("EXECUTE pr_GetRecentOrders").ToList();
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Cart>(entity =>

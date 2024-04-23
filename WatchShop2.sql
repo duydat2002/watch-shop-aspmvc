@@ -1,11 +1,4 @@
---CREATE DATABASE WatchShop2
---ON (
---	NAME = WatchShop2,
---	FILENAME = 'H:\SQL Server\WatchShop2.mdf',
---	SIZE = 100MB,
---	MAXSIZE = UNLIMITED,
---	FILEGROWTH = 10%
---)
+
 
 GO
 USE WatchShop2

@@ -1094,6 +1094,7 @@ BEGIN
 		) AS Total
 	FROM dbo.Orders
 	INNER JOIN dbo.Users ON Users.UserId = Orders.UserId
+	ORDER BY OrderDate DESC
 END
 
 --ORDER/ GetOrderById
@@ -1148,6 +1149,7 @@ BEGIN
 		WHERE LOWER(ProductName) LIKE N'%' + LOWER(@ProductName) + '%'
 	) s ON s.OrderId = Orders.OrderId
 	WHERE UserId = @UserId  
+	ORDER BY OrderDate DESC
 END
 
 EXEC dbo.pr_GetOrder @UserId=2, @ProductName=N'suu'
